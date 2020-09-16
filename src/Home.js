@@ -17,17 +17,18 @@ export default class Home extends Component {
           style={{ paddingLeft: "20vw", paddingRight: "20vw", marginTop: 80 }}
         >
           <div style={{ width: "30vw" }}>
-            <div style={{ fontSize: 32, fontWeight: 400 }}>
-              Escorts: Screening your clients has never been easier
+            <div style={{ fontSize: 32, fontWeight: 500 }}>
+              Escorts: Screening clients has never been easier
             </div>
             <div style={{ marginTop: 20 }}>
               Just send your unique Fine link to the client, <br /> and we
               handle the rest.
-              <br /> <br />
+              {/* <br /> <br />
               Customize your screening process to fit what YOU <br /> need from
-              your clients.
+              your clients. */}
             </div>
             <div
+              onClick={() => (window.location.href = "/getstarted")}
               id="get-started-button"
               style={{
                 backgroundColor: "rgb(230, 30, 77)",
@@ -48,7 +49,7 @@ export default class Home extends Component {
 
           <div
             style={{
-              marginTop: 50,
+              marginTop: 80,
               display: "flex",
               justifyContent: "space-between",
             }}
@@ -77,8 +78,8 @@ export default class Home extends Component {
                 Custom Screening
               </div>
               <div style={{ textAlign: "center", marginTop: 10, fontSize: 12 }}>
-                Customize what info you want verified from your clients! When a
-                new client comes, just send them your unqiue Fine link!
+                Customize info you want verified from your clients! When a new
+                client comes, just send them your unqiue Fine link.
               </div>
             </div>
             <div
