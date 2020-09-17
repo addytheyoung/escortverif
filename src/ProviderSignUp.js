@@ -15,13 +15,14 @@ export default class ProviderSignUp extends Component {
     super(props);
 
     this.state = {
-      currentInput: 3,
+      currentInput: 2,
+      activePictureUri: "",
       activePosePictureUri: "",
     };
   }
 
   render() {
-    const { currentInput, activePosePictureUri } = this.state;
+    const { currentInput, activePictureUri, activePosePictureUri } = this.state;
     return (
       <div>
         <Header />
@@ -83,12 +84,34 @@ export default class ProviderSignUp extends Component {
           <ProviderInput
             clickPrev={() => this.clickPrev()}
             clickNext={() => this.clickNext()}
-            nextDisabled={false}
+            nextDisabled={activePictureUri === ""}
             title={"Please upload a picture of you"}
             subTitle={
               "Blurred faces are fine. This is just so your clients can recognize you. Nobody except your clients can see this picture."
             }
-            input={<Input id="name-input" style={{ width: 250 }} type="file" />}
+            input={
+              <div>
+                <Input
+                  onChangeCapture={() => this.uploadedImage()}
+                  id="pic-input"
+                  style={{ width: 250 }}
+                  type="file"
+                />
+
+                <CropImage
+                  setCroppedImg={(croppedImgUrl) =>
+                    this.setCroppedImg(croppedImgUrl)
+                  }
+                  picture={activePictureUri}
+                />
+
+                {/* {activePictureUri !== "" && (
+                  <div>
+                    <img style={{ width: 220 }} src={activePictureUri} />
+                  </div>
+                )} */}
+              </div>
+            }
           />
         )}
 
@@ -102,27 +125,37 @@ export default class ProviderSignUp extends Component {
               "Blurred faces are fine. This is only used for our verification, and is deleted right after we verify you are real."
             }
             input={
-              <div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
                 <div>
                   <Input
                     onChangeCapture={() => this.uploadedImage()}
-                    id="name-input"
+                    id="pic-input"
                     style={{ width: 250 }}
                     type="file"
                   />
                 </div>
                 <div>OR</div>
-                <Camera
-                  onCameraStop={() => console.log("")}
-                  oncameraError={() => console.log("")}
-                  // isImageMirror={false}
-                  // idealFacingMode={"environment"}
-                  onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)}
-                ></Camera>
+                <div id="camera">
+                  <Camera
+                    id="camera"
+                    onCameraStop={() => console.log("")}
+                    oncameraError={() => console.log("")}
+                    // isImageMirror={false}
+                    // idealFacingMode={"environment"}
+                    onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)}
+                  ></Camera>
+                </div>
 
                 {activePosePictureUri !== "" && (
                   <div>
-                    <img src={activePosePictureUri} />
+                    <img style={{ width: 220 }} src={activePosePictureUri} />{" "}
                   </div>
                 )}
               </div>
@@ -149,10 +182,14 @@ export default class ProviderSignUp extends Component {
   }
 
   uploadedImage() {
-    const ref = document.getElementById("name-input").files;
+    const ref = document.getElementById("pic-input").files;
+    var stateRef = "activePictureUri";
+    if (this.state.currentInput == 3) {
+      stateRef = "activePosePictureUri";
+    }
     if (ref.length === 0) {
       this.setState({
-        activePosePictureUri: "",
+        [stateRef]: "",
       });
       return;
     }
@@ -162,11 +199,10 @@ export default class ProviderSignUp extends Component {
       return;
     }
 
-    this.setState({ activePosePictureUri: blob });
+    this.setState({ [stateRef]: blob });
   }
 
   setCroppedImg(croppedImgUrl) {
-    console.log(croppedImgUrl);
     this.setState({
       croppedImg: croppedImgUrl,
     });

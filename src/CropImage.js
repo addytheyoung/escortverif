@@ -11,8 +11,8 @@ export default class CropTest extends PureComponent {
   state = {
     src: null,
     crop: {
-      aspect: 660 / 600,
-      width: 220,
+      aspect: 100 / 100,
+      width: 200,
       height: 200,
       unit: "px",
 
@@ -101,11 +101,21 @@ export default class CropTest extends PureComponent {
     const screenWidth = window.innerWidth;
 
     return (
-      <div className="App" style={{}}>
+      <div
+        className="App"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <ReactCrop
           src={picture}
           crop={crop}
           ruleOfThirds
+          circularCrop={true}
+          style={{ maxWidth: "30vw" }}
           onImageLoaded={this.onImageLoaded}
           onComplete={this.onCropComplete}
           onChange={this.onCropChange}
@@ -114,7 +124,17 @@ export default class CropTest extends PureComponent {
         <div style={{ width: 30, height: 30 }}></div>
 
         {croppedImageUrl && (
-          <img alt="Crop" style={{ maxWidth: "100%" }} src={croppedImageUrl} />
+          <img
+            alt="Crop"
+            style={{
+              width: 200,
+              height: 200,
+              borderRadius: 100,
+              borderStyle: "solid",
+              borderColor: "transparent",
+            }}
+            src={croppedImageUrl}
+          />
         )}
       </div>
     );

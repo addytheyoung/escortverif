@@ -44,7 +44,7 @@ export default class Header extends Component {
             src={require("./images/butterfly.svg")}
             style={{ width: 50, height: 50 }}
           ></img>
-          <div style={{ marginLeft: 10 }}>fine</div>
+          <div style={{ marginLeft: 10 }}>Escora</div>
         </div>
         <div
           style={{

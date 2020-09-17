@@ -13,7 +13,8 @@
     "react-html5-camera-photo": "^1.5.4",
     "react-image-crop": "^8.6.5",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "react-share": "^4.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
