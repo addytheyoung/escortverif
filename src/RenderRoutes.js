@@ -18,15 +18,15 @@ export default class RenderRoutes extends Component {
       profileData: null,
       type: "",
     };
-
-    this.pullProfileData();
   }
 
   render() {
-    // const signedIn = !!firebase.auth().currentUser;
-    const signedIn = true;
-    const uid = "lisali48";
-    const { loadedData, profileData } = this.state;
+    const signedIn = !!firebase.auth().currentUser;
+    var uid = "";
+    if (signedIn) {
+      uid = firebase.auth().currentUser.uid;
+    }
+    const { loadedData, profileData, type } = this.state;
     if (!loadedData) {
       return <LoadingPage />;
     }
@@ -35,60 +35,84 @@ export default class RenderRoutes extends Component {
         <Router>
           <Switch>
             {signedIn && (
-              <Route
-                path={"/" + uid}
-                exact={true}
-                render={() => <ProviderHome />}
-              />
-            )}
-            {signedIn && (
-              <Route
-                path={"/makescreen"}
-                exact={true}
-                render={() => <MakeScreen />}
-              />
-            )}
-            {!signedIn && (
-              <Route path="/" exact={true} render={() => <Home />} />
-            )}
-            {!signedIn && (
-              <Route path={"/" + uid} exact={true} render={() => <Screen />} />
+              <div>
+                <Route
+                  path={"/" + uid}
+                  exact={true}
+                  render={() => <ProviderHome />}
+                />
+                <Route
+                  path={"/makescreen"}
+                  exact={true}
+                  render={() => <MakeScreen />}
+                />
+                <Route path="/" exact={true} render={() => <Home />} />
+                {/* <Route path="/" exact={false} render={() => <ErrorPage />} /> */}
+              </div>
             )}
 
-            <Route
-              path="/getstarted"
-              exact={true}
-              render={() => <ProviderSignUp />}
-            />
+            {!signedIn && (
+              <div>
+                <Route path="/" exact={true} render={() => <Home />} />
 
-            <Route path="/" exact={false} render={() => <ErrorPage />} />
+                <Route
+                  path="/getstarted"
+                  exact={true}
+                  render={() => <ProviderSignUp />}
+                />
+
+                <Route
+                  path={"/"}
+                  exact={false}
+                  render={() => <Screen profileData={profileData} />}
+                />
+
+                {/* <Route path="/" exact={false} render={() => <ErrorPage />} /> */}
+              </div>
+            )}
           </Switch>
         </Router>
       </div>
     );
   }
 
-  pullProfileData() {
-    const provider = localStorage.getItem("provider");
-    const client = localStorage.getItem("client");
-    var colRef = "Provider";
-    if (client) {
-      colRef = client;
-    }
-    firebase
-      .firestore()
-      .collection(colRef)
-      .doc("abc")
-      .get()
-      .then((snapshot) => {
-        this.setState({
-          profileData: snapshot.data(),
-          loadedData: true,
-          type: colRef,
+  async componentDidMount() {
+    const signedIn = !!firebase.auth().currentUser;
+
+    // We're signed in!
+    if (signedIn) {
+      // Get the path
+      const path = window.location.pathname;
+      // Provider or client?
+      const provider = localStorage.getItem("provider");
+      const client = localStorage.getItem("client");
+      var colRef = "Provider";
+      if (client == "true") {
+        colRef = "Clients";
+      }
+
+      firebase
+        .firestore()
+        .collection(colRef)
+        .doc("abc")
+        .get()
+        .then((snapshot) => {
+          this.setState({
+            profileData: snapshot.data(),
+            loadedData: true,
+            type: colRef,
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
         });
-      })
-      .catch((e) => {
-        console.log(e.message);
+    } else {
+      console.log("set");
+      this.setState({
+        profileData: [],
+        loadedData: true,
+        type: "",
       });
+    }
   }
 }

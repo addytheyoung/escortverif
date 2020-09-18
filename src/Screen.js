@@ -16,6 +16,9 @@ export default class Screen extends Component {
 
   render() {
     const { activeQuestion, activePictureUri } = this.state;
+    const { profileData, providerData } = this.props;
+    console.log(providerData);
+    console.log(profileData);
     return (
       <div>
         <Header />
@@ -122,11 +125,11 @@ export default class Screen extends Component {
                     picture={activePictureUri}
                   />
 
-                  {/* {activePictureUri !== "" && (
-                  <div>
-                    <img style={{ width: 220 }} src={activePictureUri} />
-                  </div>
-                )} */}
+                  {activePictureUri !== "" && (
+                    <div>
+                      <img style={{ width: 220 }} src={activePictureUri} />
+                    </div>
+                  )}
                 </div>
               }
             />
