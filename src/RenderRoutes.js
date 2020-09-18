@@ -33,44 +33,43 @@ export default class RenderRoutes extends Component {
     return (
       <div>
         <Router>
-          <Switch>
-            {signedIn && (
-              <div>
-                <Route
-                  path={"/" + uid}
-                  exact={true}
-                  render={() => <ProviderHome />}
-                />
-                <Route
-                  path={"/makescreen"}
-                  exact={true}
-                  render={() => <MakeScreen />}
-                />
-                <Route path="/" exact={true} render={() => <Home />} />
-                {/* <Route path="/" exact={false} render={() => <ErrorPage />} /> */}
-              </div>
-            )}
+          {signedIn && (
+            <Switch>
+              <Route path="/" exact={true} render={() => <Home />} />
 
-            {!signedIn && (
-              <div>
-                <Route path="/" exact={true} render={() => <Home />} />
+              <Route
+                path={"/makescreen"}
+                exact={true}
+                render={() => <MakeScreen />}
+              />
+              <Route
+                path={"/"}
+                exact={false}
+                render={() => <Screen profileData={profileData} />}
+              />
+              {/* <Route path="/" exact={false} render={() => <ErrorPage />} /> */}
+            </Switch>
+          )}
 
-                <Route
-                  path="/getstarted"
-                  exact={true}
-                  render={() => <ProviderSignUp />}
-                />
+          {!signedIn && (
+            <Switch>
+              <Route path="/" exact={true} render={() => <Home />} />
 
-                <Route
-                  path={"/"}
-                  exact={false}
-                  render={() => <Screen profileData={profileData} />}
-                />
+              <Route
+                path="/getstarted"
+                exact={true}
+                render={() => <ProviderSignUp />}
+              />
 
-                {/* <Route path="/" exact={false} render={() => <ErrorPage />} /> */}
-              </div>
-            )}
-          </Switch>
+              <Route
+                path={"/"}
+                exact={false}
+                render={() => <Screen profileData={profileData} />}
+              />
+
+              {/* <Route path="/" exact={false} render={() => <ErrorPage />} /> */}
+            </Switch>
+          )}
         </Router>
       </div>
     );
@@ -109,7 +108,7 @@ export default class RenderRoutes extends Component {
     } else {
       console.log("set");
       this.setState({
-        profileData: [],
+        profileData: null,
         loadedData: true,
         type: "",
       });
