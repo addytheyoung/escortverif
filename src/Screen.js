@@ -8,19 +8,28 @@ import * as firebase from "firebase";
 import ErrorPage from "./ErrorPage";
 import LoadingPage from "./LoadingPage";
 import ProgressBar from "./ProgressBar";
+import ReferenceInput from "./ReferenceInput";
 
 export default class Screen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeQuestion: 0,
+      info: "",
+      activeQuestion: 3,
       deleteItems: [false, false, false, false, false, false],
       activeInput1: "+1",
       activeInput2: "",
       errorPage: false,
       providerData: false,
       activePosePictureUri: "",
+      activeLiscenseUri: "",
+      jobTitle: "",
+      employerTitle: "",
+      employerCity: "",
+      linkedinProfile: "",
+      activePaystubUri: "",
+      numReferences: [],
     };
 
     // 1) Signed out + invalid provider, render: ErrorPage
@@ -33,13 +42,21 @@ export default class Screen extends Component {
 
   render() {
     const {
+      info,
       activeQuestion,
       errorPage,
       providerData,
       activeInput1,
       activeInput2,
       activePosePictureUri,
+      activeLiscenseUri,
       deleteItems,
+      jobTitle,
+      employerTitle,
+      employerCity,
+      linkedinProfile,
+      activePaystubUri,
+      numReferences,
     } = this.state;
     const { profileData } = this.props;
 
@@ -56,6 +73,28 @@ export default class Screen extends Component {
       return (
         <div>
           <Header />
+
+          <div>
+            {info !== "" && (
+              <div
+                style={{
+                  position: "fixed",
+                  top: 100,
+                  left: 50,
+                  width: 300,
+                  height: 200,
+                  backgroundColor: "#ffffff",
+                  borderRadius: 5,
+                  borderStyle: "solid",
+                  borderColor: "lightgray",
+                  fontSize: 12,
+                  padding: 10,
+                }}
+              >
+                {info}
+              </div>
+            )}
+          </div>
 
           {activeQuestion === 0 && (
             <div>
@@ -91,7 +130,7 @@ export default class Screen extends Component {
                     {activePosePictureUri !== "" && (
                       <div>
                         <img
-                          style={{ width: 220 }}
+                          style={{ width: 260 }}
                           src={activePosePictureUri}
                         />{" "}
                       </div>
@@ -109,6 +148,239 @@ export default class Screen extends Component {
                       ></Checkbox>
                       <div>I want this deleted after Lisa views it.</div>
                     </div>
+                  </div>
+                }
+              />
+            </div>
+          )}
+
+          {activeQuestion === 1 && (
+            <div>
+              <ProgressBar currentIndex={2} total={4} />
+              <ProviderInput
+                clickPrev={() => this.clickPrev()}
+                clickNext={() => this.clickNext()}
+                nextDisabled={activeLiscenseUri === ""}
+                title={"Please upload a picture of your liscense"}
+                subTitle={
+                  "This is so we can verify your name, race, and age for " +
+                  providerData.first_name +
+                  "."
+                }
+                input={
+                  <div>
+                    <Input
+                      id="pic-input"
+                      onChangeCapture={() =>
+                        this.uploadedImage("activeLiscenseUri")
+                      }
+                      type="file"
+                    />
+
+                    {activeLiscenseUri !== "" && (
+                      <div>
+                        <img style={{ width: 260 }} src={activeLiscenseUri} />{" "}
+                      </div>
+                    )}
+
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Checkbox
+                        onChange={() => this.updateCheckedBoxes(1)}
+                        checked={deleteItems[1]}
+                      ></Checkbox>
+                      <div>
+                        {"I want this deleted after " +
+                          providerData.first_name +
+                          " views it."}
+                      </div>
+                    </div>
+                  </div>
+                }
+              />
+            </div>
+          )}
+
+          {activeQuestion === 2 && (
+            <div>
+              <ProgressBar currentIndex={3} total={4} />
+              <ProviderInput
+                clickPrev={() => this.clickPrev()}
+                clickNext={() => this.clickNext()}
+                nextDisabled={
+                  activePaystubUri === "" &&
+                  (jobTitle === "" ||
+                    employerTitle === "" ||
+                    employerCity === "")
+                }
+                title={"Employment"}
+                subTitle={
+                  <div style={{ textAlign: "left" }}>
+                    <div style={{ fontSize: 14 }}>
+                      We want to make sure Lisa is safe with you.
+                    </div>
+                    <br />
+                    1. Linkedin is required if you have one. If not, we may
+                    contact to verify your employment. <br /> <br />
+                    2. We NEVER say who we are or what we do if we need to reach
+                    out, even if they ask. Everything is confidential.
+                    <br /> <br />
+                    3. We have to save this information so we don't ever need to
+                    do this again!
+                    <br /> <br />
+                    4. See our sample here:
+                    <div style={{ marginTop: 10, marginRight: 5 }}></div>
+                    {this.imgWindow(
+                      "Hello, we're looking for HR to verify [Andrew Young]'s employment as a [Your job] at [Your company]."
+                    )}
+                  </div>
+                }
+                input={
+                  <div>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <Input
+                        onChange={(word) =>
+                          this.setState({
+                            jobTitle: word.target.value,
+                          })
+                        }
+                        value={jobTitle}
+                        placeholder="Job Title"
+                        style={{ width: 260 }}
+                      />
+                      <div style={{ height: 20 }}></div>
+                      <Input
+                        onChange={(word) =>
+                          this.setState({
+                            employerTitle: word.target.value,
+                          })
+                        }
+                        value={employerTitle}
+                        placeholder="Employer Name"
+                        style={{ width: 260 }}
+                      />
+                      <div style={{ height: 20 }}></div>
+                      <Input
+                        onChange={(word) =>
+                          this.setState({
+                            employerCity: word.target.value,
+                          })
+                        }
+                        value={employerCity}
+                        placeholder="Employer City, State"
+                        style={{ width: 260 }}
+                      />
+                      <div style={{ height: 20 }}></div>
+                      <Input
+                        onChange={(word) =>
+                          this.setState({
+                            linkedinProfile: word.target.value,
+                          })
+                        }
+                        value={linkedinProfile}
+                        placeholder="Linkedin (Optional)"
+                        style={{ width: 260 }}
+                      />
+                      <div
+                        style={{
+                          marginTop: 20,
+                          marginBottom: 20,
+                          fontWeight: 500,
+                        }}
+                      >
+                        OR
+                      </div>
+                      <div style={{ fontWeight: 500, marginBottom: 10 }}>
+                        PayStub / W2 Picture
+                      </div>
+                      <Input
+                        id="pic-input"
+                        onChangeCapture={() =>
+                          this.uploadedImage("activePaystubUri")
+                        }
+                        type="file"
+                      />
+                      {activePaystubUri !== "" && (
+                        <div>
+                          <img style={{ width: 260 }} src={activePaystubUri} />{" "}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                }
+              />
+            </div>
+          )}
+
+          {activeQuestion === 3 && (
+            <div>
+              <ProgressBar currentIndex={4} total={4} />
+              <ProviderInput
+                clickPrev={() => this.clickPrev()}
+                clickNext={() => this.clickNext()}
+                nextDisabled={false}
+                title={"References"}
+                subTitle={
+                  "Seen other escorts? For some providers, this is all you need. Make sure to include their online profile (Eros, Adultsearch, etc.)"
+                }
+                input={
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    {/* <Input
+                      onChange={(word) =>
+                        this.setState({
+                          employerCity: word.target.value,
+                        })
+                      }
+                      value={employerCity}
+                      placeholder="Facebook profile"
+                      style={{ width: 260 }}
+                    />
+                    <div style={{ height: 10 }}></div>
+                    <Input
+                      onChange={(word) =>
+                        this.setState({
+                          employerCity: word.target.value,
+                        })
+                      }
+                      value={employerCity}
+                      placeholder="Twitter profile"
+                      style={{ width: 260 }}
+                    />
+                    <div style={{ height: 10 }}></div>
+
+                    <Input
+                      onChange={(word) =>
+                        this.setState({
+                          employerCity: word.target.value,
+                        })
+                      }
+                      value={employerCity}
+                      placeholder="Address"
+                      style={{ width: 260 }}
+                    /> */}
+
+                    <div
+                      style={{ cursor: "pointer" }}
+                      onClick={() => {
+                        this.setState({
+                          numReferences: [...numReferences, ""],
+                        });
+                      }}
+                    >
+                      {"Add a reference +"}
+                    </div>
+                    {numReferences.map((ref, index) => {
+                      return (
+                        <div style={{ marginTop: 10, marginBottom: 10 }}>
+                          <ReferenceInput />
+                        </div>
+                      );
+                    })}
                   </div>
                 }
               />
@@ -332,10 +604,32 @@ export default class Screen extends Component {
           this.setState({
             activeQuestion: activeQuestion + 1,
           });
-        } else {
         }
+      } else {
+        this.setState({
+          activeQuestion: activeQuestion + 1,
+        });
       }
+    } else if (activeQuestion === 1) {
     }
+  }
+
+  uploadedImage(state) {
+    const ref = document.getElementById("pic-input").files;
+
+    if (ref.length === 0) {
+      this.setState({
+        [state]: "",
+      });
+      return;
+    }
+    const image = ref[0];
+    const blob = URL.createObjectURL(image);
+    if (!image || !blob) {
+      return;
+    }
+
+    this.setState({ [state]: blob });
   }
 
   // Update one of the selections.
@@ -453,6 +747,32 @@ export default class Screen extends Component {
         providerData: provider.docs[0].data(),
       });
     }
+  }
+
+  // Nexted Component: The info window we show the user.
+  imgWindow(newInfo) {
+    const stateInfo = this.state.info;
+    return (
+      <img
+        onClick={() =>
+          this.setState({
+            info: stateInfo === "" ? newInfo : "",
+          })
+        }
+        onMouseOver={() =>
+          this.setState({
+            info: newInfo,
+          })
+        }
+        onMouseLeave={() =>
+          this.setState({
+            info: "",
+          })
+        }
+        style={{ width: 20, height: 20, cursor: "pointer" }}
+        src={require("./images/info.svg")}
+      />
+    );
   }
 
   componentDidUpdate() {

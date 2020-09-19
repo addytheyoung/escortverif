@@ -106,7 +106,6 @@ export default class RenderRoutes extends Component {
           console.log(e.message);
         });
     } else {
-      console.log("set");
       this.setState({
         profileData: null,
         loadedData: true,
