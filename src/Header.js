@@ -12,6 +12,7 @@ export default class Header extends Component {
   }
 
   render() {
+    const { margin } = this.props;
     const signedIn = !!firebase.auth().currentUser;
     return (
       <div
@@ -26,6 +27,8 @@ export default class Header extends Component {
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
+          position: "fixed",
+          top: 0,
         }}
       >
         <div
@@ -39,7 +42,7 @@ export default class Header extends Component {
             alignItems: "center",
           }}
         >
-          <div style={{ width: "20vw" }}></div>
+          <div style={{ width: margin ? [margin] : "20vw" }}></div>
           <img
             src={require("./images/butterfly.svg")}
             style={{ width: 50, height: 50 }}
@@ -56,7 +59,7 @@ export default class Header extends Component {
         <div
           style={{
             display: "flex",
-            marginRight: "20vw",
+            marginRight: margin ? [margin] : "20vw",
           }}
         >
           <div
