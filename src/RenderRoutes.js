@@ -11,6 +11,7 @@ import LoadingPage from "./LoadingPage";
 import Profile from "./Profile";
 import SignInPage from "./SignInPage";
 import About from "./About";
+import VerifyEmail from "./VerifyEmail";
 
 export default class RenderRoutes extends Component {
   constructor(props) {
@@ -47,6 +48,11 @@ export default class RenderRoutes extends Component {
                 render={() => <MakeScreen />}
               />
               <Route
+                path="/getstarted"
+                exact={true}
+                render={() => <ProviderSignUp profileData={profileData} />}
+              />
+              <Route
                 path={"/"}
                 exact={false}
                 render={() => <Screen profileData={profileData} />}
@@ -67,13 +73,19 @@ export default class RenderRoutes extends Component {
               <Route
                 path="/getstarted"
                 exact={true}
-                render={() => <ProviderSignUp />}
+                render={() => <ProviderSignUp profileData={profileData} />}
               />
 
               <Route
                 path="/getstartedclient"
                 exact={true}
                 render={() => <Screen />}
+              />
+
+              <Route
+                path="/verifyemail"
+                exact={true}
+                render={() => <VerifyEmail />}
               />
 
               <Route

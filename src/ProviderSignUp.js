@@ -15,7 +15,7 @@ export default class ProviderSignUp extends Component {
     super(props);
 
     this.state = {
-      currentInput: 2,
+      currentInput: 0,
       activePictureUri: "",
       activePosePictureUri: "",
     };
@@ -23,46 +23,54 @@ export default class ProviderSignUp extends Component {
 
   render() {
     const { currentInput, activePictureUri, activePosePictureUri } = this.state;
+    const { profileData } = this.props;
+
+    if (profileData) {
+    } else {
+      return (
+        <div>
+          <Header />
+          <div style={{ height: 50 }}></div>
+          {currentInput === 0 && (
+            <ProviderInput
+              prevDisabled={true}
+              clickPrev={() => this.clickPrev()}
+              clickNext={() => this.clickNext()}
+              title={"What's your escort email?"}
+              subTitle={""}
+              input={
+                <Input
+                  id="email-input"
+                  style={{ width: 250 }}
+                  type="email"
+                  placeholder="Email"
+                />
+              }
+            />
+          )}
+
+          {currentInput === 1 && (
+            <div
+              style={{
+                width: "100vw",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginTop: 100,
+              }}
+            >
+              <div style={{ textAlign: "center", width: "30vw" }}>
+                We sent you an email! <br /> <br />
+                Please click the link to verify it.
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
     return (
       <div>
-        <Header />
-        <div style={{ height: 50 }}></div>
-
-        {currentInput === 0 && (
-          <ProviderInput
-            prevDisabled={true}
-            clickPrev={() => this.clickPrev()}
-            clickNext={() => this.clickNext()}
-            title={"What's your escort email?"}
-            subTitle={""}
-            input={
-              <Input
-                id="email-input"
-                style={{ width: 250 }}
-                type="email"
-                placeholder="Email"
-              />
-            }
-          />
-        )}
-
-        {/* {currentInput === 1 && (
-          <div
-            style={{
-              width: "100vw",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: 100,
-            }}
-          >
-            <div style={{ textAlign: "center", width: "30vw" }}>
-              We sent you an email! <br /> <br />
-              Please click the link to verify it.
-            </div>
-          </div>
-        )} */}
-
         {currentInput === 1 && (
           <ProviderInput
             clickPrev={() => this.clickPrev()}
@@ -231,13 +239,9 @@ export default class ProviderSignUp extends Component {
       if (!checkEmail(email)) {
         return;
       }
-      //   this.sendSignInLinkToEmail(email);
+      this.sendSignInLinkToEmail(email);
     } else if (currentInput === 1) {
     }
-
-    this.setState({
-      currentInput: currentInput + 1,
-    });
   }
 
   // Send the sign in link to our email
@@ -245,7 +249,7 @@ export default class ProviderSignUp extends Component {
     var actionCodeSettings = {
       // URL you want to redirect back to. The domain (www.example.com) for this
       // URL must be whitelisted in the Firebase Console.
-      url: "https://escverif.web.app/email?=" + email,
+      url: "https://escora.io/verifyemail?email=" + email,
       // This must be true.
       handleCodeInApp: true,
     };
