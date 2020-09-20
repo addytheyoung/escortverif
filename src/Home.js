@@ -14,7 +14,7 @@ export default class Home extends Component {
       <div>
         <Header />
         <div
-          style={{ paddingLeft: "20vw", paddingRight: "20vw", marginTop: 80 }}
+          style={{ paddingLeft: "20vw", paddingRight: "20vw", marginTop: 120 }}
         >
           <div style={{ width: "30vw" }}>
             <div style={{ fontSize: 32, fontWeight: 500 }}>

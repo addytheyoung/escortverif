@@ -42,35 +42,6 @@ export default class About extends Component {
             >
               <img
                 style={{ width: 50, height: 50 }}
-                src={require("./images/user (1).svg")}
-              />
-
-              <div
-                style={{
-                  fontSize: 18,
-                  fontWeight: 500,
-                  textAlign: "center",
-                  marginTop: 20,
-                }}
-              >
-                Make Account
-              </div>
-              <div style={{ textAlign: "left", marginTop: 10, fontSize: 13 }}>
-                Fill out your profile! The only thing your clients see is your
-                profile picture and name, and that's just to show them you're
-                real.
-              </div>
-            </div>
-            <div
-              style={{
-                width: "18vw",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <img
-                style={{ width: 50, height: 50 }}
                 src={require("./images/sketch.svg")}
               />
               <div
@@ -140,9 +111,38 @@ export default class About extends Component {
                 Get Results
               </div>
               <div style={{ textAlign: "left", marginTop: 10, fontSize: 13 }}>
-                You get results 0-15 minutes after screening. See all the info,
-                any flags, and ratings/reviews from other escorts for that
-                client! (We ONLY have ratings for clients, not you)
+                You get results in about 15 minutes. See all the verified info
+                from the client, as well as ratings/reviews from other Escorts
+                who saw this client.
+              </div>
+            </div>
+            <div
+              style={{
+                width: "18vw",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <img
+                style={{ width: 50, height: 50 }}
+                src={require("./images/star (1).svg")}
+              />
+
+              <div
+                style={{
+                  fontSize: 18,
+                  fontWeight: 500,
+                  textAlign: "center",
+                  marginTop: 20,
+                }}
+              >
+                Client Ratings & Reviews
+              </div>
+              <div style={{ textAlign: "left", marginTop: 10, fontSize: 13 }}>
+                Leave your own anonymous rating/review for the client! Don't
+                worry, on Escora, clients can't rate or review escorts, but you
+                can!
               </div>
             </div>
           </div>
@@ -192,7 +192,8 @@ export default class About extends Component {
               </div>
               <div style={{ textAlign: "left", marginTop: 10, fontSize: 13 }}>
                 An Escort will send you a link you follow, or you can sign up
-                ahead of time right here!
+                ahead of time right here! Her profile on our platform proves
+                she's real and safe.
               </div>
             </div>
             <div
