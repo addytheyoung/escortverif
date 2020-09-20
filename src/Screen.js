@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from "./Header";
 import ProviderInput from "./ProviderInput";
-import { Input, Checkbox } from "@material-ui/core";
+import { Input, Checkbox, Select, MenuItem } from "@material-ui/core";
 import Camera from "react-html5-camera-photo";
 import CropImage from "./CropImage";
 import * as firebase from "firebase";
@@ -16,7 +16,11 @@ export default class Screen extends Component {
 
     this.state = {
       info: "",
-      activeQuestion: 3,
+      firstName: "",
+      lastName: "",
+      ageRange: "Age Range",
+      race: "",
+      activeQuestion: 4,
       deleteItems: [false, false, false, false, false, false],
       activeInput1: "+1",
       activeInput2: "",
@@ -57,6 +61,10 @@ export default class Screen extends Component {
       linkedinProfile,
       activePaystubUri,
       numReferences,
+      firstName,
+      lastName,
+      ageRange,
+      race,
     } = this.state;
     const { profileData } = this.props;
 
@@ -381,6 +389,105 @@ export default class Screen extends Component {
                         </div>
                       );
                     })}
+                  </div>
+                }
+              />
+            </div>
+          )}
+
+          {activeQuestion === 4 && (
+            <div>
+              <ProgressBar currentIndex={4} total={4} />
+              <ProviderInput
+                clickPrev={() => this.clickPrev()}
+                clickNext={() => this.clickNext()}
+                nextDisabled={
+                  firstName === "" ||
+                  lastName === "" ||
+                  ageRange === "Age Range" ||
+                  race === ""
+                }
+                title={"About"}
+                subTitle={
+                  "This ones pretty easy. Remember, only escorts you share your profie with can see any of this, and you can choose to not save it by checking the box below."
+                }
+                input={
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <Input
+                      value={firstName}
+                      onChange={(word) =>
+                        this.setState({
+                          firstName: word.target.value,
+                        })
+                      }
+                      placeholder="First name"
+                      style={{ width: 250 }}
+                    />
+                    <div style={{ height: 10 }} />
+                    <Input
+                      value={lastName}
+                      onChange={(word) =>
+                        this.setState({
+                          lastName: word.target.value,
+                        })
+                      }
+                      placeholder="Last name"
+                      style={{ width: 250 }}
+                    />
+                    <div style={{ height: 10 }} />
+                    <Select
+                      onChange={(val) =>
+                        this.setState({
+                          ageRange: val.target.value,
+                        })
+                      }
+                      value={ageRange}
+                      placeholder="Age Range"
+                      style={{
+                        width: 250,
+                        color: ageRange == "Age Range" ? "#a1a1a1" : "#000000",
+                        fontWeight: 400,
+                      }}
+                    >
+                      <MenuItem value={"Age Range"}>Age range</MenuItem>
+                      <MenuItem value={"18-25"}>18-25</MenuItem>
+                      <MenuItem value={"26-30"}>26-30</MenuItem>
+                      <MenuItem value={"31-35"}>31-35</MenuItem>
+                      <MenuItem value={"36-40"}>36-40</MenuItem>
+                      <MenuItem value={"41-45"}>41-45</MenuItem>
+                      <MenuItem value={"46-50"}>46-50</MenuItem>
+                      <MenuItem value={"51-55"}>51-55</MenuItem>
+                      <MenuItem value={"56-60"}>56-60</MenuItem>
+                      <MenuItem value={"60+"}>60+</MenuItem>
+
+                      <MenuItem />
+                    </Select>
+                    <div style={{ height: 10 }} />
+                    <Input
+                      value={race}
+                      onChange={(word) =>
+                        this.setState({
+                          race: word.target.value,
+                        })
+                      }
+                      placeholder="Race"
+                      style={{ width: 250 }}
+                    />
+                    <div style={{ height: 10 }} />
+
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Checkbox
+                        onChange={() => this.updateCheckedBoxes(0)}
+                        checked={deleteItems[0]}
+                      ></Checkbox>
+                      <div>I want this deleted after Lisa views it.</div>
+                    </div>
                   </div>
                 }
               />
@@ -727,25 +834,36 @@ export default class Screen extends Component {
   }
 
   async pullProviderData() {
-    const id = window.location.pathname.substring(
-      1,
-      window.location.pathname.length
-    );
-    const provider = await firebase
-      .firestore()
-      .collection("Providers")
-      .where("escora_id", "==", id)
-      .get();
+    const path = window.location.pathname;
+    if (path === "/getstartedclient") {
+      // Get the static, default profile
+      const provider = await firebase
+        .firestore()
+        .collection("Providers")
+        .where("escora_id", "==", "lisali96")
+        .get();
 
-    if (provider.empty) {
-      // Render error page
-      this.setState({
-        errorPage: true,
-      });
-    } else {
       this.setState({
         providerData: provider.docs[0].data(),
       });
+    } else {
+      const id = path.substring(1, path.length);
+      const provider = await firebase
+        .firestore()
+        .collection("Providers")
+        .where("escora_id", "==", id)
+        .get();
+
+      if (provider.empty) {
+        // Render error page
+        this.setState({
+          errorPage: true,
+        });
+      } else {
+        this.setState({
+          providerData: provider.docs[0].data(),
+        });
+      }
     }
   }
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./css/Header.css";
+import * as firebase from "firebase";
 
 export default class Header extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ export default class Header extends Component {
   }
 
   render() {
-    const { openPage, homePage } = this.props;
+    const signedIn = !!firebase.auth().currentUser;
     return (
       <div
         style={{
@@ -29,8 +30,7 @@ export default class Header extends Component {
       >
         <div
           onClick={function () {
-            window.history.replaceState(null, null, "/");
-            openPage("home");
+            window.location.href = "/";
           }}
           id="header-link"
           style={{
@@ -61,8 +61,7 @@ export default class Header extends Component {
         >
           <div
             onClick={function () {
-              window.history.replaceState(null, null, "/about");
-              openPage("about");
+              window.location.href = "/about";
             }}
             id="header-link"
             style={{
@@ -80,8 +79,7 @@ export default class Header extends Component {
 
           <div
             onClick={function () {
-              window.history.replaceState(null, null, "/profile");
-              openPage("profile");
+              window.location.href = "profile";
             }}
             id="header-link"
             style={{
@@ -94,7 +92,12 @@ export default class Header extends Component {
               style={{ height: 25, width: 25, marginLeft: 20 }}
               src={require("./images/user.svg")}
             />
-            <div style={{ marginLeft: 5, fontSize: 14 }}>Profile</div>
+            {signedIn && (
+              <div style={{ marginLeft: 5, fontSize: 14 }}>Profile</div>
+            )}
+            {!signedIn && (
+              <div style={{ marginLeft: 5, fontSize: 14 }}>Sign in</div>
+            )}
           </div>
         </div>
       </div>

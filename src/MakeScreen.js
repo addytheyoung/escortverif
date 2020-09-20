@@ -115,6 +115,12 @@ export default class MakeScreen extends Component {
               "Optional references outside of Escora. This makes for easy client picking if they have references you know.",
               16
             )}
+
+            {this.mainCheckboxComp(
+              ["STD's", "HIV", "Herpes", "Chlamydia", "Ghonnorhea"],
+              "We'll have this soon.",
+              17
+            )}
           </div>
 
           <div

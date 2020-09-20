@@ -21,29 +21,53 @@ export default class Home extends Component {
               Escorts: Screening clients has never been easier
             </div>
             <div style={{ marginTop: 20 }}>
-              Just send your unique Fine link to the client, <br /> and we
+              Just send your unique Escora link to the client, <br /> and we
               handle the rest.
               {/* <br /> <br />
               Customize your screening process to fit what YOU <br /> need from
               your clients. */}
             </div>
-            <div
-              onClick={() => (window.location.href = "/getstarted")}
-              id="get-started-button"
-              style={{
-                backgroundColor: "rgb(230, 30, 77)",
-                width: 150,
-                padding: 10,
-                color: "white",
-                fontWeight: "600",
-                borderRadius: 5,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                marginTop: 30,
-              }}
-            >
-              Get started
+
+            <div style={{ display: "flex" }}>
+              <div
+                onClick={() => (window.location.href = "/getstartedclient")}
+                id="get-started-button"
+                style={{
+                  backgroundColor: "#008489",
+                  width: 150,
+                  padding: 10,
+                  color: "white",
+                  fontWeight: "600",
+                  borderRadius: 5,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 30,
+                }}
+              >
+                I'm a client
+              </div>
+
+              <div style={{ width: 15 }}></div>
+
+              <div
+                onClick={() => (window.location.href = "/getstarted")}
+                id="get-started-button"
+                style={{
+                  backgroundColor: "rgb(230, 30, 77)",
+                  width: 150,
+                  padding: 10,
+                  color: "white",
+                  fontWeight: "600",
+                  borderRadius: 5,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: 30,
+                }}
+              >
+                I'm an escort
+              </div>
             </div>
           </div>
 
@@ -78,8 +102,9 @@ export default class Home extends Component {
                 Custom Screening
               </div>
               <div style={{ textAlign: "center", marginTop: 10, fontSize: 12 }}>
-                Customize info you want verified from your clients! When a new
-                client comes, just send them your unqiue Fine link.
+                Customize the info you want from your clients! When a new client
+                comes, just send them your unqiue Escora link, and we handle the
+                rest.
               </div>
             </div>
             <div
@@ -105,8 +130,9 @@ export default class Home extends Component {
                 Client Comfort
               </div>
               <div style={{ textAlign: "center", marginTop: 10, fontSize: 12 }}>
-                We don't store unwanted client info, we're easy (and free) to
-                use, and using us guarentees the client that you're real.
+                For your clients, Escora is simple and free to use. We're
+                obsessed with privacy, and using us guarentees the client you're
+                real.
               </div>
             </div>
             <div
@@ -132,8 +158,8 @@ export default class Home extends Component {
                 Quick results
               </div>
               <div style={{ textAlign: "center", marginTop: 10, fontSize: 12 }}>
-                Within 15 minutes, we send you our calculated safety indicator
-                for the client, all info they provided, and what we verified!
+                Within 0-15 minutes, we send you the clients full profile, with
+                what we verified, and ratings of the client from other escorts!
               </div>
             </div>
           </div>

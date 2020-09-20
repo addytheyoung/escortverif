@@ -8,6 +8,9 @@ import MakeScreen from "./MakeScreen";
 import Screen from "./Screen";
 import ErrorPage from "./ErrorPage";
 import LoadingPage from "./LoadingPage";
+import Profile from "./Profile";
+import SignInPage from "./SignInPage";
+import About from "./About";
 
 export default class RenderRoutes extends Component {
   constructor(props) {
@@ -36,7 +39,8 @@ export default class RenderRoutes extends Component {
           {signedIn && (
             <Switch>
               <Route path="/" exact={true} render={() => <Home />} />
-
+              <Route path="/about" exact={true} render={() => <About />} />
+              <Route path="/profile" exact={true} render={() => <Profile />} />
               <Route
                 path={"/makescreen"}
                 exact={true}
@@ -54,11 +58,22 @@ export default class RenderRoutes extends Component {
           {!signedIn && (
             <Switch>
               <Route path="/" exact={true} render={() => <Home />} />
-
+              <Route path="/about" exact={true} render={() => <About />} />
+              <Route
+                path="/profile"
+                exact={true}
+                render={() => <SignInPage />}
+              />
               <Route
                 path="/getstarted"
                 exact={true}
                 render={() => <ProviderSignUp />}
+              />
+
+              <Route
+                path="/getstartedclient"
+                exact={true}
+                render={() => <Screen />}
               />
 
               <Route
