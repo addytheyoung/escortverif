@@ -14,7 +14,7 @@ export default class Home extends Component {
       <div>
         <Header />
         <div
-          style={{ paddingLeft: "20vw", paddingRight: "20vw", marginTop: 120 }}
+          style={{ paddingLeft: "20vw", paddingRight: "20vw", marginTop: 140 }}
         >
           <div style={{ width: "30vw" }}>
             <div style={{ fontSize: 36, fontWeight: 500 }}>
@@ -105,7 +105,7 @@ export default class Home extends Component {
               >
                 Custom Screening
               </div>
-              <div style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}>
+              <div style={{ textAlign: "left", marginTop: 10, fontSize: 16 }}>
                 Customize the info you want from your clients! When a new client
                 comes, just send them your unqiue Escora link, and we handle the
                 rest.
@@ -133,7 +133,7 @@ export default class Home extends Component {
               >
                 Client Comfort
               </div>
-              <div style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}>
+              <div style={{ textAlign: "left", marginTop: 10, fontSize: 16 }}>
                 For your clients, Escora is simple and free to use. We're
                 obsessed with privacy, and using us guarentees the client you're
                 real.
@@ -161,7 +161,7 @@ export default class Home extends Component {
               >
                 Quick results
               </div>
-              <div style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}>
+              <div style={{ textAlign: "left", marginTop: 10, fontSize: 16 }}>
                 Within 0-15 minutes, we send you the clients full profile, with
                 what we verified, and ratings of the client from other escorts!
               </div>

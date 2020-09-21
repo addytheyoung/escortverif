@@ -38,15 +38,19 @@ export default class ProviderInput extends Component {
             <div
               onClick={() => this.prev()}
               style={{
-                padding: 10,
-                paddingLeft: 20,
-                paddingRight: 20,
+                padding: 15,
+                paddingLeft: 25,
+                paddingRight: 25,
                 backgroundColor: "#f1f1f1",
                 opacity: prevDisabled ? 0.4 : 1,
                 color: "black",
-                fontWeight: 500,
+                fontWeight: 600,
                 cursor: prevDisabled ? "inherit" : "pointer",
                 borderRadius: 5,
+                fontSize: 18,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               Prev
@@ -55,15 +59,19 @@ export default class ProviderInput extends Component {
             <div
               onClick={() => this.next()}
               style={{
-                padding: 10,
-                paddingLeft: 20,
-                paddingRight: 20,
+                padding: 15,
+                paddingLeft: 25,
+                paddingRight: 25,
                 backgroundColor: "rgb(230, 30, 77)",
                 opacity: nextDisabled ? 0.4 : 1,
                 color: "white",
-                fontWeight: 500,
+                fontWeight: 600,
                 cursor: nextDisabled ? "inherit" : "pointer",
                 borderRadius: 5,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                fontSize: 18,
               }}
             >
               Next

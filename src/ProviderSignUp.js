@@ -40,7 +40,7 @@ export default class ProviderSignUp extends Component {
               input={
                 <Input
                   id="email-input"
-                  style={{ width: 250 }}
+                  style={{ width: 300, fontSize: 18 }}
                   type="email"
                   placeholder="Email"
                 />
