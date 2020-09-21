@@ -20,7 +20,7 @@ export default class Screen extends Component {
       lastName: "",
       ageRange: "Age Range",
       race: "",
-      activeQuestion: 4,
+      activeQuestion: 0,
       deleteItems: [false, false, false, false, false, false],
       activeInput1: "+1",
       activeInput2: "",
@@ -76,11 +76,13 @@ export default class Screen extends Component {
           <LoadingPage />
         </div>
       );
-    } else if (!profileData) {
+    } else if (profileData) {
       // Signed in!
       return (
         <div>
           <Header />
+
+          <div style={{ height: 120 }}></div>
 
           <div>
             {info !== "" && (
@@ -135,14 +137,25 @@ export default class Screen extends Component {
                       ></Camera>
                     </div>
 
-                    {activePosePictureUri !== "" && (
+                    <div style={{ display: "flex" }}>
                       <div>
                         <img
                           style={{ width: 260 }}
-                          src={activePosePictureUri}
+                          src={
+                            "https://miro.medium.com/max/1440/0*BWdxsqjS7nx29soF"
+                          }
                         />{" "}
                       </div>
-                    )}
+
+                      {activePosePictureUri !== "" && (
+                        <div>
+                          <img
+                            style={{ width: 260 }}
+                            src={activePosePictureUri}
+                          />{" "}
+                        </div>
+                      )}
+                    </div>
                     <div
                       style={{
                         display: "flex",
@@ -154,7 +167,9 @@ export default class Screen extends Component {
                         onChange={() => this.updateCheckedBoxes(0)}
                         checked={deleteItems[0]}
                       ></Checkbox>
-                      <div>I want this deleted after Lisa views it.</div>
+                      <div style={{ fontSize: 18 }}>
+                        I want this deleted after Lisa views it.
+                      </div>
                     </div>
                   </div>
                 }
@@ -507,6 +522,7 @@ export default class Screen extends Component {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              marginTop: 120,
             }}
           >
             {activeQuestion === 0 && (
@@ -533,16 +549,15 @@ export default class Screen extends Component {
                   <div style={{ width: "25vw" }}>
                     <div
                       style={{
-                        fontSize: 24,
+                        fontSize: 28,
                         marginBottom: 30,
+                        fontWeight: 500,
                       }}
                     >
                       {"Secure, safe, & private client screen for " +
-                        providerData.first_name +
-                        " " +
-                        providerData.last_name}
+                        providerData.first_name}
                     </div>
-                    <div style={{ fontSize: 12 }}>
+                    <div style={{ fontSize: 16 }}>
                       {"We just need some info to make sure " +
                         providerData.first_name +
                         " is safe with you."}
@@ -558,7 +573,14 @@ export default class Screen extends Component {
                   </div>
                 </div>
 
-                <div style={{ fontSize: 20, marginTop: 60 }}>
+                <div
+                  style={{
+                    fontSize: 24,
+                    marginTop: 60,
+                    fontWeight: 600,
+                    color: "#008489",
+                  }}
+                >
                   Satisfied? Let's get started!
                 </div>
                 <div
@@ -566,7 +588,9 @@ export default class Screen extends Component {
                   id="get-started-button"
                   style={{
                     padding: 10,
-                    width: 100,
+                    width: 150,
+                    height: 40,
+                    fontSize: 18,
                     backgroundColor: "rgb(230, 30, 77)",
                     borderRadius: 5,
                     display: "flex",
@@ -596,8 +620,9 @@ export default class Screen extends Component {
                 <div
                   style={{
                     textAlign: "center",
-                    fontSize: 22,
+                    fontSize: 28,
                     marginBottom: 20,
+                    fontWeight: 500,
                   }}
                 >
                   What's your phone number?
@@ -612,8 +637,8 @@ export default class Screen extends Component {
                       : null
                   }
                   type="text"
-                  style={{ width: 250 }}
-                  placeholder="Phone "
+                  style={{ width: 300, fontSize: 22 }}
+                  placeholder="Phone"
                 />
 
                 <div ref={(ref) => (this.recaptcha = ref)}></div>
@@ -623,7 +648,8 @@ export default class Screen extends Component {
                   onClick={() => this.sendText()}
                   style={{
                     padding: 10,
-                    width: 100,
+                    height: 30,
+                    width: 150,
                     backgroundColor: "rgb(230, 30, 77)",
                     borderRadius: 5,
                     display: "flex",
@@ -633,9 +659,10 @@ export default class Screen extends Component {
                     fontWeight: 600,
                     textAlign: "center",
                     marginTop: 30,
+                    fontSize: 18,
                   }}
                 >
-                  SEND
+                  SEND CODE
                 </div>
               </div>
             )}
@@ -653,8 +680,9 @@ export default class Screen extends Component {
                 <div
                   style={{
                     textAlign: "center",
-                    fontSize: 22,
+                    fontSize: 26,
                     marginBottom: 20,
+                    fontWeight: 500,
                   }}
                 >
                   What's the code?
@@ -667,7 +695,7 @@ export default class Screen extends Component {
                     })
                   }
                   type="text"
-                  style={{ width: 250 }}
+                  style={{ width: 300, fontSize: 22 }}
                   placeholder="Code"
                 />
 
@@ -676,7 +704,8 @@ export default class Screen extends Component {
                   onClick={() => this.verifyText()}
                   style={{
                     padding: 10,
-                    width: 100,
+                    height: 30,
+                    width: 150,
                     backgroundColor: "rgb(230, 30, 77)",
                     borderRadius: 5,
                     display: "flex",
@@ -686,6 +715,7 @@ export default class Screen extends Component {
                     fontWeight: 600,
                     textAlign: "center",
                     marginTop: 30,
+                    fontSize: 18,
                   }}
                 >
                   SUBMIT
@@ -770,14 +800,15 @@ export default class Screen extends Component {
         });
       })
       .catch(function (error) {
-        alert(error);
+        alert(error.message);
         // Error; SMS not sent
         // ...
       });
   }
 
   verifyText() {
-    var code = this.state.activeInput2;
+    const { activeInput1, activeInput2 } = this.state;
+    var code = activeInput2;
     window.confirmationResult
       .confirm(code)
       .then(function (result) {
@@ -805,7 +836,7 @@ export default class Screen extends Component {
               job_title: "",
               last_name: "",
               linkedin: "",
-              phone: this.state.activeInput1,
+              phone: activeInput1,
               picture: "",
               race: "",
               references: [],
@@ -818,10 +849,12 @@ export default class Screen extends Component {
               alert(e.message);
               console.log(e.message);
             });
+        } else {
+          window.location.reload();
         }
       })
       .catch(function (error) {
-        alert(error.message);
+        alert("Wrong code!");
         console.log(error.message);
         // User couldn't sign in (bad verification code?)
         // ...
@@ -899,9 +932,8 @@ export default class Screen extends Component {
   componentDidUpdate() {
     if (
       this.state.activeQuestion === 1 &&
-      !window.recaptchaVerifier &&
+      !window.recaptchaVerifier
       // !firebase.auth().currentUser
-      false
     ) {
       window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
         this.recaptcha,
