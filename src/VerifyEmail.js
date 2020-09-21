@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import * as firebase from "firebase";
+import LoadingPage from "./LoadingPage";
 
 export default class VerifyEmail extends Component {
   constructor(props) {
@@ -22,25 +23,58 @@ export default class VerifyEmail extends Component {
         // attacks, ask the user to provide the associated email again. For example:
         email = window.prompt("Please provide your email for confirmation");
       }
-      alert(email);
       // The client SDK will parse the code from the link for you.
-      //   firebase
-      //     .auth()
-      //     .signInWithEmailLink(email, window.location.href)
-      //     .then(function (result) {
-      //       // Clear email from storage.
-      //       window.localStorage.removeItem("emailForSignIn");
-      //       // You can access the new user via result.user
-      //       // Additional user info profile not available via:
-      //       // result.additionalUserInfo.profile == null
-      //       // You can check if the user is new or existing:
-      //       // result.additionalUserInfo.isNewUser
-      //     })
-      //     .catch(function (error) {
-      //       // Some error occurred, you can inspect the code: error.code
-      //       // Common errors could be invalid email and invalid or expired OTPs.
-      //     });
+      firebase
+        .auth()
+        .signInWithEmailLink(email, window.location.href)
+        .then(function (result) {
+          localStorage.setItem("client", "false");
+          localStorage.setItem("provider", "true");
+          if (result.additionalUserInfo.isNewUser) {
+            firebase
+              .firestore()
+              .collection("Providers")
+              .doc(result.user.uid)
+              .set({
+                client_address: false,
+                client_age: false,
+                client_assult_charges: false,
+                client_background: false,
+                client_company: false,
+                client_escora_ratings: true,
+                client_escora_references: true,
+                client_facebook: false,
+                client_felonies: false,
+                client_income: false,
+                client_job: false,
+                client_linkedin: false,
+                client_name: false,
+                client_phone: true,
+                client_references: false,
+                client_stds: [false, false, false, false],
+                client_twitter: false,
+                escora_id: "",
+                first_name: "",
+                last_name: "",
+                picture: "",
+                verify_picture: "",
+              })
+              .then(() => {
+                window.location.href = "/getstarted";
+              })
+              .catch((e) => {
+                alert(e.message);
+                console.log(e.message);
+              });
+          }
+        })
+        .catch(function (error) {
+          alert(error.message);
+          console.log(error.message);
+          // Some error occurred, you can inspect the code: error.code
+          // Common errors could be invalid email and invalid or expired OTPs.
+        });
     }
-    return <div></div>;
+    return <LoadingPage />;
   }
 }

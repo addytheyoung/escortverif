@@ -25,8 +25,7 @@ export default class ProviderSignUp extends Component {
     const { currentInput, activePictureUri, activePosePictureUri } = this.state;
     const { profileData } = this.props;
 
-    if (profileData) {
-    } else {
+    if (!profileData) {
       return (
         <div>
           <Header />
@@ -36,7 +35,7 @@ export default class ProviderSignUp extends Component {
               prevDisabled={true}
               clickPrev={() => this.clickPrev()}
               clickNext={() => this.clickNext()}
-              title={"What's your escort email?"}
+              title={"What's your email?"}
               subTitle={""}
               input={
                 <Input
@@ -67,80 +66,36 @@ export default class ProviderSignUp extends Component {
           )}
         </div>
       );
-    }
-
-    return (
-      <div>
-        {currentInput === 1 && (
-          <ProviderInput
-            clickPrev={() => this.clickPrev()}
-            clickNext={() => this.clickNext()}
-            title={"What escort name do you go by?"}
-            subTitle={""}
-            input={
-              <Input
-                id="escort-name-input"
-                style={{ width: 250 }}
-                type="text"
-                placeholder="Escort name"
-              />
-            }
-          />
-        )}
-
-        {currentInput === 2 && (
-          <ProviderInput
-            clickPrev={() => this.clickPrev()}
-            clickNext={() => this.clickNext()}
-            nextDisabled={activePictureUri === ""}
-            title={"Please upload a picture of you"}
-            subTitle={
-              "Blurred faces are fine. This is just so your clients can recognize you. Nobody except your clients can see this picture."
-            }
-            input={
-              <div>
+    } else {
+      return (
+        <div>
+          {currentInput === 1 && (
+            <ProviderInput
+              clickPrev={() => this.clickPrev()}
+              clickNext={() => this.clickNext()}
+              title={"What escort name do you go by?"}
+              subTitle={""}
+              input={
                 <Input
-                  onChangeCapture={() => this.uploadedImage()}
-                  id="pic-input"
+                  id="escort-name-input"
                   style={{ width: 250 }}
-                  type="file"
+                  type="text"
+                  placeholder="Escort name"
                 />
+              }
+            />
+          )}
 
-                <CropImage
-                  setCroppedImg={(croppedImgUrl) =>
-                    this.setCroppedImg(croppedImgUrl)
-                  }
-                  picture={activePictureUri}
-                />
-
-                {/* {activePictureUri !== "" && (
-                  <div>
-                    <img style={{ width: 220 }} src={activePictureUri} />
-                  </div>
-                )} */}
-              </div>
-            }
-          />
-        )}
-
-        {currentInput === 3 && (
-          <ProviderInput
-            clickPrev={() => this.clickPrev()}
-            clickNext={() => this.clickNext()}
-            nextDisabled={activePosePictureUri === ""}
-            title={"Please copy the pose and upload"}
-            subTitle={
-              "Blurred faces are fine. This is only used for our verification, and is deleted right after we verify you are real."
-            }
-            input={
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
+          {currentInput === 2 && (
+            <ProviderInput
+              clickPrev={() => this.clickPrev()}
+              clickNext={() => this.clickNext()}
+              nextDisabled={activePictureUri === ""}
+              title={"Please upload a picture of you"}
+              subTitle={
+                "Blurred faces are fine. This is just so your clients can recognize you. Nobody except your clients can see this picture."
+              }
+              input={
                 <div>
                   <Input
                     onChangeCapture={() => this.uploadedImage()}
@@ -148,45 +103,89 @@ export default class ProviderSignUp extends Component {
                     style={{ width: 250 }}
                     type="file"
                   />
-                </div>
-                <div>OR</div>
-                <div id="camera">
-                  <Camera
-                    id="camera"
-                    onCameraStop={() => console.log("")}
-                    oncameraError={() => console.log("")}
-                    // isImageMirror={false}
-                    // idealFacingMode={"environment"}
-                    onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)}
-                  ></Camera>
-                </div>
 
-                {activePosePictureUri !== "" && (
+                  <CropImage
+                    setCroppedImg={(croppedImgUrl) =>
+                      this.setCroppedImg(croppedImgUrl)
+                    }
+                    picture={activePictureUri}
+                  />
+
+                  {/* {activePictureUri !== "" && (
                   <div>
-                    <img style={{ width: 220 }} src={activePosePictureUri} />{" "}
+                    <img style={{ width: 220 }} src={activePictureUri} />
                   </div>
-                )}
-              </div>
-            }
-          />
-        )}
+                )} */}
+                </div>
+              }
+            />
+          )}
 
-        <div
-          style={{
-            width: "100vw",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: 100,
-          }}
-        >
-          <div style={{ textAlign: "center", width: "30vw", fontSize: 12 }}>
-            We don't share this information with anyone. We use this just to
-            make sure you're real, and we take as little info as possible.
+          {currentInput === 3 && (
+            <ProviderInput
+              clickPrev={() => this.clickPrev()}
+              clickNext={() => this.clickNext()}
+              nextDisabled={activePosePictureUri === ""}
+              title={"Please copy the pose and upload"}
+              subTitle={
+                "Blurred faces are fine. This is only used for our verification, and is deleted right after we verify you are real."
+              }
+              input={
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div>
+                    <Input
+                      onChangeCapture={() => this.uploadedImage()}
+                      id="pic-input"
+                      style={{ width: 250 }}
+                      type="file"
+                    />
+                  </div>
+                  <div>OR</div>
+                  <div id="camera">
+                    <Camera
+                      id="camera"
+                      onCameraStop={() => console.log("")}
+                      oncameraError={() => console.log("")}
+                      // isImageMirror={false}
+                      // idealFacingMode={"environment"}
+                      onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)}
+                    ></Camera>
+                  </div>
+
+                  {activePosePictureUri !== "" && (
+                    <div>
+                      <img style={{ width: 220 }} src={activePosePictureUri} />{" "}
+                    </div>
+                  )}
+                </div>
+              }
+            />
+          )}
+
+          <div
+            style={{
+              width: "100vw",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 100,
+            }}
+          >
+            <div style={{ textAlign: "center", width: "30vw", fontSize: 12 }}>
+              We don't share this information with anyone. We use this just to
+              make sure you're real, and we take as little info as possible.
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 
   uploadedImage() {

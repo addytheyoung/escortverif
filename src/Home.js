@@ -17,10 +17,10 @@ export default class Home extends Component {
           style={{ paddingLeft: "20vw", paddingRight: "20vw", marginTop: 120 }}
         >
           <div style={{ width: "30vw" }}>
-            <div style={{ fontSize: 32, fontWeight: 500 }}>
+            <div style={{ fontSize: 36, fontWeight: 500 }}>
               Escorts: Screening clients has never been easier
             </div>
-            <div style={{ marginTop: 20 }}>
+            <div style={{ marginTop: 20, fontSize: 18 }}>
               Just send your unique Escora link to the client, <br /> and we
               handle the rest.
               {/* <br /> <br />
@@ -34,7 +34,7 @@ export default class Home extends Component {
                 id="get-started-button"
                 style={{
                   backgroundColor: "#008489",
-                  width: 150,
+                  width: 180,
                   padding: 10,
                   color: "white",
                   fontWeight: "600",
@@ -43,6 +43,8 @@ export default class Home extends Component {
                   justifyContent: "center",
                   alignItems: "center",
                   marginTop: 30,
+                  fontSize: 20,
+                  height: 40,
                 }}
               >
                 I'm a client
@@ -55,7 +57,7 @@ export default class Home extends Component {
                 id="get-started-button"
                 style={{
                   backgroundColor: "rgb(230, 30, 77)",
-                  width: 150,
+                  width: 180,
                   padding: 10,
                   color: "white",
                   fontWeight: "600",
@@ -64,6 +66,8 @@ export default class Home extends Component {
                   justifyContent: "center",
                   alignItems: "center",
                   marginTop: 30,
+                  fontSize: 20,
+                  height: 40,
                 }}
               >
                 I'm an escort
@@ -93,7 +97,7 @@ export default class Home extends Component {
 
               <div
                 style={{
-                  fontSize: 18,
+                  fontSize: 22,
                   fontWeight: 500,
                   textAlign: "center",
                   marginTop: 20,
@@ -101,7 +105,7 @@ export default class Home extends Component {
               >
                 Custom Screening
               </div>
-              <div style={{ textAlign: "center", marginTop: 10, fontSize: 12 }}>
+              <div style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}>
                 Customize the info you want from your clients! When a new client
                 comes, just send them your unqiue Escora link, and we handle the
                 rest.
@@ -121,7 +125,7 @@ export default class Home extends Component {
               />
               <div
                 style={{
-                  fontSize: 18,
+                  fontSize: 22,
                   fontWeight: 500,
                   textAlign: "center",
                   marginTop: 20,
@@ -129,7 +133,7 @@ export default class Home extends Component {
               >
                 Client Comfort
               </div>
-              <div style={{ textAlign: "center", marginTop: 10, fontSize: 12 }}>
+              <div style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}>
                 For your clients, Escora is simple and free to use. We're
                 obsessed with privacy, and using us guarentees the client you're
                 real.
@@ -149,7 +153,7 @@ export default class Home extends Component {
               />
               <div
                 style={{
-                  fontSize: 18,
+                  fontSize: 22,
                   fontWeight: 500,
                   textAlign: "center",
                   marginTop: 20,
@@ -157,7 +161,7 @@ export default class Home extends Component {
               >
                 Quick results
               </div>
-              <div style={{ textAlign: "center", marginTop: 10, fontSize: 12 }}>
+              <div style={{ textAlign: "center", marginTop: 10, fontSize: 16 }}>
                 Within 0-15 minutes, we send you the clients full profile, with
                 what we verified, and ratings of the client from other escorts!
               </div>

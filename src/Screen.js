@@ -782,44 +782,47 @@ export default class Screen extends Component {
       .confirm(code)
       .then(function (result) {
         // Signed in! Set local storage, make a profile, and reload the page to begin.
-        console.log(result);
         localStorage.setItem("client", "true");
         localStorage.setItem("provider", "false");
-        firebase
-          .firestore()
-          .collection("Clients")
-          .doc(firebase.auth().currentUser.uid)
-          .set({
-            address: "",
-            age: "",
-            assult_charges: "",
-            background: "",
-            employer: "",
-            escora_ratings: [],
-            escora_reviews: [],
-            facebook: "",
-            felonies: "",
-            first_name: "Andrew",
-            height: "",
-            income: "",
-            job_title: "",
-            last_name: "",
-            linkedin: "",
-            phone: this.state.activeInput1,
-            picture: "",
-            race: "",
-            references: [],
-            twitter: "",
-          })
-          .then(() => {
-            window.location.reload();
-          })
-          .catch((e) => {
-            console.log(e.message);
-          });
+        if (result.additionalUserInfo.isNewUser) {
+          firebase
+            .firestore()
+            .collection("Clients")
+            .doc(result.user.uid)
+            .set({
+              address: "",
+              age: "",
+              assult_charges: "",
+              background: "",
+              employer: "",
+              escora_ratings: [],
+              escora_reviews: [],
+              facebook: "",
+              felonies: "",
+              first_name: "Andrew",
+              height: "",
+              income: "",
+              job_title: "",
+              last_name: "",
+              linkedin: "",
+              phone: this.state.activeInput1,
+              picture: "",
+              race: "",
+              references: [],
+              twitter: "",
+            })
+            .then(() => {
+              window.location.reload();
+            })
+            .catch((e) => {
+              alert(e.message);
+              console.log(e.message);
+            });
+        }
       })
       .catch(function (error) {
-        alert(error);
+        alert(error.message);
+        console.log(error.message);
         // User couldn't sign in (bad verification code?)
         // ...
       });

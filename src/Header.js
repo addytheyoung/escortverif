@@ -17,7 +17,7 @@ export default class Header extends Component {
     return (
       <div
         style={{
-          height: 60,
+          height: 80,
           width: "100vw",
           backgroundColor: "#ffffff",
           borderBottomStyle: "solid",
@@ -45,9 +45,9 @@ export default class Header extends Component {
           <div style={{ width: margin ? [margin] : "20vw" }}></div>
           <img
             src={require("./images/butterfly.svg")}
-            style={{ width: 50, height: 50 }}
+            style={{ width: 70, height: 70 }}
           ></img>
-          <div style={{ marginLeft: 10 }}>Escora</div>
+          <div style={{ marginLeft: 10, fontSize: 20 }}>Escora</div>
         </div>
         <div
           style={{
@@ -75,9 +75,9 @@ export default class Header extends Component {
           >
             <img
               src={require("./images/info.svg")}
-              style={{ height: 25, width: 25 }}
+              style={{ height: 35, width: 35 }}
             />
-            <div style={{ marginLeft: 5, fontSize: 14 }}>About</div>
+            <div style={{ marginLeft: 5, fontSize: 18 }}>About</div>
           </div>
 
           <div
@@ -92,14 +92,14 @@ export default class Header extends Component {
             }}
           >
             <img
-              style={{ height: 25, width: 25, marginLeft: 20 }}
+              style={{ height: 35, width: 35, marginLeft: 20 }}
               src={require("./images/user.svg")}
             />
             {signedIn && (
-              <div style={{ marginLeft: 5, fontSize: 14 }}>Profile</div>
+              <div style={{ marginLeft: 5, fontSize: 18 }}>Profile</div>
             )}
             {!signedIn && (
-              <div style={{ marginLeft: 5, fontSize: 14 }}>Sign in</div>
+              <div style={{ marginLeft: 5, fontSize: 18 }}>Sign in</div>
             )}
           </div>
         </div>
