@@ -98,6 +98,7 @@ export default class CropTest extends PureComponent {
   render() {
     const picture = this.props.picture;
     const { crop, croppedImageUrl, src } = this.state;
+    const { showCroppedImage, showOriginalImage } = this.props;
     const screenWidth = window.innerWidth;
 
     return (
@@ -110,20 +111,23 @@ export default class CropTest extends PureComponent {
           alignItems: "center",
         }}
       >
-        <ReactCrop
-          src={picture}
-          crop={crop}
-          ruleOfThirds
-          circularCrop={true}
-          style={{ maxWidth: "30vw" }}
-          onImageLoaded={this.onImageLoaded}
-          onComplete={this.onCropComplete}
-          onChange={this.onCropChange}
-        />
+        {showOriginalImage && (
+          <ReactCrop
+            src={picture}
+            crop={crop}
+            ruleOfThirds
+            circularCrop={true}
+            // style={{ height: "30vh" }}
+            imageStyle={{ maxHeight: "40vh" }}
+            onImageLoaded={this.onImageLoaded}
+            onComplete={this.onCropComplete}
+            onChange={this.onCropChange}
+          />
+        )}
 
         <div style={{ width: 30, height: 30 }}></div>
 
-        {croppedImageUrl && (
+        {croppedImageUrl && showCroppedImage && (
           <img
             alt="Crop"
             style={{

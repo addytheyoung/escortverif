@@ -29,6 +29,7 @@ export default class Header extends Component {
           alignItems: "center",
           position: "fixed",
           top: 0,
+          zIndex: 999,
         }}
       >
         <div

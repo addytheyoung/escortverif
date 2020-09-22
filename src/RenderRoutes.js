@@ -63,6 +63,11 @@ export default class RenderRoutes extends Component {
 
           {!signedIn && (
             <Switch>
+              <Route
+                path={"/makescreen"}
+                exact={true}
+                render={() => <MakeScreen />}
+              />
               <Route path="/" exact={true} render={() => <Home />} />
               <Route path="/about" exact={true} render={() => <About />} />
               <Route

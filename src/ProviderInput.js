@@ -22,10 +22,10 @@ export default class ProviderInput extends Component {
             flexDirection: "column",
           }}
         >
-          <div style={{ fontSize: 26, fontWeight: 500 }}>{title}</div>
+          <div style={{ fontSize: 28, fontWeight: 500 }}>{title}</div>
           <div
             style={{
-              marginTop: 15,
+              marginTop: 20,
               fontSize: 16,
               width: "30vw",
               textAlign: "center",

@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import Header from "./Header";
 import { Checkbox } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import { green } from "@material-ui/core/colors";
+import { createMuiTheme } from "@material-ui/core/styles";
 
 export default class MakeScreen extends Component {
+  counter = -1;
   constructor(props) {
     super(props);
 
@@ -10,18 +14,18 @@ export default class MakeScreen extends Component {
       info: "",
       checkedBoxes: [
         true,
+        true,
+        false,
+        false,
+        false,
+        null,
         false,
         false,
         false,
         false,
         false,
         false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
+        null,
         false,
         false,
         false,
@@ -64,62 +68,97 @@ export default class MakeScreen extends Component {
             alignItems: "center",
           }}
         >
-          <div style={{ width: "30vw" }}>
-            <div style={{ marginTop: 50, fontSize: 20, marginBottom: 40 }}>
+          <div style={{ width: "40vw" }}>
+            <div
+              style={{
+                marginTop: 120,
+                fontSize: 26,
+                marginBottom: 60,
+                fontWeight: 500,
+              }}
+            >
               What you would like to know (and verify) about your clients?
             </div>
 
             {this.mainCheckboxComp(
-              ["Escora Encounters", "Escora Ratings", "Escora Reviews"],
+              ["Given", "Escora Ratings & Reviews", "Phone Number"],
               "Client encounters are stored with Escora. We show the clients encounters with other providers who used Escora, including ratings, reviews, and total number of encounters. If a client has no Escora history, they may just be new to the platform, but we reccommend checking the (optional) references box below just to be safe.",
               0
             )}
+
+            <div style={{ height: 40 }}></div>
+
             {this.mainCheckboxComp(
-              ["Photo", "Photo Verification"],
-              "We verify what your client looks like through a custom pose picture, (What Bumble / Tinder do) and send you that image. Most clients have this verified already, but we ask for a new picture every few months to make sure.",
+              [
+                "About",
+                "First + Last Name",
+                "Age",
+                "Race",
+                "Want 'About' verified?",
+              ],
+              "Just some basic info about your client. Most clients have this verified already, but if not, to verify we request a liscense or some other form of identification. If you don't want this info verified, we just send you what the client gives us.",
               2
             )}
+            <div style={{ height: 40 }}></div>
 
             {this.mainCheckboxComp(
-              ["Liscense", "Full Legal Name", "Age, Height, Race"],
-              "We request an image of your clients liscense. Most clients have this verified already, so it's not too much trouble.",
-              3
+              ["References", "References"],
+              "Optional references outside of Escora. If you choose to check quick submit, your client is done after they enter references. You'll have the references, along with any info you see checked above.",
+              6,
+              true
             )}
 
-            {this.mainCheckboxComp(
-              ["Employment", "Official Job Title", "Company Title", "Income"],
-              "We verify the official job title, company, and/or income of your client. We HIGHLY reccomend checking job title here, as to make your client isn't working a job that could harm you. We're here to make sure you're safe.",
-              5
-            )}
+            <div style={{ height: 40 }}></div>
 
             {this.mainCheckboxComp(
-              ["Criminal History", "Felonies", "Assult Charges", "Background"],
-              "Background check on the client for you safety. We'll run this automatically every screen so you see any changes, and usually don't need any extra info from the client. The screen will take a bit longer with this information, but no less than 10 minutes.",
+              ["Photo", "Photo Verification"],
+              "We verify what your client looks like through a custom pose picture. Most clients have this verified already, but we ask for a new picture every few months to make sure.",
               8
             )}
 
-            {this.mainCheckboxComp(
-              ["Personal Info", "Phone Number", "Address"],
-              "We'll get and verify the phone number or address of the client, and send it your way.",
-              11
-            )}
+            <div style={{ height: 40 }}></div>
 
             {this.mainCheckboxComp(
-              ["Social Media (Optional)", "Facebook", "Twitter", "LinkedIn"],
-              "Optional social media verification. We'll send you the verified profiles of the accounts they share, along with stats about their likelihood of being safe.",
+              [
+                "Employment",
+                "Official Job Title",
+                "Company",
+                "LinkedIn",
+                "Want 'Employment' verified?",
+              ],
+              "The official job title, company, and/or LinkedIn of your client. We HIGHLY reccomend checking job title here, along with us verifying it, as to make your client isn't working a job that could harm you. We're here to make sure you're safe.",
+              9
+            )}
+
+            <div style={{ height: 40 }}></div>
+
+            {this.mainCheckboxComp(
+              ["Criminal History", "Felonies", "Assult Charges"],
+              "Background check on the client for you safety. We'll run this automatically every screen so you see any changes, and usually don't need any extra info from the client. The screen will take a bit longer with this information, but no less than 10 minutes.",
               13
             )}
 
-            {this.mainCheckboxComp(
-              ["Other References (Optional)", "References"],
-              "Optional references outside of Escora. This makes for easy client picking if they have references you know.",
-              16
-            )}
+            <div style={{ height: 40 }}></div>
 
             {this.mainCheckboxComp(
-              ["STD's", "HIV", "Herpes", "Chlamydia", "Ghonnorhea"],
-              "We'll have this soon.",
-              17
+              ["Social Media", "Facebook", "Twitter", "Instagram"],
+              "Optional social media. We'll send you the profiles of the accounts they share.",
+              15
+            )}
+
+            <div style={{ height: 40 }}></div>
+
+            {this.mainCheckboxComp(
+              [
+                "STD's",
+                "HIV",
+                "Herpes",
+                "Chlamydia",
+                "Ghonnorhea",
+                "Want STD's verified?",
+              ],
+              "We'll have this soon. We'll let you know when it's ready, and you can verify your clients cleanliness!",
+              18
             )}
           </div>
 
@@ -153,8 +192,24 @@ export default class MakeScreen extends Component {
 
   // Update one of the selections.
   updateCheckedBoxes(box) {
-    const checkedBoxes = this.state.checkedBoxes;
+    const { checkedBoxes } = this.state;
     checkedBoxes[box] = !checkedBoxes[box];
+
+    if ((box === 2 || box === 3 || box === 4) && checkedBoxes[5] == null) {
+      checkedBoxes[5] = true;
+    } else if (!checkedBoxes[2] && !checkedBoxes[3] && !checkedBoxes[4]) {
+      checkedBoxes[5] = null;
+    }
+
+    if ((box === 9 || box === 10 || box === 11) && checkedBoxes[12] == null) {
+      checkedBoxes[12] = true;
+    } else if (!checkedBoxes[9] && !checkedBoxes[10] && !checkedBoxes[11]) {
+      checkedBoxes[12] = null;
+    }
+
+    if (box === 6) {
+      checkedBoxes[7] = !checkedBoxes[7];
+    }
     this.setState({
       checkedBoxes: checkedBoxes,
     });
@@ -189,7 +244,7 @@ export default class MakeScreen extends Component {
 
   // Main box
 
-  mainCheckboxComp(elemArray, windowText, currentIndex) {
+  mainCheckboxComp(elemArray, windowText, currentIndex, secondCheckbox) {
     const checkedBoxes = this.state.checkedBoxes;
 
     return (
@@ -197,14 +252,12 @@ export default class MakeScreen extends Component {
         style={{
           display: "flex",
           alignItems: "center",
-          marginTop: 30,
-          marginBottom: 30,
           justifyContent: "center",
         }}
       >
         <div style={{ width: 240 }}>
           <div style={{ fontWeight: 500, display: "flex" }}>
-            <div style={{ width: 165 }}>{elemArray[0]}</div>
+            <div style={{ width: 189, fontSize: 18 }}>{elemArray[0]}</div>
             <div style={{ marginLeft: 20 }}>{this.imgWindow(windowText)}</div>
           </div>
           <div style={{ height: 4 }}></div>
@@ -214,6 +267,23 @@ export default class MakeScreen extends Component {
               return null;
             }
             const newIndex = (index += currentIndex - 1);
+
+            if (newIndex === 5 || newIndex === 12) {
+              return (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <div style={{ width: 200 }}>{elem}</div>
+
+                  {this.checkboxComp(newIndex)}
+                </div>
+              );
+            }
+
             return (
               <div
                 style={{
@@ -222,24 +292,73 @@ export default class MakeScreen extends Component {
                   alignItems: "center",
                 }}
               >
-                <div style={{ width: 150 }}>{elem}</div>
+                <div style={{ width: 200 }}>{elem}</div>
 
                 <Checkbox
-                  disabled={newIndex === 0 || newIndex === 1 ? true : false}
-                  checked={
-                    newIndex === 0 || newIndex === 1
+                  style={{ zIndex: 1 }}
+                  disabled={
+                    newIndex === 0 || newIndex === 1 || newIndex >= 18
                       ? true
-                      : checkedBoxes[newIndex]
+                      : false
                   }
+                  checked={checkedBoxes[newIndex]}
                   onChange={() => this.updateCheckedBoxes(newIndex)}
                 />
               </div>
             );
           })}
+
+          {secondCheckbox && checkedBoxes[6] && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ width: 200 }}>
+                Quick submit if they have references?
+              </div>
+
+              <Checkbox
+                onChange={() => this.updateCheckedBoxes(7)}
+                checked={checkedBoxes[7]}
+              />
+            </div>
+          )}
         </div>
 
         <div style={{ width: 50 }}></div>
       </div>
     );
+  }
+
+  checkboxComp(newIndex) {
+    const { checkedBoxes } = this.state;
+
+    var disabled = false;
+    if (newIndex === 5) {
+      disabled = !checkedBoxes[2] && !checkedBoxes[3] && !checkedBoxes[4];
+    } else if (newIndex === 12) {
+      disabled = !checkedBoxes[9] && !checkedBoxes[10] && !checkedBoxes[11];
+    }
+    const BlueCheckbox = withStyles({
+      root: {
+        color: "#008489",
+        "&$checked": {
+          color: "#008489",
+        },
+      },
+      checked: {},
+    })((props) => (
+      <Checkbox
+        color="default"
+        {...props}
+        disabled={disabled}
+        checked={checkedBoxes[newIndex]}
+        onChange={() => this.updateCheckedBoxes(newIndex)}
+      />
+    ));
+    return <BlueCheckbox />;
   }
 }

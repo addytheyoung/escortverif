@@ -14,24 +14,51 @@ export default class Screen extends Component {
   constructor(props) {
     super(props);
 
+    const { profileData } = this.props;
+    const {
+      address,
+      age,
+      assult_charges,
+      background,
+      employer,
+      employer_city,
+      escora_ratings,
+      escora_reviews,
+      facebook,
+      felonies,
+      first_name,
+      job_title,
+      last_name,
+      liscense_picture,
+      linkedin,
+      phone,
+      picture,
+      race,
+      references,
+      twitter,
+    } = profileData;
+
     this.state = {
-      info: "",
-      firstName: "",
-      lastName: "",
-      ageRange: "Age Range",
-      race: "",
       activeQuestion: 0,
+      uploadingPicture: false,
+      uploadingFile: true,
+      croppingPicture: false,
+      info: "",
+      firstName: first_name,
+      lastName: last_name,
+      ageRange: age ? age : "Age Range",
+      race: race,
       deleteItems: [false, false, false, false, false, false],
       activeInput1: "+1",
       activeInput2: "",
       errorPage: false,
       providerData: false,
-      activePosePictureUri: "",
-      activeLiscenseUri: "",
-      jobTitle: "",
-      employerTitle: "",
-      employerCity: "",
-      linkedinProfile: "",
+      activePosePictureUri: picture,
+      activeLiscenseUri: liscense_picture,
+      jobTitle: job_title,
+      employerTitle: employer,
+      employerCity: employer_city,
+      linkedinProfile: linkedin,
       activePaystubUri: "",
       numReferences: [],
     };
@@ -42,10 +69,14 @@ export default class Screen extends Component {
     // 4) Signed in + valid provider, render: activeQuestion: x
 
     this.pullProviderData();
+    this.pullQuestions();
   }
 
   render() {
     const {
+      uploadingPicture,
+      uploadingFile,
+      croppingPicture,
       info,
       activeQuestion,
       errorPage,
@@ -108,54 +139,86 @@ export default class Screen extends Component {
 
           {activeQuestion === 0 && (
             <div>
-              <ProgressBar currentIndex={1} total={4} />
+              <ProgressBar currentIndex={0} total={4} />
               <ProviderInput
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
-                nextDisabled={activePosePictureUri === ""}
-                title={"Please copy the pose and upload"}
+                prevDisabled={true}
+                nextDisabled={
+                  firstName === "" ||
+                  lastName === "" ||
+                  ageRange === "Age Range" ||
+                  race === ""
+                }
+                title={"About"}
                 subTitle={
-                  "This is only used for Lisa's verification of what you look like. Nobody can see this except providers you choose to share it with."
+                  "Remember, only escorts you choose to share your profile with can see any of your info, and you can choose to not save it at all by checking the box below."
                 }
                 input={
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div id="camera">
-                      <Camera
-                        id="camera"
-                        onCameraStop={() => console.log("")}
-                        oncameraError={() => console.log("")}
-                        // isImageMirror={false}
-                        // idealFacingMode={"environment"}
-                        onTakePhoto={(dataUri) => this.handleTakePhoto(dataUri)}
-                      ></Camera>
-                    </div>
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <Input
+                      value={firstName}
+                      onChange={(word) =>
+                        this.setState({
+                          firstName: word.target.value,
+                        })
+                      }
+                      placeholder="First name"
+                      style={{ width: 250, fontSize: 18 }}
+                    />
+                    <div style={{ height: 10 }} />
+                    <Input
+                      value={lastName}
+                      onChange={(word) =>
+                        this.setState({
+                          lastName: word.target.value,
+                        })
+                      }
+                      placeholder="Last name"
+                      style={{ width: 250, fontSize: 18 }}
+                    />
+                    <div style={{ height: 10 }} />
+                    <Select
+                      onChange={(val) =>
+                        this.setState({
+                          ageRange: val.target.value,
+                        })
+                      }
+                      value={ageRange}
+                      placeholder="Age Range"
+                      style={{
+                        width: 250,
+                        color: ageRange == "Age Range" ? "#a1a1a1" : "#000000",
+                        fontWeight: 400,
+                        fontSize: 18,
+                      }}
+                    >
+                      <MenuItem value={"Age Range"}>Age range</MenuItem>
+                      <MenuItem value={"18-25"}>18-25</MenuItem>
+                      <MenuItem value={"26-30"}>26-30</MenuItem>
+                      <MenuItem value={"31-35"}>31-35</MenuItem>
+                      <MenuItem value={"36-40"}>36-40</MenuItem>
+                      <MenuItem value={"41-45"}>41-45</MenuItem>
+                      <MenuItem value={"46-50"}>46-50</MenuItem>
+                      <MenuItem value={"51-55"}>51-55</MenuItem>
+                      <MenuItem value={"56-60"}>56-60</MenuItem>
+                      <MenuItem value={"60+"}>60+</MenuItem>
 
-                    <div style={{ display: "flex" }}>
-                      <div>
-                        <img
-                          style={{ width: 260 }}
-                          src={
-                            "https://miro.medium.com/max/1440/0*BWdxsqjS7nx29soF"
-                          }
-                        />{" "}
-                      </div>
+                      <MenuItem />
+                    </Select>
+                    <div style={{ height: 10 }} />
+                    <Input
+                      value={race}
+                      onChange={(word) =>
+                        this.setState({
+                          race: word.target.value,
+                        })
+                      }
+                      placeholder="Race"
+                      style={{ width: 250, fontSize: 18 }}
+                    />
+                    <div style={{ height: 10 }} />
 
-                      {activePosePictureUri !== "" && (
-                        <div>
-                          <img
-                            style={{ width: 260 }}
-                            src={activePosePictureUri}
-                          />{" "}
-                        </div>
-                      )}
-                    </div>
                     <div
                       style={{
                         display: "flex",
@@ -167,9 +230,7 @@ export default class Screen extends Component {
                         onChange={() => this.updateCheckedBoxes(0)}
                         checked={deleteItems[0]}
                       ></Checkbox>
-                      <div style={{ fontSize: 18 }}>
-                        I want this deleted after Lisa views it.
-                      </div>
+                      <div>I want this deleted after Lisa views it.</div>
                     </div>
                   </div>
                 }
@@ -178,6 +239,260 @@ export default class Screen extends Component {
           )}
 
           {activeQuestion === 1 && (
+            <div>
+              <ProgressBar currentIndex={1} total={4} />
+              <ProviderInput
+                clickPrev={() => this.clickPrev()}
+                clickNext={() => this.clickNext()}
+                nextDisabled={activePosePictureUri === "" || croppingPicture}
+                title={"Please upload a picture of you"}
+                subTitle={
+                  "This is used for Lisa's (and other Escorts) verification of what you look like. Nobody can see this, except escorts you choose to share it with."
+                }
+                input={
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {uploadingPicture && (
+                      <div
+                        id="camera"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
+                      >
+                        {!activePosePictureUri && (
+                          <Camera
+                            id="camera"
+                            onCameraStop={() => console.log("")}
+                            oncameraError={() => console.log("")}
+                            // isImageMirror={false}
+                            // idealFacingMode={"environment"}
+                            onTakePhoto={(dataUri) =>
+                              this.handleTakePhoto(dataUri)
+                            }
+                          ></Camera>
+                        )}
+                        <CropImage
+                          showCroppedImage={!croppingPicture}
+                          showOriginalImage={croppingPicture}
+                          setCroppedImg={(croppedImgUrl) =>
+                            this.setCroppedImg(croppedImgUrl)
+                          }
+                          picture={activePosePictureUri}
+                        />
+                        {croppingPicture && (
+                          <div
+                            onClick={() =>
+                              this.setState({
+                                croppingPicture: false,
+                              })
+                            }
+                            id="button"
+                            style={{
+                              marginTop: 5,
+                              borderRadius: 5,
+                              backgroundColor: "#008489",
+                              color: "white",
+                              padding: 10,
+                              fontSize: 18,
+                              fontWeight: 500,
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              marginBottom: 40,
+                            }}
+                          >
+                            DONE CROPPING
+                          </div>
+                        )}
+                        {!croppingPicture && (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                            }}
+                          >
+                            <div
+                              style={{
+                                fontSize: 18,
+                                marginTop: 30,
+                                fontWeight: 500,
+                              }}
+                            >
+                              OR
+                            </div>
+                            <div
+                              onClick={() =>
+                                this.setState({
+                                  uploadingFile: true,
+                                  uploadingPicture: false,
+                                  activePosePictureUri: "",
+                                })
+                              }
+                              id="button"
+                              style={{
+                                marginTop: 20,
+                                borderRadius: 5,
+                                backgroundColor: "#a1a1a1",
+                                color: "white",
+                                padding: 10,
+                                fontSize: 18,
+                                fontWeight: 500,
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: 170,
+                                marginBottom: 40,
+                              }}
+                            >
+                              Upload a photo
+                            </div>
+                          </div>
+                        )}
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Checkbox
+                            onChange={() => this.updateCheckedBoxes(0)}
+                            checked={deleteItems[0]}
+                          ></Checkbox>
+                          <div style={{ fontSize: 18 }}>
+                            I want this deleted after Lisa views it.
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {uploadingFile && (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Input
+                          id="pic-input"
+                          onChangeCapture={() =>
+                            this.uploadedImage("activePosePictureUri")
+                          }
+                          type="file"
+                        />
+                        <CropImage
+                          showCroppedImage={!croppingPicture}
+                          showOriginalImage={croppingPicture}
+                          setCroppedImg={(croppedImgUrl) =>
+                            this.setCroppedImg(croppedImgUrl)
+                          }
+                          picture={activePosePictureUri}
+                        />
+
+                        {croppingPicture && (
+                          <div
+                            onClick={() =>
+                              this.setState({
+                                croppingPicture: false,
+                              })
+                            }
+                            id="button"
+                            style={{
+                              marginTop: 5,
+                              borderRadius: 5,
+                              backgroundColor: "#008489",
+                              color: "white",
+                              padding: 10,
+                              fontSize: 18,
+                              fontWeight: 500,
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              marginBottom: 40,
+                            }}
+                          >
+                            DONE CROPPING
+                          </div>
+                        )}
+
+                        {!croppingPicture && (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              marginTop: 20,
+                            }}
+                          >
+                            <div
+                              style={{
+                                fontSize: 18,
+                                fontWeight: 500,
+                              }}
+                            >
+                              OR
+                            </div>
+                            <div
+                              onClick={() =>
+                                this.setState({
+                                  uploadingFile: false,
+                                  uploadingPicture: true,
+                                  activePosePictureUri: "",
+                                })
+                              }
+                              id="button"
+                              style={{
+                                marginTop: 20,
+                                borderRadius: 5,
+                                backgroundColor: "#a1a1a1",
+                                color: "white",
+                                padding: 10,
+                                fontSize: 18,
+                                fontWeight: 500,
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                marginBottom: 40,
+                              }}
+                            >
+                              Take a picture here
+                            </div>
+                          </div>
+                        )}
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Checkbox
+                            onChange={() => this.updateCheckedBoxes(0)}
+                            checked={deleteItems[0]}
+                          ></Checkbox>
+                          <div style={{ fontSize: 18 }}>
+                            I want this deleted after Lisa views it.
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                }
+              />
+            </div>
+          )}
+
+          {activeQuestion === 2 && (
             <div>
               <ProgressBar currentIndex={2} total={4} />
               <ProviderInput
@@ -229,7 +544,7 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 2 && (
+          {activeQuestion === 3 && (
             <div>
               <ProgressBar currentIndex={3} total={4} />
               <ProviderInput
@@ -340,7 +655,7 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 3 && (
+          {activeQuestion === 4 && (
             <div>
               <ProgressBar currentIndex={4} total={4} />
               <ProviderInput
@@ -404,105 +719,6 @@ export default class Screen extends Component {
                         </div>
                       );
                     })}
-                  </div>
-                }
-              />
-            </div>
-          )}
-
-          {activeQuestion === 4 && (
-            <div>
-              <ProgressBar currentIndex={4} total={4} />
-              <ProviderInput
-                clickPrev={() => this.clickPrev()}
-                clickNext={() => this.clickNext()}
-                nextDisabled={
-                  firstName === "" ||
-                  lastName === "" ||
-                  ageRange === "Age Range" ||
-                  race === ""
-                }
-                title={"About"}
-                subTitle={
-                  "This ones pretty easy. Remember, only escorts you share your profie with can see any of this, and you can choose to not save it by checking the box below."
-                }
-                input={
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <Input
-                      value={firstName}
-                      onChange={(word) =>
-                        this.setState({
-                          firstName: word.target.value,
-                        })
-                      }
-                      placeholder="First name"
-                      style={{ width: 250 }}
-                    />
-                    <div style={{ height: 10 }} />
-                    <Input
-                      value={lastName}
-                      onChange={(word) =>
-                        this.setState({
-                          lastName: word.target.value,
-                        })
-                      }
-                      placeholder="Last name"
-                      style={{ width: 250 }}
-                    />
-                    <div style={{ height: 10 }} />
-                    <Select
-                      onChange={(val) =>
-                        this.setState({
-                          ageRange: val.target.value,
-                        })
-                      }
-                      value={ageRange}
-                      placeholder="Age Range"
-                      style={{
-                        width: 250,
-                        color: ageRange == "Age Range" ? "#a1a1a1" : "#000000",
-                        fontWeight: 400,
-                      }}
-                    >
-                      <MenuItem value={"Age Range"}>Age range</MenuItem>
-                      <MenuItem value={"18-25"}>18-25</MenuItem>
-                      <MenuItem value={"26-30"}>26-30</MenuItem>
-                      <MenuItem value={"31-35"}>31-35</MenuItem>
-                      <MenuItem value={"36-40"}>36-40</MenuItem>
-                      <MenuItem value={"41-45"}>41-45</MenuItem>
-                      <MenuItem value={"46-50"}>46-50</MenuItem>
-                      <MenuItem value={"51-55"}>51-55</MenuItem>
-                      <MenuItem value={"56-60"}>56-60</MenuItem>
-                      <MenuItem value={"60+"}>60+</MenuItem>
-
-                      <MenuItem />
-                    </Select>
-                    <div style={{ height: 10 }} />
-                    <Input
-                      value={race}
-                      onChange={(word) =>
-                        this.setState({
-                          race: word.target.value,
-                        })
-                      }
-                      placeholder="Race"
-                      style={{ width: 250 }}
-                    />
-                    <div style={{ height: 10 }} />
-
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Checkbox
-                        onChange={() => this.updateCheckedBoxes(0)}
-                        checked={deleteItems[0]}
-                      ></Checkbox>
-                      <div>I want this deleted after Lisa views it.</div>
-                    </div>
                   </div>
                 }
               />
@@ -728,9 +944,14 @@ export default class Screen extends Component {
     }
   }
 
-  clickPrev() {}
+  clickPrev() {
+    const { activeQuestion } = this.state;
+    this.setState({
+      activeQuestion: activeQuestion - 1,
+    });
+  }
 
-  clickNext() {
+  async clickNext() {
     const { activeQuestion, activePosePictureUri, deleteItems } = this.state;
     if (activeQuestion === 0) {
       if (deleteItems[0]) {
@@ -738,26 +959,55 @@ export default class Screen extends Component {
           "This item will not be saved for next time. Are you sure?"
         );
         if (conf) {
+          await this.updateDatabase();
           this.setState({
             activeQuestion: activeQuestion + 1,
           });
         }
       } else {
+        await this.updateDatabase();
         this.setState({
           activeQuestion: activeQuestion + 1,
         });
       }
-    } else if (activeQuestion === 1) {
+    } else {
+      await this.updateDatabase();
+      this.setState({
+        activeQuestion: activeQuestion + 1,
+      });
     }
+  }
+
+  // Fill what we've already answered and find the right page
+  pullQuestions() {}
+
+  async updateDatabase() {
+    const { activeQuestion, firstName, lastName, ageRange, race } = this.state;
+    const myDocRef = firebase.firestore().collection("Clients").doc("abc");
+    if (activeQuestion === 0) {
+      await myDocRef.update({
+        first_name: firstName,
+        last_name: lastName,
+        age: ageRange,
+        race: race,
+      });
+    } else {
+    }
+  }
+
+  setCroppedImg(croppedImgUrl) {
+    this.setState({
+      croppedImg: croppedImgUrl,
+    });
   }
 
   uploadedImage(state) {
     const ref = document.getElementById("pic-input").files;
 
     if (ref.length === 0) {
-      this.setState({
-        [state]: "",
-      });
+      // this.setState({
+      //   [state]: "",
+      // });
       return;
     }
     const image = ref[0];
@@ -766,7 +1016,7 @@ export default class Screen extends Component {
       return;
     }
 
-    this.setState({ [state]: blob });
+    this.setState({ [state]: blob, croppingPicture: true });
   }
 
   // Update one of the selections.
@@ -781,6 +1031,7 @@ export default class Screen extends Component {
   handleTakePhoto(dataUri) {
     this.setState({
       activePosePictureUri: dataUri,
+      croppingPicture: true,
     });
   }
 
@@ -931,9 +1182,10 @@ export default class Screen extends Component {
 
   componentDidUpdate() {
     if (
-      this.state.activeQuestion === 1 &&
-      !window.recaptchaVerifier
+      // this.state.activeQuestion === 1 &&
+      // !window.recaptchaVerifier &&
       // !firebase.auth().currentUser
+      false
     ) {
       window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
         this.recaptcha,
