@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./css/Header.css";
 import * as firebase from "firebase";
+import { isMobile } from "react-device-detect";
 
 export default class Header extends Component {
   constructor(props) {
@@ -43,12 +44,17 @@ export default class Header extends Component {
             alignItems: "center",
           }}
         >
-          <div style={{ width: margin ? [margin] : "20vw" }}></div>
+          {!isMobile && (
+            <div style={{ width: margin ? [margin] : "20vw" }}></div>
+          )}
+          {isMobile && <div style={{ width: margin ? [margin] : "5vw" }}></div>}
           <img
             src={require("./images/butterfly.svg")}
-            style={{ width: 70, height: 70 }}
+            style={{ width: isMobile ? 40 : 70, height: isMobile ? 40 : 70 }}
           ></img>
-          <div style={{ marginLeft: 10, fontSize: 20 }}>Escora</div>
+          <div style={{ marginLeft: 10, fontSize: isMobile ? 18 : 20 }}>
+            Escora
+          </div>
         </div>
         <div
           style={{
@@ -60,7 +66,7 @@ export default class Header extends Component {
         <div
           style={{
             display: "flex",
-            marginRight: margin ? [margin] : "20vw",
+            marginRight: margin ? [margin] : isMobile ? "5vw" : "20vw",
           }}
         >
           <div
@@ -76,9 +82,11 @@ export default class Header extends Component {
           >
             <img
               src={require("./images/info.svg")}
-              style={{ height: 35, width: 35 }}
+              style={{ height: isMobile ? 30 : 35, width: isMobile ? 30 : 35 }}
             />
-            <div style={{ marginLeft: 5, fontSize: 18 }}>About</div>
+            {!isMobile && (
+              <div style={{ marginLeft: 5, fontSize: 18 }}>About</div>
+            )}
           </div>
 
           <div
@@ -93,13 +101,17 @@ export default class Header extends Component {
             }}
           >
             <img
-              style={{ height: 35, width: 35, marginLeft: 20 }}
+              style={{
+                height: isMobile ? 30 : 35,
+                width: isMobile ? 30 : 35,
+                marginLeft: 20,
+              }}
               src={require("./images/user.svg")}
             />
-            {signedIn && (
+            {signedIn && !isMobile && (
               <div style={{ marginLeft: 5, fontSize: 18 }}>Profile</div>
             )}
-            {!signedIn && (
+            {!signedIn && !isMobile && (
               <div style={{ marginLeft: 5, fontSize: 18 }}>Sign in</div>
             )}
           </div>

@@ -9,6 +9,8 @@ import ErrorPage from "./ErrorPage";
 import LoadingPage from "./LoadingPage";
 import ProgressBar from "./ProgressBar";
 import ReferenceInput from "./ReferenceInput";
+import { isMobile } from "react-device-detect";
+import "./css/ProviderSignUp.css";
 
 export default class Screen extends Component {
   constructor(props) {
@@ -27,6 +29,7 @@ export default class Screen extends Component {
       facebook,
       felonies,
       first_name,
+      instagram,
       job_title,
       last_name,
       liscense_picture,
@@ -39,12 +42,15 @@ export default class Screen extends Component {
     } = profileData;
 
     this.state = {
-      activeQuestion: 0,
       uploadingPicture: false,
       uploadingFile: true,
       croppingPicture: false,
       info: "",
       firstName: first_name,
+      facebook: facebook,
+      instagram: instagram,
+      references: references,
+      twitter: twitter,
       lastName: last_name,
       ageRange: age ? age : "Age Range",
       race: race,
@@ -61,6 +67,8 @@ export default class Screen extends Component {
       linkedinProfile: linkedin,
       activePaystubUri: "",
       numReferences: [],
+      activeQuestion: 0,
+      activeQuestionArray: [],
     };
 
     // 1) Signed out + invalid provider, render: ErrorPage
@@ -69,7 +77,6 @@ export default class Screen extends Component {
     // 4) Signed in + valid provider, render: activeQuestion: x
 
     this.pullProviderData();
-    this.pullQuestions();
   }
 
   render() {
@@ -96,6 +103,7 @@ export default class Screen extends Component {
       lastName,
       ageRange,
       race,
+      activeQuestionArray,
     } = this.state;
     const { profileData } = this.props;
 
@@ -113,7 +121,7 @@ export default class Screen extends Component {
         <div>
           <Header />
 
-          <div style={{ height: 120 }}></div>
+          <div style={{ height: 81 }}></div>
 
           <div>
             {info !== "" && (
@@ -139,7 +147,10 @@ export default class Screen extends Component {
 
           {activeQuestion === 0 && (
             <div>
-              <ProgressBar currentIndex={0} total={4} />
+              <ProgressBar
+                currentIndex={0}
+                total={activeQuestionArray.length}
+              />
               <ProviderInput
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
@@ -155,7 +166,13 @@ export default class Screen extends Component {
                   "Remember, only escorts you choose to share your profile with can see any of your info, and you can choose to not save it at all by checking the box below."
                 }
                 input={
-                  <div style={{ display: "flex", flexDirection: "column" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
                     <Input
                       value={firstName}
                       onChange={(word) =>
@@ -164,7 +181,7 @@ export default class Screen extends Component {
                         })
                       }
                       placeholder="First name"
-                      style={{ width: 250, fontSize: 18 }}
+                      style={{ width: isMobile ? "80vw" : 250, fontSize: 18 }}
                     />
                     <div style={{ height: 10 }} />
                     <Input
@@ -175,7 +192,7 @@ export default class Screen extends Component {
                         })
                       }
                       placeholder="Last name"
-                      style={{ width: 250, fontSize: 18 }}
+                      style={{ width: isMobile ? "80vw" : 250, fontSize: 18 }}
                     />
                     <div style={{ height: 10 }} />
                     <Select
@@ -187,7 +204,7 @@ export default class Screen extends Component {
                       value={ageRange}
                       placeholder="Age Range"
                       style={{
-                        width: 250,
+                        width: isMobile ? "80vw" : 250,
                         color: ageRange == "Age Range" ? "#a1a1a1" : "#000000",
                         fontWeight: 400,
                         fontSize: 18,
@@ -215,7 +232,7 @@ export default class Screen extends Component {
                         })
                       }
                       placeholder="Race"
-                      style={{ width: 250, fontSize: 18 }}
+                      style={{ width: isMobile ? "80vw" : 250, fontSize: 18 }}
                     />
                     <div style={{ height: 10 }} />
 
@@ -240,7 +257,10 @@ export default class Screen extends Component {
 
           {activeQuestion === 1 && (
             <div>
-              <ProgressBar currentIndex={1} total={4} />
+              <ProgressBar
+                currentIndex={1}
+                total={activeQuestionArray.length}
+              />
               <ProviderInput
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
@@ -260,7 +280,7 @@ export default class Screen extends Component {
                   >
                     {uploadingPicture && (
                       <div
-                        id="camera"
+                        id={isMobile ? "camera-mobile" : "camera"}
                         style={{
                           display: "flex",
                           flexDirection: "column",
@@ -269,7 +289,6 @@ export default class Screen extends Component {
                       >
                         {!activePosePictureUri && (
                           <Camera
-                            id="camera"
                             onCameraStop={() => console.log("")}
                             oncameraError={() => console.log("")}
                             // isImageMirror={false}
@@ -494,7 +513,10 @@ export default class Screen extends Component {
 
           {activeQuestion === 2 && (
             <div>
-              <ProgressBar currentIndex={2} total={4} />
+              <ProgressBar
+                currentIndex={2}
+                total={activeQuestionArray.length}
+              />
               <ProviderInput
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
@@ -546,7 +568,10 @@ export default class Screen extends Component {
 
           {activeQuestion === 3 && (
             <div>
-              <ProgressBar currentIndex={3} total={4} />
+              <ProgressBar
+                currentIndex={3}
+                total={activeQuestionArray.length}
+              />
               <ProviderInput
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
@@ -657,7 +682,10 @@ export default class Screen extends Component {
 
           {activeQuestion === 4 && (
             <div>
-              <ProgressBar currentIndex={4} total={4} />
+              <ProgressBar
+                currentIndex={4}
+                total={activeQuestionArray.length}
+              />
               <ProviderInput
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
@@ -945,14 +973,34 @@ export default class Screen extends Component {
   }
 
   clickPrev() {
-    const { activeQuestion } = this.state;
+    const { activeQuestion, activeQuestionArray } = this.state;
+    var activeQuestionArrayIndex = -1;
+    for (var i = 0; i < activeQuestionArray.length; i++) {
+      if (activeQuestionArray[i] === activeQuestion) {
+        activeQuestionArrayIndex = i;
+        break;
+      }
+    }
     this.setState({
-      activeQuestion: activeQuestion - 1,
+      activeQuestion: activeQuestionArray[activeQuestionArrayIndex - 1],
     });
   }
 
   async clickNext() {
-    const { activeQuestion, activePosePictureUri, deleteItems } = this.state;
+    const {
+      activeQuestion,
+      activePosePictureUri,
+      deleteItems,
+      activeQuestionArray,
+    } = this.state;
+    var activeQuestionArrayIndex = -1;
+    for (var i = 0; i < activeQuestionArray.length; i++) {
+      if (activeQuestionArray[i] === activeQuestion) {
+        activeQuestionArrayIndex = i;
+        break;
+      }
+    }
+
     if (activeQuestion === 0) {
       if (deleteItems[0]) {
         const conf = window.confirm(
@@ -961,25 +1009,139 @@ export default class Screen extends Component {
         if (conf) {
           await this.updateDatabase();
           this.setState({
-            activeQuestion: activeQuestion + 1,
+            activeQuestion: activeQuestionArray[activeQuestionArrayIndex + 1],
           });
         }
       } else {
         await this.updateDatabase();
         this.setState({
-          activeQuestion: activeQuestion + 1,
+          activeQuestion: activeQuestionArray[activeQuestionArrayIndex + 1],
         });
       }
     } else {
       await this.updateDatabase();
       this.setState({
-        activeQuestion: activeQuestion + 1,
+        activeQuestion: activeQuestionArray[activeQuestionArrayIndex + 1],
       });
     }
   }
 
-  // Fill what we've already answered and find the right page
-  pullQuestions() {}
+  // ** Check out Pages start **
+
+  checkSocialPage(profileData, providerData) {
+    const { facebook, twitter, instagram } = profileData;
+    const { client_facebook, client_twitter, client_instagram } = providerData;
+
+    if (
+      (client_facebook && facebook === "") ||
+      (client_twitter && twitter === "") ||
+      (client_instagram && instagram === "")
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
+  checkEmploymentPage(profileData, providerData) {
+    const { job_title, employer, employer_city, linkedin } = profileData;
+    const {
+      client_job,
+      client_company,
+      client_employer_city,
+      client_linkedin,
+    } = providerData;
+
+    if (
+      (client_job && job_title === "") ||
+      (client_company && employer === "") ||
+      (client_employer_city && employer_city === "") ||
+      (client_linkedin && linkedin === "")
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  checkLiscensePage(profileData, providerData) {
+    const { liscense_picture } = profileData;
+    const client_liscense = true;
+
+    if (client_liscense && liscense_picture === "") {
+      return true;
+    }
+    return false;
+  }
+
+  checkPicturePage(profileData, providerData) {
+    const { picture } = profileData;
+    const { client_photo } = providerData;
+
+    if (client_photo && picture === "") {
+      return true;
+    }
+    return false;
+  }
+
+  checkReferencePage(profileData, providerData) {
+    const { references } = profileData;
+    const { client_references } = providerData;
+
+    if (client_references && references.length === 0) {
+      return true;
+    }
+    return false;
+  }
+
+  checkAboutPage(profileData, providerData) {
+    const { first_name, last_name, age, race } = profileData;
+    const { client_name, client_age, client_race } = providerData;
+    if (client_name && (first_name === "" || last_name === "")) {
+      return true;
+    } else if (client_age && age === "Age Range") {
+      return true;
+    } else if (client_race && race === "") {
+      return true;
+    }
+    return false;
+  }
+
+  // ** Check out Pages end **
+
+  // What questions does our user need to answer?
+  pullActiveQuestions(providerData) {
+    const profileData = this.props.profileData;
+    const finalActiveQuestionArray = [];
+
+    if (this.checkAboutPage(profileData, providerData)) {
+      finalActiveQuestionArray.push(0);
+    }
+
+    if (this.checkReferencePage(profileData, providerData)) {
+      finalActiveQuestionArray.push(1);
+    }
+
+    if (this.checkPicturePage(profileData, providerData)) {
+      finalActiveQuestionArray.push(2);
+    }
+
+    if (this.checkLiscensePage(profileData, providerData)) {
+      finalActiveQuestionArray.push(3);
+    }
+
+    if (this.checkEmploymentPage(profileData, providerData)) {
+      finalActiveQuestionArray.push(4);
+    }
+
+    if (this.checkSocialPage(profileData, providerData)) {
+      finalActiveQuestionArray.push(5);
+    }
+
+    // Always push the final page
+    finalActiveQuestionArray.push(6);
+
+    return finalActiveQuestionArray;
+  }
 
   async updateDatabase() {
     const { activeQuestion, firstName, lastName, ageRange, race } = this.state;
@@ -1120,6 +1282,7 @@ export default class Screen extends Component {
     });
   }
 
+  // Pull the data from the provider
   async pullProviderData() {
     const path = window.location.pathname;
     if (path === "/getstartedclient") {
@@ -1130,8 +1293,14 @@ export default class Screen extends Component {
         .where("escora_id", "==", "lisali96")
         .get();
 
+      const activeQuestionArray = this.pullActiveQuestions(
+        provider.docs[0].data()
+      );
+
       this.setState({
         providerData: provider.docs[0].data(),
+        activeQuestionArray: activeQuestionArray,
+        activeQuestion: activeQuestionArray[0],
       });
     } else {
       const id = path.substring(1, path.length);
@@ -1147,8 +1316,14 @@ export default class Screen extends Component {
           errorPage: true,
         });
       } else {
+        const activeQuestionArray = this.pullActiveQuestions(
+          provider.docs[0].data()
+        );
+
         this.setState({
           providerData: provider.docs[0].data(),
+          activeQuestionArray: activeQuestionArray,
+          activeQuestion: activeQuestionArray[0],
         });
       }
     }

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "./Header";
+import { isMobile } from "react-device-detect";
 
 export default class About extends Component {
   render() {
@@ -8,8 +9,8 @@ export default class About extends Component {
         <Header margin={"10vw"} />
         <div
           style={{
-            marginLeft: "10vw",
-            marginRight: "10vw",
+            marginLeft: isMobile ? "5vw" : "10vw",
+            marginRight: isMobile ? "5vw" : "10vw",
             display: "flex",
             flexDirection: "column",
             marginTop: 120,
@@ -34,10 +35,11 @@ export default class About extends Component {
           >
             <div
               style={{
-                width: "18vw",
+                width: isMobile ? "90vw" : "18vw",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                marginTop: isMobile ? 30 : 0,
               }}
             >
               <img
@@ -61,10 +63,11 @@ export default class About extends Component {
             </div>
             <div
               style={{
-                width: "18vw",
+                width: isMobile ? "90vw" : "18vw",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                marginTop: isMobile ? 30 : 0,
               }}
             >
               <img
@@ -89,10 +92,11 @@ export default class About extends Component {
 
             <div
               style={{
-                width: "18vw",
+                width: isMobile ? "90vw" : "18vw",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                marginTop: isMobile ? 30 : 0,
               }}
             >
               <img
@@ -118,10 +122,11 @@ export default class About extends Component {
             </div>
             <div
               style={{
-                width: "18vw",
+                width: isMobile ? "90vw" : "18vw",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                marginTop: isMobile ? 30 : 0,
               }}
             >
               <img
@@ -169,10 +174,11 @@ export default class About extends Component {
           >
             <div
               style={{
-                width: "18vw",
+                width: isMobile ? "90vw" : "18vw",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                marginTop: isMobile ? 30 : 0,
               }}
             >
               <img
@@ -198,10 +204,11 @@ export default class About extends Component {
             </div>
             <div
               style={{
-                width: "18vw",
+                width: isMobile ? "90vw" : "18vw",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                marginTop: isMobile ? 30 : 0,
               }}
             >
               <img
@@ -225,10 +232,11 @@ export default class About extends Component {
             </div>
             <div
               style={{
-                width: "18vw",
+                width: isMobile ? "90vw" : "18vw",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                marginTop: isMobile ? 30 : 0,
               }}
             >
               <img
@@ -316,7 +324,7 @@ export default class About extends Component {
           >
             Advantages of Escora
           </div>
-          <div style={{ width: "30vw", marginBottom: 30 }}>
+          <div style={{ width: isMobile ? "90vw" : "30vw", marginBottom: 30 }}>
             <div style={{ fontSize: 22, fontWeight: 500 }}>
               Keep your clients
             </div>
@@ -328,7 +336,7 @@ export default class About extends Component {
               process without worry.
             </div>
           </div>
-          <div style={{ width: "30vw", marginBottom: 30 }}>
+          <div style={{ width: isMobile ? "90vw" : "30vw", marginBottom: 30 }}>
             <div style={{ fontSize: 22, fontWeight: 500 }}>Safety</div>
             <div style={{ height: 10 }}></div>
             <div style={{ color: "#515151", fontSize: 18 }}>
@@ -338,7 +346,7 @@ export default class About extends Component {
               yourself, or with anyone else.
             </div>
           </div>
-          <div style={{ width: "30vw", marginBottom: 30 }}>
+          <div style={{ width: isMobile ? "90vw" : "30vw", marginBottom: 30 }}>
             <div style={{ fontSize: 22, fontWeight: 500 }}>
               Easy & Quick for Everyone
             </div>
@@ -350,7 +358,7 @@ export default class About extends Component {
               in a matter of seconds.
             </div>
           </div>
-          <div style={{ width: "30vw", marginBottom: 30 }}>
+          <div style={{ width: isMobile ? "90vw" : "30vw", marginBottom: 30 }}>
             <div style={{ fontSize: 22, fontWeight: 500 }}>Privacy</div>
             <div style={{ height: 10 }}></div>
             <div style={{ color: "#515151", fontSize: 18 }}>
@@ -361,7 +369,7 @@ export default class About extends Component {
           </div>
         </div>
 
-        <div style={{ height: 100 }}></div>
+        <div style={{ height: 80 }}></div>
       </div>
     );
   }

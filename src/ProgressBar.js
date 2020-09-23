@@ -19,6 +19,8 @@ export default class ProgressBar extends Component {
           width: [width],
           backgroundColor: "#008489",
           borderRadius: 5,
+          position: "fixed",
+          top: 81,
         }}
       ></div>
     );

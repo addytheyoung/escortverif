@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Header from "./Header";
 import "./css/Home.css";
+import { isMobile } from "react-device-detect";
 
 export default class Home extends Component {
   constructor(props) {
@@ -14,15 +15,19 @@ export default class Home extends Component {
       <div>
         <Header />
         <div
-          style={{ paddingLeft: "20vw", paddingRight: "20vw", marginTop: 140 }}
+          style={{
+            paddingLeft: isMobile ? "5vw" : "20vw",
+            paddingRight: isMobile ? "5vw" : "20vw",
+            marginTop: isMobile ? 120 : 140,
+          }}
         >
-          <div style={{ width: "30vw" }}>
+          <div style={{ width: isMobile ? "90vw" : "30vw" }}>
             <div style={{ fontSize: 36, fontWeight: 500 }}>
               Escorts: Screening clients has never been easier
             </div>
             <div style={{ marginTop: 20, fontSize: 18 }}>
-              Just send your unique Escora link to the client, <br /> and we
-              handle the rest.
+              Just send your unique Escora link to the client, and we handle the
+              rest.
               {/* <br /> <br />
               Customize your screening process to fit what YOU <br /> need from
               your clients. */}
@@ -77,17 +82,19 @@ export default class Home extends Component {
 
           <div
             style={{
-              marginTop: 80,
+              marginTop: isMobile ? 40 : 80,
               display: "flex",
               justifyContent: "space-between",
+              flexWrap: "wrap",
             }}
           >
             <div
               style={{
-                width: "18vw",
+                width: isMobile ? "90vw" : "18vw",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                marginTop: isMobile ? 30 : 0,
               }}
             >
               <img
@@ -113,10 +120,11 @@ export default class Home extends Component {
             </div>
             <div
               style={{
-                width: "18vw",
+                width: isMobile ? "90vw" : "18vw",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                marginTop: isMobile ? 30 : 0,
               }}
             >
               <img
@@ -141,10 +149,11 @@ export default class Home extends Component {
             </div>
             <div
               style={{
-                width: "18vw",
+                width: isMobile ? "90vw" : "18vw",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                marginTop: isMobile ? 30 : 0,
               }}
             >
               <img
@@ -168,6 +177,7 @@ export default class Home extends Component {
             </div>
           </div>
         </div>
+        <div style={{ height: 80 }}></div>
       </div>
     );
   }

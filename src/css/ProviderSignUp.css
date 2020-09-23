@@ -5,3 +5,11 @@
 #camera {
   width: 40vw;
 }
+
+#camera-mobile video {
+  width: 100vw;
+}
+
+#camera-mobile {
+  width: 100vw;
+}

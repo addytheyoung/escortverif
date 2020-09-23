@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Input } from "@material-ui/core";
+import { isMobile } from "react-device-detect";
 
 export default class ProviderInput extends Component {
   constructor(props) {
@@ -22,12 +23,21 @@ export default class ProviderInput extends Component {
             flexDirection: "column",
           }}
         >
-          <div style={{ fontSize: 28, fontWeight: 500 }}>{title}</div>
+          <div
+            style={{
+              fontSize: 28,
+              fontWeight: 500,
+              width: isMobile ? "90vw" : "30vw",
+              textAlign: "center",
+            }}
+          >
+            {title}
+          </div>
           <div
             style={{
               marginTop: 20,
               fontSize: 16,
-              width: "30vw",
+              width: isMobile ? "90vw" : "30vw",
               textAlign: "center",
             }}
           >

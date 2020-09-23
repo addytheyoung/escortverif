@@ -4,6 +4,7 @@ import { Checkbox } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 import { createMuiTheme } from "@material-ui/core/styles";
+import { isMobile } from "react-device-detect";
 
 export default class MakeScreen extends Component {
   counter = -1;
@@ -68,21 +69,29 @@ export default class MakeScreen extends Component {
             alignItems: "center",
           }}
         >
-          <div style={{ width: "40vw" }}>
-            <div
-              style={{
-                marginTop: 120,
-                fontSize: 26,
-                marginBottom: 60,
-                fontWeight: 500,
-              }}
-            >
-              What you would like to know (and verify) about your clients?
-            </div>
-
+          <div
+            style={{
+              marginTop: 120,
+              fontSize: 28,
+              marginBottom: 60,
+              fontWeight: 500,
+              width: isMobile ? "90vw" : "60vw",
+              textAlign: "center",
+            }}
+          >
+            What would you like to know (and verify) about your clients?
+          </div>
+          <div
+            style={{
+              width: isMobile ? "100vw" : "60vw",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
             {this.mainCheckboxComp(
               ["Given", "Escora Ratings & Reviews", "Phone Number"],
-              "Client encounters are stored with Escora. We show the clients encounters with other providers who used Escora, including ratings, reviews, and total number of encounters. If a client has no Escora history, they may just be new to the platform, but we reccommend checking the (optional) references box below just to be safe.",
+              "Client encounters are stored with Escora. We show the clients encounters with other providers who used Escora, including ratings & reviews of the client from the other providers. (Don't worry: client's don't rate or review providers) If a client has no Escora history, they may just be new to the platform, but we reccommend checking the references box below just to be safe. We also require a verified phone number for the client to begin. Phone number is the only thing Escora requires. The rest is up to you!",
               0
             )}
 
@@ -96,7 +105,7 @@ export default class MakeScreen extends Component {
                 "Race",
                 "Want 'About' verified?",
               ],
-              "Just some basic info about your client. Most clients have this verified already, but if not, to verify we request a liscense or some other form of identification. If you don't want this info verified, we just send you what the client gives us.",
+              "Just some basic info about your client. Most clients have this verified already, but if not, to verify we request a liscense or some other form of identification. If you don't want this info verified, (a bit easier for the client) we just send you the info the client gives us, which may or may not be true.",
               2
             )}
             <div style={{ height: 40 }}></div>
@@ -251,7 +260,9 @@ export default class MakeScreen extends Component {
       <div
         style={{
           display: "flex",
-          alignItems: "center",
+          marginBottom: 30,
+          marginTop: 30,
+          width: isMobile ? "80vw" : "25vw",
           justifyContent: "center",
         }}
       >
@@ -295,7 +306,6 @@ export default class MakeScreen extends Component {
                 <div style={{ width: 200 }}>{elem}</div>
 
                 <Checkbox
-                  style={{ zIndex: 1 }}
                   disabled={
                     newIndex === 0 || newIndex === 1 || newIndex >= 18
                       ? true
@@ -327,8 +337,6 @@ export default class MakeScreen extends Component {
             </div>
           )}
         </div>
-
-        <div style={{ width: 50 }}></div>
       </div>
     );
   }
