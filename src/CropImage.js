@@ -129,6 +129,7 @@ export default class CropTest extends PureComponent {
 
         {croppedImageUrl && showCroppedImage && (
           <img
+            id="cropped-image"
             alt="Crop"
             style={{
               width: 200,

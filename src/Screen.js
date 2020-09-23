@@ -11,6 +11,7 @@ import ProgressBar from "./ProgressBar";
 import ReferenceInput from "./ReferenceInput";
 import { isMobile } from "react-device-detect";
 import "./css/ProviderSignUp.css";
+import { LineShareButton } from "react-share";
 
 export default class Screen extends Component {
   constructor(props) {
@@ -80,6 +81,7 @@ export default class Screen extends Component {
   }
 
   render() {
+    // Get all the data
     const {
       uploadingPicture,
       uploadingFile,
@@ -104,8 +106,21 @@ export default class Screen extends Component {
       ageRange,
       race,
       activeQuestionArray,
+      facebook,
+      instagram,
+      twitter,
+      references,
     } = this.state;
     const { profileData } = this.props;
+
+    // get the activequestionindex
+    var activeQuestionArrayIndex = -1;
+    for (var i = 0; i < activeQuestionArray.length; i++) {
+      if (activeQuestionArray[i] === activeQuestion) {
+        activeQuestionArrayIndex = i;
+        break;
+      }
+    }
 
     if (errorPage) {
       return <ErrorPage />;
@@ -148,7 +163,7 @@ export default class Screen extends Component {
           {activeQuestion === 0 && (
             <div>
               <ProgressBar
-                currentIndex={0}
+                currentIndex={activeQuestionArrayIndex + 1}
                 total={activeQuestionArray.length}
               />
               <ProviderInput
@@ -255,13 +270,84 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 1 && (
+          {activeQuestion === 0 && (
             <div>
               <ProgressBar
-                currentIndex={1}
+                currentIndex={activeQuestionArrayIndex + 1}
                 total={activeQuestionArray.length}
               />
               <ProviderInput
+                prevDisabled={activeQuestionArrayIndex === 0}
+                clickPrev={() => this.clickPrev()}
+                clickNext={() => this.clickNext()}
+                nextDisabled={!this.checkReferenceArray()}
+                title={"References"}
+                subTitle={
+                  "Seen other escorts? For some providers, this is all you need. Make sure to include their online profile (Eros, Adultsearch, etc.)"
+                }
+                input={
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div
+                      style={{ cursor: "pointer", fontSize: 18 }}
+                      onClick={() => {
+                        if (numReferences.length >= 5) {
+                          return;
+                        }
+                        this.setState({
+                          numReferences: [...numReferences, ""],
+                        });
+                      }}
+                    >
+                      {"Add a reference +"}
+                    </div>
+
+                    {numReferences.map((ref, index) => {
+                      return (
+                        <div style={{ marginTop: 10, marginBottom: 10 }}>
+                          <ReferenceInput
+                            updateState={(state) =>
+                              this.updateReferences(state, index)
+                            }
+                            key={index}
+                          />
+                        </div>
+                      );
+                    })}
+                    <div
+                      style={{ cursor: "pointer", marginTop: 20, fontSize: 18 }}
+                      onClick={() => {
+                        const tempRef = numReferences;
+                        if (tempRef.length === 0) {
+                          return;
+                        }
+                        tempRef.splice(0, 1);
+                        this.setState({
+                          numReferences: tempRef,
+                        });
+                      }}
+                    >
+                      {"Remove a reference -"}
+                    </div>
+                  </div>
+                }
+              />
+            </div>
+          )}
+
+          {activeQuestion === 1 && (
+            <div>
+              <ProgressBar
+                currentIndex={activeQuestionArrayIndex + 1}
+                total={activeQuestionArray.length}
+              />
+              <ProviderInput
+                prevDisabled={activeQuestionArrayIndex === 0}
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
                 nextDisabled={activePosePictureUri === "" || croppingPicture}
@@ -511,13 +597,14 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 2 && (
+          {activeQuestion === 3 && (
             <div>
               <ProgressBar
-                currentIndex={2}
+                currentIndex={activeQuestionArrayIndex + 1}
                 total={activeQuestionArray.length}
               />
               <ProviderInput
+                prevDisabled={activeQuestionArrayIndex === 0}
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
                 nextDisabled={activeLiscenseUri === ""}
@@ -566,13 +653,14 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 3 && (
+          {activeQuestion === 4 && (
             <div>
               <ProgressBar
-                currentIndex={3}
+                currentIndex={activeQuestionArrayIndex + 1}
                 total={activeQuestionArray.length}
               />
               <ProviderInput
+                prevDisabled={activeQuestionArrayIndex === 0}
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
                 nextDisabled={
@@ -680,73 +768,68 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 4 && (
+          {activeQuestion === 5 && (
             <div>
               <ProgressBar
-                currentIndex={4}
+                currentIndex={activeQuestionArrayIndex + 1}
                 total={activeQuestionArray.length}
               />
               <ProviderInput
+                prevDisabled={activeQuestionArrayIndex === 0}
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
                 nextDisabled={false}
-                title={"References"}
+                title={"Social"}
                 subTitle={
-                  "Seen other escorts? For some providers, this is all you need. Make sure to include their online profile (Eros, Adultsearch, etc.)"
+                  <div style={{}}>Optional, but highly reccomended.</div>
                 }
                 input={
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    {/* <Input
-                      onChange={(word) =>
-                        this.setState({
-                          employerCity: word.target.value,
-                        })
-                      }
-                      value={employerCity}
-                      placeholder="Facebook profile"
-                      style={{ width: 260 }}
-                    />
-                    <div style={{ height: 10 }}></div>
-                    <Input
-                      onChange={(word) =>
-                        this.setState({
-                          employerCity: word.target.value,
-                        })
-                      }
-                      value={employerCity}
-                      placeholder="Twitter profile"
-                      style={{ width: 260 }}
-                    />
-                    <div style={{ height: 10 }}></div>
-
-                    <Input
-                      onChange={(word) =>
-                        this.setState({
-                          employerCity: word.target.value,
-                        })
-                      }
-                      value={employerCity}
-                      placeholder="Address"
-                      style={{ width: 260 }}
-                    /> */}
-
-                    <div
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        this.setState({
-                          numReferences: [...numReferences, ""],
-                        });
-                      }}
-                    >
-                      {"Add a reference +"}
+                  <div>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <Input
+                        onChange={(word) =>
+                          this.setState({
+                            facebook: word.target.value,
+                          })
+                        }
+                        value={facebook}
+                        placeholder="Facebook profile"
+                        style={{ width: 260, fontSize: 18 }}
+                      />
+                      <div style={{ height: 20 }}></div>
+                      <Input
+                        onChange={(word) =>
+                          this.setState({
+                            twitter: word.target.value,
+                          })
+                        }
+                        value={twitter}
+                        placeholder="Twitter profile"
+                        style={{ width: 260, fontSize: 18 }}
+                      />
+                      <div style={{ height: 20 }}></div>
+                      <Input
+                        onChange={(word) =>
+                          this.setState({
+                            twitter: word.target.value,
+                          })
+                        }
+                        value={twitter}
+                        placeholder="Twitter profile"
+                        style={{ width: 260, fontSize: 18 }}
+                      />
+                      <div style={{ height: 20 }}></div>
+                      <Input
+                        onChange={(word) =>
+                          this.setState({
+                            linkedinProfile: word.target.value,
+                          })
+                        }
+                        value={linkedinProfile}
+                        placeholder="Linkedin profile"
+                        style={{ width: 260, fontSize: 18 }}
+                      />
                     </div>
-                    {numReferences.map((ref, index) => {
-                      return (
-                        <div style={{ marginTop: 10, marginBottom: 10 }}>
-                          <ReferenceInput />
-                        </div>
-                      );
-                    })}
                   </div>
                 }
               />
@@ -981,6 +1064,7 @@ export default class Screen extends Component {
         break;
       }
     }
+
     this.setState({
       activeQuestion: activeQuestionArray[activeQuestionArrayIndex - 1],
     });
@@ -1024,6 +1108,36 @@ export default class Screen extends Component {
         activeQuestion: activeQuestionArray[activeQuestionArrayIndex + 1],
       });
     }
+  }
+
+  updateReferences(newState, index) {
+    const { references } = this.state;
+    const tempReferences = references;
+
+    if (index < tempReferences.length) {
+      tempReferences[index] = newState;
+    } else {
+      tempReferences.push(newState);
+    }
+
+    this.setState({
+      references: tempReferences,
+    });
+  }
+
+  checkReferenceArray() {
+    const { references, numReferences } = this.state;
+    if (references.length < numReferences.length) {
+      return false;
+    } else {
+      for (var i = 0; i < numReferences.length; i++) {
+        if (references[i].name === "" || references[i].contact === "") {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   // ** Check out Pages start **
@@ -1087,7 +1201,12 @@ export default class Screen extends Component {
     const { references } = profileData;
     const { client_references } = providerData;
 
-    if (client_references && references.length === 0) {
+    if (
+      client_references &&
+      (references.length === 0 ||
+        references[0].name === "" ||
+        references[0].contact === "")
+    ) {
       return true;
     }
     return false;
@@ -1144,15 +1263,37 @@ export default class Screen extends Component {
   }
 
   async updateDatabase() {
-    const { activeQuestion, firstName, lastName, ageRange, race } = this.state;
+    const {
+      activeQuestion,
+      firstName,
+      lastName,
+      ageRange,
+      race,
+      references,
+    } = this.state;
     const myDocRef = firebase.firestore().collection("Clients").doc("abc");
     if (activeQuestion === 0) {
+      // About
       await myDocRef.update({
         first_name: firstName,
         last_name: lastName,
         age: ageRange,
         race: race,
       });
+    }
+    //  else if (activeQuestion === 1) {
+    //   // References
+    //   await myDocRef.update({
+    //     references: references,
+    //   });
+    // }
+    else if (activeQuestion === 1) {
+      const croppedPicture = document.getElementById("cropped-image").src;
+      console.log(croppedPicture);
+    } else if (activeQuestion === 3) {
+    } else if (activeQuestion === 4) {
+    } else if (activeQuestion === 5) {
+    } else if (activeQuestion === 6) {
     } else {
     }
   }
