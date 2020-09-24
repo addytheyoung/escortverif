@@ -19,6 +19,7 @@ export default class Screen extends Component {
     super(props);
 
     const { profileData } = this.props;
+
     const {
       address,
       age,
@@ -75,11 +76,6 @@ export default class Screen extends Component {
       activeImage: "",
     };
 
-    // 1) Signed out + invalid provider, render: ErrorPage
-    // 2) Signed in + invalid provider, render: ErrorPage
-    // 3) Signed out + valid provider, render: activeQuestion: 0
-    // 4) Signed in + valid provider, render: activeQuestion: x
-
     this.pullProviderData();
   }
 
@@ -135,7 +131,7 @@ export default class Screen extends Component {
           <LoadingPage />
         </div>
       );
-    } else if (profileData) {
+    } else if (profileData.first_name) {
       // Signed in!
       return (
         <div>
@@ -275,7 +271,7 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 0 && (
+          {activeQuestion === 1 && (
             <div>
               <ProgressBar
                 currentIndex={activeQuestionArrayIndex + 1}
@@ -345,7 +341,7 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 0 && (
+          {activeQuestion === 2 && (
             <div>
               <ProgressBar
                 currentIndex={activeQuestionArrayIndex + 1}
@@ -605,7 +601,7 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 0 && (
+          {activeQuestion === 3 && (
             <div>
               <ProgressBar
                 currentIndex={activeQuestionArrayIndex + 1}
@@ -858,7 +854,7 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 0 && (
+          {activeQuestion === 4 && (
             <div>
               <ProgressBar
                 currentIndex={activeQuestionArrayIndex + 1}
@@ -971,7 +967,7 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 0 && (
+          {activeQuestion === 5 && (
             <div>
               <ProgressBar
                 currentIndex={activeQuestionArrayIndex + 1}
@@ -1038,7 +1034,7 @@ export default class Screen extends Component {
               />
             </div>
           )}
-          {activeQuestion === 1 && (
+          {activeQuestion === 6 && (
             <div
               style={{
                 marginTop: 80,
@@ -1465,34 +1461,38 @@ export default class Screen extends Component {
   // What questions does our user need to answer?
   pullActiveQuestions(providerData) {
     const profileData = this.props.profileData;
-    const finalActiveQuestionArray = [];
+    var finalActiveQuestionArray = [];
+    const signedIn = firebase.auth().currentUser;
 
-    if (this.checkAboutPage(profileData, providerData)) {
-      finalActiveQuestionArray.push(0);
+    if (signedIn) {
+      if (this.checkAboutPage(profileData, providerData)) {
+        finalActiveQuestionArray.push(0);
+      }
+
+      if (this.checkReferencePage(profileData, providerData)) {
+        finalActiveQuestionArray.push(1);
+      }
+
+      if (this.checkPicturePage(profileData, providerData)) {
+        finalActiveQuestionArray.push(2);
+      }
+
+      if (this.checkLiscensePage(profileData, providerData)) {
+        finalActiveQuestionArray.push(3);
+      }
+
+      if (this.checkEmploymentPage(profileData, providerData)) {
+        finalActiveQuestionArray.push(4);
+      }
+
+      if (this.checkSocialPage(profileData, providerData)) {
+        finalActiveQuestionArray.push(5);
+      }
+      // Always push the final page
+      finalActiveQuestionArray.push(6);
+    } else {
+      finalActiveQuestionArray = [0, 1, 2, 3, 4, 5, 6];
     }
-
-    if (this.checkReferencePage(profileData, providerData)) {
-      finalActiveQuestionArray.push(1);
-    }
-
-    if (this.checkPicturePage(profileData, providerData)) {
-      finalActiveQuestionArray.push(2);
-    }
-
-    if (this.checkLiscensePage(profileData, providerData)) {
-      finalActiveQuestionArray.push(3);
-    }
-
-    if (this.checkEmploymentPage(profileData, providerData)) {
-      finalActiveQuestionArray.push(4);
-    }
-
-    if (this.checkSocialPage(profileData, providerData)) {
-      finalActiveQuestionArray.push(5);
-    }
-
-    // Always push the final page
-    finalActiveQuestionArray.push(6);
 
     return finalActiveQuestionArray;
   }
@@ -1525,63 +1525,58 @@ export default class Screen extends Component {
         age: ageRange,
         race: race,
       });
-    }
-    //  else if (activeQuestion === 1) {
-    //   // References
-    //   await myDocRef.update({
-    //     references: references,
-    //   });
-    // }
-    // else if (activeQuestion === 1) {
-    //   console.log(croppedImg);
-    //   const number = randomNumber(20);
-    //   const storageRef = firebase
-    //     .storage()
-    //     .ref()
-    //     .child(firebase.auth().currentUser.uid)
-    //     .child("profile_picture");
+    } else if (activeQuestion === 1) {
+      // References
+      await myDocRef.update({
+        references: references,
+      });
+    } else if (activeQuestion === 2) {
+      console.log(croppedImg);
+      const number = randomNumber(20);
+      const storageRef = firebase
+        .storage()
+        .ref()
+        .child(firebase.auth().currentUser.uid)
+        .child("profile_picture");
 
-    //   await storageRef.put(croppedImg);
-    //   const url = await storageRef.getDownloadURL();
-    //   await myDocRef.update({
-    //     picture: url,
-    //   });
-    // }
-    // else if (activeQuestion === 1) {
-    //   console.log(croppedImg);
-    //   const storageRef = firebase
-    //     .storage()
-    //     .ref()
-    //     .child(firebase.auth().currentUser.uid)
-    //     .child("liscense");
+      await storageRef.put(croppedImg);
+      const url = await storageRef.getDownloadURL();
+      await myDocRef.update({
+        picture: url,
+      });
+    } else if (activeQuestion === 3) {
+      console.log(croppedImg);
+      const storageRef = firebase
+        .storage()
+        .ref()
+        .child(firebase.auth().currentUser.uid)
+        .child("liscense");
 
-    //   await storageRef.put(croppedImg);
-    //   const url = await storageRef.getDownloadURL();
-    //   await myDocRef.update({
-    //     lisense_picture: url,
-    //   });
-    // }
-    // else if (activeQuestion === 1) {
-    //   var url = "";
-    //   if (activePaystubUri) {
-    //     const storageRef = await firebase
-    //       .storage()
-    //       .ref()
-    //       .child(firebase.auth().currentUser.uid)
-    //       .child("employment");
+      await storageRef.put(croppedImg);
+      const url = await storageRef.getDownloadURL();
+      await myDocRef.update({
+        lisense_picture: url,
+      });
+    } else if (activeQuestion === 4) {
+      var url = "";
+      if (activePaystubUri) {
+        const storageRef = await firebase
+          .storage()
+          .ref()
+          .child(firebase.auth().currentUser.uid)
+          .child("employment");
 
-    //     await storageRef.put(activeImage);
-    //     url = await storageRef.getDownloadURL();
-    //   }
-    //   await myDocRef.update({
-    //     paystub_picture: url,
-    //     job_title: jobTitle,
-    //     employer: employerTitle,
-    //     employer_city: employerCity,
-    //     linkedin: linkedinProfile,
-    //   });
-    // }
-    else if (activeQuestion === 1) {
+        await storageRef.put(activeImage);
+        url = await storageRef.getDownloadURL();
+      }
+      await myDocRef.update({
+        paystub_picture: url,
+        job_title: jobTitle,
+        employer: employerTitle,
+        employer_city: employerCity,
+        linkedin: linkedinProfile,
+      });
+    } else if (activeQuestion === 5) {
       await myDocRef.update({
         facebook: facebook,
         twitter: twitter,
@@ -1722,7 +1717,7 @@ export default class Screen extends Component {
       const provider = await firebase
         .firestore()
         .collection("Providers")
-        .where("escora_id", "==", "lisali96")
+        .where("escora_id", "==", "lisali69")
         .get();
 
       const activeQuestionArray = this.pullActiveQuestions(
@@ -1735,6 +1730,7 @@ export default class Screen extends Component {
         activeQuestion: activeQuestionArray[0],
       });
     } else {
+      // Get the specific provider data.
       const id = path.substring(1, path.length);
       const provider = await firebase
         .firestore()
@@ -1743,7 +1739,6 @@ export default class Screen extends Component {
         .get();
 
       if (provider.empty) {
-        // Render error page
         this.setState({
           errorPage: true,
         });

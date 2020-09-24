@@ -90,7 +90,7 @@ export default class ProviderSignUp extends Component {
 
           {currentInput === 0 && (
             <div>
-              <ProgressBar currentIndex={1} total={5} />
+              <ProgressBar currentIndex={1} total={4} />
 
               <ProviderInput
                 clickPrev={() => this.clickPrev()}
@@ -117,7 +117,7 @@ export default class ProviderSignUp extends Component {
           )}
           {currentInput === 1 && (
             <div>
-              <ProgressBar currentIndex={2} total={5} />
+              <ProgressBar currentIndex={2} total={4} />
 
               <ProviderInput
                 clickPrev={() => this.clickPrev()}
@@ -157,7 +157,7 @@ export default class ProviderSignUp extends Component {
 
           {currentInput === 2 && (
             <div>
-              <ProgressBar currentIndex={3} total={5} />
+              <ProgressBar currentIndex={3} total={4} />
               <ProviderInput
                 prevDisabled={false}
                 clickPrev={() => this.clickPrev()}
@@ -392,8 +392,8 @@ export default class ProviderSignUp extends Component {
             }}
           >
             <div style={{ textAlign: "center", width: "30vw", fontSize: 12 }}>
-              We don't share this information with anyone. We use this just to
-              make sure you're real, and we take as little info as possible.
+              We don't share this information with anyone, and we take as little
+              info as possible.
             </div>
           </div>
         </div>

@@ -84,7 +84,7 @@ export default class RenderRoutes extends Component {
               <Route
                 path="/getstartedclient"
                 exact={true}
-                render={() => <Screen />}
+                render={() => <Screen profileData={profileData} />}
               />
 
               <Route
@@ -139,7 +139,7 @@ export default class RenderRoutes extends Component {
         });
     } else {
       this.setState({
-        profileData: null,
+        profileData: {},
         loadedData: true,
         type: "",
       });
