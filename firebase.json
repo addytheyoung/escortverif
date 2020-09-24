@@ -7,9 +7,42 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "./build",
+    "public": "client/build",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
+      {
+        "source": "/public-key",
+        "function": "app"
+      },
+      {
+        "source": "/create-transfers",
+        "function": "app"
+      },
+      { "source": "/product-details", "function": "app" },
+      {
+        "source": "/customer",
+        "function": "app"
+      },
+      {
+        "source": "/create-payment-intent",
+        "function": "app"
+      },
+      {
+        "source": "/fetch-item-price",
+        "function": "app"
+      },
+      {
+        "source": "/make-seller",
+        "function": "app"
+      },
+      {
+        "source": "/post-to-fb",
+        "function": "app"
+      },
+      {
+        "source": "/send-email",
+        "function": "app"
+      },
       {
         "source": "**",
         "destination": "/index.html"
