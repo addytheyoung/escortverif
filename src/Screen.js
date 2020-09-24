@@ -11,7 +11,8 @@ import ProgressBar from "./ProgressBar";
 import ReferenceInput from "./ReferenceInput";
 import { isMobile } from "react-device-detect";
 import "./css/ProviderSignUp.css";
-import { LineShareButton } from "react-share";
+import randomNumber from "./functions/randomNumber";
+import { act } from "react-dom/test-utils";
 
 export default class Screen extends Component {
   constructor(props) {
@@ -70,6 +71,8 @@ export default class Screen extends Component {
       numReferences: [],
       activeQuestion: 0,
       activeQuestionArray: [],
+      croppedImg: "",
+      activeImage: "",
     };
 
     // 1) Signed out + invalid provider, render: ErrorPage
@@ -110,6 +113,8 @@ export default class Screen extends Component {
       instagram,
       twitter,
       references,
+      croppedImg,
+      activeImage,
     } = this.state;
     const { profileData } = this.props;
 
@@ -340,7 +345,7 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 1 && (
+          {activeQuestion === 0 && (
             <div>
               <ProgressBar
                 currentIndex={activeQuestionArrayIndex + 1}
@@ -380,7 +385,10 @@ export default class Screen extends Component {
                             // isImageMirror={false}
                             // idealFacingMode={"environment"}
                             onTakePhoto={(dataUri) =>
-                              this.handleTakePhoto(dataUri)
+                              this.handleTakePhoto(
+                                dataUri,
+                                "activePosePictureUri"
+                              )
                             }
                           ></Camera>
                         )}
@@ -597,7 +605,7 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 3 && (
+          {activeQuestion === 0 && (
             <div>
               <ProgressBar
                 currentIndex={activeQuestionArrayIndex + 1}
@@ -607,53 +615,250 @@ export default class Screen extends Component {
                 prevDisabled={activeQuestionArrayIndex === 0}
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
-                nextDisabled={activeLiscenseUri === ""}
+                nextDisabled={activeLiscenseUri === "" || croppingPicture}
                 title={"Please upload a picture of your liscense"}
-                subTitle={
-                  "This is so we can verify your name, race, and age for " +
-                  providerData.first_name +
-                  "."
-                }
+                subTitle={"This is so we can verify your info."}
                 input={
-                  <div>
-                    <Input
-                      id="pic-input"
-                      onChangeCapture={() =>
-                        this.uploadedImage("activeLiscenseUri")
-                      }
-                      type="file"
-                    />
-
-                    {activeLiscenseUri !== "" && (
-                      <div>
-                        <img style={{ width: 260 }} src={activeLiscenseUri} />{" "}
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {uploadingPicture && (
+                      <div
+                        id={isMobile ? "camera-mobile" : "camera"}
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
+                      >
+                        {!activeLiscenseUri && (
+                          <Camera
+                            onCameraStop={() => console.log("")}
+                            oncameraError={() => console.log("")}
+                            onTakePhoto={(dataUri) =>
+                              this.handleTakePhoto(dataUri, "activeLiscenseUri")
+                            }
+                          ></Camera>
+                        )}
+                        <CropImage
+                          showCroppedImage={!croppingPicture}
+                          showOriginalImage={croppingPicture}
+                          setCroppedImg={(croppedImgUrl) =>
+                            this.setCroppedImg(croppedImgUrl)
+                          }
+                          picture={activeLiscenseUri}
+                        />
+                        {croppingPicture && (
+                          <div
+                            onClick={() =>
+                              this.setState({
+                                croppingPicture: false,
+                              })
+                            }
+                            id="button"
+                            style={{
+                              marginTop: 5,
+                              borderRadius: 5,
+                              backgroundColor: "#008489",
+                              color: "white",
+                              padding: 10,
+                              fontSize: 18,
+                              fontWeight: 500,
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              marginBottom: 40,
+                            }}
+                          >
+                            DONE CROPPING
+                          </div>
+                        )}
+                        {!croppingPicture && (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                            }}
+                          >
+                            <div
+                              style={{
+                                fontSize: 18,
+                                marginTop: 30,
+                                fontWeight: 500,
+                              }}
+                            >
+                              OR
+                            </div>
+                            <div
+                              onClick={() =>
+                                this.setState({
+                                  uploadingFile: true,
+                                  uploadingPicture: false,
+                                  activeLiscenseUri: "",
+                                })
+                              }
+                              id="button"
+                              style={{
+                                marginTop: 20,
+                                borderRadius: 5,
+                                backgroundColor: "#a1a1a1",
+                                color: "white",
+                                padding: 10,
+                                fontSize: 18,
+                                fontWeight: 500,
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                width: 170,
+                                marginBottom: 40,
+                              }}
+                            >
+                              Upload a photo
+                            </div>
+                          </div>
+                        )}
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Checkbox
+                            onChange={() => this.updateCheckedBoxes(0)}
+                            checked={deleteItems[0]}
+                          ></Checkbox>
+                          <div style={{ fontSize: 18 }}>
+                            I want this deleted after Lisa views it.
+                          </div>
+                        </div>
                       </div>
                     )}
 
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Checkbox
-                        onChange={() => this.updateCheckedBoxes(1)}
-                        checked={deleteItems[1]}
-                      ></Checkbox>
-                      <div>
-                        {"I want this deleted after " +
-                          providerData.first_name +
-                          " views it."}
+                    {uploadingFile && (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Input
+                          id="pic-input"
+                          onChangeCapture={() =>
+                            this.uploadedImage("activeLiscenseUri")
+                          }
+                          type="file"
+                        />
+                        <CropImage
+                          showCroppedImage={!croppingPicture}
+                          showOriginalImage={croppingPicture}
+                          setCroppedImg={(croppedImgUrl) =>
+                            this.setCroppedImg(croppedImgUrl)
+                          }
+                          picture={activeLiscenseUri}
+                        />
+
+                        {croppingPicture && (
+                          <div
+                            onClick={() =>
+                              this.setState({
+                                croppingPicture: false,
+                              })
+                            }
+                            id="button"
+                            style={{
+                              marginTop: 5,
+                              borderRadius: 5,
+                              backgroundColor: "#008489",
+                              color: "white",
+                              padding: 10,
+                              fontSize: 18,
+                              fontWeight: 500,
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              marginBottom: 40,
+                            }}
+                          >
+                            DONE CROPPING
+                          </div>
+                        )}
+
+                        {!croppingPicture && (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              marginTop: 20,
+                            }}
+                          >
+                            <div
+                              style={{
+                                fontSize: 18,
+                                fontWeight: 500,
+                              }}
+                            >
+                              OR
+                            </div>
+                            <div
+                              onClick={() =>
+                                this.setState({
+                                  uploadingFile: false,
+                                  uploadingPicture: true,
+                                  activeLiscenseUri: "",
+                                })
+                              }
+                              id="button"
+                              style={{
+                                marginTop: 20,
+                                borderRadius: 5,
+                                backgroundColor: "#a1a1a1",
+                                color: "white",
+                                padding: 10,
+                                fontSize: 18,
+                                fontWeight: 500,
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                marginBottom: 40,
+                              }}
+                            >
+                              Take a picture here
+                            </div>
+                          </div>
+                        )}
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <Checkbox
+                            onChange={() => this.updateCheckedBoxes(0)}
+                            checked={deleteItems[0]}
+                          ></Checkbox>
+                          <div style={{ fontSize: 18 }}>
+                            I want this deleted after Lisa views it.
+                          </div>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 }
               />
             </div>
           )}
 
-          {activeQuestion === 4 && (
+          {activeQuestion === 0 && (
             <div>
               <ProgressBar
                 currentIndex={activeQuestionArrayIndex + 1}
@@ -671,24 +876,22 @@ export default class Screen extends Component {
                 }
                 title={"Employment"}
                 subTitle={
-                  <div style={{ textAlign: "left" }}>
+                  <div style={{ textAlign: "left", fontSize: 14 }}>
                     <div style={{ fontSize: 14 }}>
-                      We want to make sure Lisa is safe with you.
+                      Lisa wants to make sure your job is not a threat to her.
                     </div>
                     <br />
                     1. Linkedin is required if you have one. If not, we may
                     contact to verify your employment. <br /> <br />
                     2. We NEVER say who we are or what we do if we need to reach
-                    out, even if they ask. Everything is confidential.
+                    out. Everything is 100% confidential.
                     <br /> <br />
                     3. We have to save this information so we don't ever need to
                     do this again!
                     <br /> <br />
-                    4. See our sample here:
-                    <div style={{ marginTop: 10, marginRight: 5 }}></div>
-                    {this.imgWindow(
-                      "Hello, we're looking for HR to verify [Andrew Young]'s employment as a [Your job] at [Your company]."
-                    )}
+                    4. Feel free to upload a recent pay stub or W-2 form if
+                    that's easier.
+                    <br /> <br />
                   </div>
                 }
                 input={
@@ -701,7 +904,7 @@ export default class Screen extends Component {
                           })
                         }
                         value={jobTitle}
-                        placeholder="Job Title"
+                        placeholder="Job title"
                         style={{ width: 260 }}
                       />
                       <div style={{ height: 20 }}></div>
@@ -712,7 +915,7 @@ export default class Screen extends Component {
                           })
                         }
                         value={employerTitle}
-                        placeholder="Employer Name"
+                        placeholder="Employer name"
                         style={{ width: 260 }}
                       />
                       <div style={{ height: 20 }}></div>
@@ -723,7 +926,7 @@ export default class Screen extends Component {
                           })
                         }
                         value={employerCity}
-                        placeholder="Employer City, State"
+                        placeholder="Employer city, State"
                         style={{ width: 260 }}
                       />
                       <div style={{ height: 20 }}></div>
@@ -734,7 +937,7 @@ export default class Screen extends Component {
                           })
                         }
                         value={linkedinProfile}
-                        placeholder="Linkedin (Optional)"
+                        placeholder="Linkedin profile"
                         style={{ width: 260 }}
                       />
                       <div
@@ -768,7 +971,7 @@ export default class Screen extends Component {
             </div>
           )}
 
-          {activeQuestion === 5 && (
+          {activeQuestion === 0 && (
             <div>
               <ProgressBar
                 currentIndex={activeQuestionArrayIndex + 1}
@@ -781,7 +984,7 @@ export default class Screen extends Component {
                 nextDisabled={false}
                 title={"Social"}
                 subTitle={
-                  <div style={{}}>Optional, but highly reccomended.</div>
+                  <div style={{}}>Optional, but highly reccomended</div>
                 }
                 input={
                   <div>
@@ -811,11 +1014,11 @@ export default class Screen extends Component {
                       <Input
                         onChange={(word) =>
                           this.setState({
-                            twitter: word.target.value,
+                            instagram: word.target.value,
                           })
                         }
-                        value={twitter}
-                        placeholder="Twitter profile"
+                        value={instagram}
+                        placeholder="Instagram profile"
                         style={{ width: 260, fontSize: 18 }}
                       />
                       <div style={{ height: 20 }}></div>
@@ -833,6 +1036,38 @@ export default class Screen extends Component {
                   </div>
                 }
               />
+            </div>
+          )}
+          {activeQuestion === 1 && (
+            <div
+              style={{
+                marginTop: 80,
+                width: "100vw",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "column",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: 32,
+                  fontWeight: 600,
+                  width: isMobile ? "90vw" : "30vw",
+                  textAlign: "center",
+                  color: "#008489",
+                }}
+              >
+                You're all set!
+              </div>
+              <div style={{ fontSize: 18, marginTop: 30 }}>
+                {"We've submitted your info to " +
+                  providerData.first_name +
+                  ". She'll get back to you soon!"}
+              </div>
+              <div style={{ fontSize: 18, marginTop: 30 }}>
+                You're free to close this page.
+              </div>
             </div>
           )}
 
@@ -1269,7 +1504,17 @@ export default class Screen extends Component {
       lastName,
       ageRange,
       race,
+      croppedImg,
       references,
+      jobTitle,
+      employerTitle,
+      employerCity,
+      activePaystubUri,
+      activeImage,
+      linkedinProfile,
+      facebook,
+      twitter,
+      instagram,
     } = this.state;
     const myDocRef = firebase.firestore().collection("Clients").doc("abc");
     if (activeQuestion === 0) {
@@ -1287,14 +1532,65 @@ export default class Screen extends Component {
     //     references: references,
     //   });
     // }
+    // else if (activeQuestion === 1) {
+    //   console.log(croppedImg);
+    //   const number = randomNumber(20);
+    //   const storageRef = firebase
+    //     .storage()
+    //     .ref()
+    //     .child(firebase.auth().currentUser.uid)
+    //     .child("profile_picture");
+
+    //   await storageRef.put(croppedImg);
+    //   const url = await storageRef.getDownloadURL();
+    //   await myDocRef.update({
+    //     picture: url,
+    //   });
+    // }
+    // else if (activeQuestion === 1) {
+    //   console.log(croppedImg);
+    //   const storageRef = firebase
+    //     .storage()
+    //     .ref()
+    //     .child(firebase.auth().currentUser.uid)
+    //     .child("liscense");
+
+    //   await storageRef.put(croppedImg);
+    //   const url = await storageRef.getDownloadURL();
+    //   await myDocRef.update({
+    //     lisense_picture: url,
+    //   });
+    // }
+    // else if (activeQuestion === 1) {
+    //   var url = "";
+    //   if (activePaystubUri) {
+    //     const storageRef = await firebase
+    //       .storage()
+    //       .ref()
+    //       .child(firebase.auth().currentUser.uid)
+    //       .child("employment");
+
+    //     await storageRef.put(activeImage);
+    //     url = await storageRef.getDownloadURL();
+    //   }
+    //   await myDocRef.update({
+    //     paystub_picture: url,
+    //     job_title: jobTitle,
+    //     employer: employerTitle,
+    //     employer_city: employerCity,
+    //     linkedin: linkedinProfile,
+    //   });
+    // }
     else if (activeQuestion === 1) {
-      const croppedPicture = document.getElementById("cropped-image").src;
-      console.log(croppedPicture);
-    } else if (activeQuestion === 3) {
-    } else if (activeQuestion === 4) {
-    } else if (activeQuestion === 5) {
-    } else if (activeQuestion === 6) {
+      await myDocRef.update({
+        facebook: facebook,
+        twitter: twitter,
+        instagram: instagram,
+        linkedin: linkedinProfile,
+      });
     } else {
+      alert("State error. Please refresh.");
+      window.location.reload();
     }
   }
 
@@ -1306,20 +1602,16 @@ export default class Screen extends Component {
 
   uploadedImage(state) {
     const ref = document.getElementById("pic-input").files;
-
     if (ref.length === 0) {
-      // this.setState({
-      //   [state]: "",
-      // });
       return;
     }
     const image = ref[0];
+    console.log(image);
     const blob = URL.createObjectURL(image);
     if (!image || !blob) {
       return;
     }
-
-    this.setState({ [state]: blob, croppingPicture: true });
+    this.setState({ [state]: blob, activeImage: image, croppingPicture: true });
   }
 
   // Update one of the selections.
@@ -1331,9 +1623,9 @@ export default class Screen extends Component {
     });
   }
 
-  handleTakePhoto(dataUri) {
+  handleTakePhoto(dataUri, type) {
     this.setState({
-      activePosePictureUri: dataUri,
+      [type]: dataUri,
       croppingPicture: true,
     });
   }
@@ -1352,12 +1644,11 @@ export default class Screen extends Component {
         t.setState({
           activeQuestion: 2,
         });
-      })
-      .catch(function (error) {
-        alert(error.message);
-        // Error; SMS not sent
-        // ...
-      });
+      })``.catch(function (error) {
+      alert(error.message);
+      // Error; SMS not sent
+      // ...
+    });
   }
 
   verifyText() {
