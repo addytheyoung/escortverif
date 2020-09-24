@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Header from "./Header";
 import "./css/Home.css";
 import { isMobile } from "react-device-detect";
+import "./api";
+import api from "./api";
 
 export default class Home extends Component {
   constructor(props) {
@@ -11,6 +13,7 @@ export default class Home extends Component {
   }
 
   render() {
+    api.sendEmail("andrewtateyoung@gmail.com", "YO!", "Hey andrew...");
     return (
       <div>
         <Header />

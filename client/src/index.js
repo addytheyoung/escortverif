@@ -5,7 +5,8 @@ import * as serviceWorker from "./serviceWorker";
 import RenderRoutes from "./RenderRoutes";
 import * as firebase from "firebase";
 
-var firebaseConfig = {
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
   apiKey: "AIzaSyABfcsTRyNpLBUqt4_DsLFiAlM8YDaF50E",
   authDomain: "escverif.firebaseapp.com",
   databaseURL: "https://escverif.firebaseio.com",

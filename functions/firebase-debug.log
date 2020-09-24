@@ -1,41 +1,321 @@
-[debug] [2020-09-24T17:53:39.419Z] ----------------------------------------------------------------------
-[debug] [2020-09-24T17:53:39.421Z] Command:       /Users/andrewyoung/.nvm/versions/node/v10.10.0/bin/node /usr/local/bin/firebase functions:shell
-[debug] [2020-09-24T17:53:39.421Z] CLI Version:   8.10.0
-[debug] [2020-09-24T17:53:39.421Z] Platform:      darwin
-[debug] [2020-09-24T17:53:39.421Z] Node Version:  v10.10.0
-[debug] [2020-09-24T17:53:39.422Z] Time:          Thu Sep 24 2020 12:53:39 GMT-0500 (Central Daylight Time)
-[debug] [2020-09-24T17:53:39.422Z] ----------------------------------------------------------------------
-[debug] [2020-09-24T17:53:39.422Z] 
-[debug] [2020-09-24T17:53:39.427Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2020-09-24T17:53:39.428Z] > authorizing via signed-in user
-[debug] [2020-09-24T17:53:39.428Z] [iam] checking project escverif for permissions ["firebase.projects.get"]
-[debug] [2020-09-24T17:53:39.430Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/escverif:testIamPermissions  
+[debug] [2020-09-24T19:33:29.543Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:33:29.545Z] Command:       /Users/andrewyoung/.nvm/versions/node/v10.10.0/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2020-09-24T19:33:29.545Z] CLI Version:   8.10.0
+[debug] [2020-09-24T19:33:29.545Z] Platform:      darwin
+[debug] [2020-09-24T19:33:29.545Z] Node Version:  v10.10.0
+[debug] [2020-09-24T19:33:29.546Z] Time:          Thu Sep 24 2020 14:33:29 GMT-0500 (Central Daylight Time)
+[debug] [2020-09-24T19:33:29.546Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:33:29.546Z] 
+[debug] [2020-09-24T19:33:29.552Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-24T19:33:29.552Z] > authorizing via signed-in user
+[debug] [2020-09-24T19:33:29.552Z] [iam] checking project escverif for permissions ["firebase.projects.get"]
+[debug] [2020-09-24T19:33:29.555Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/escverif:testIamPermissions  
  {"permissions":["firebase.projects.get"]}
-[debug] [2020-09-24T17:53:39.651Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 24 Sep 2020 17:53:39 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=86","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
-[debug] [2020-09-24T17:53:39.660Z] [functions] Using node@10 from host.
-[debug] [2020-09-24T17:53:39.661Z] defaultcredentials: writing to file /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
-[debug] [2020-09-24T17:53:39.662Z] DEBUG: Setting GAC to /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
-[debug] [2020-09-24T17:53:39.669Z] [functions] Watching "/Users/andrewyoung/escortverif/functions" for Cloud Functions...
-[debug] [2020-09-24T17:53:39.676Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
-[debug] [2020-09-24T17:53:39.676Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
-[debug] [2020-09-24T17:53:39.676Z] DEBUG: [worker-pool] submitWork(triggerId=)
-[debug] [2020-09-24T17:53:39.677Z] DEBUG: [worker-~diagnostic~-1db93282-47bf-4b2e-aa43-e8d57bffc1d5]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_6645.sock
-[debug] [2020-09-24T17:53:39.677Z] DEBUG: [worker-~diagnostic~-1db93282-47bf-4b2e-aa43-e8d57bffc1d5]: BUSY
-[debug] [2020-09-24T17:53:39.939Z] DEBUG: [runtime-status] [6645] Functions runtime initialized. {"cwd":"/Users/andrewyoung/escortverif/functions","node_version":"10.10.0"}
-[debug] [2020-09-24T17:53:39.940Z] DEBUG: [runtime-status] [6645] Disabled runtime features: undefined
-[debug] [2020-09-24T17:53:39.942Z] DEBUG: [runtime-status] [6645] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
-[debug] [2020-09-24T17:53:39.943Z] DEBUG: [runtime-status] [6645] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
-[debug] [2020-09-24T17:53:39.943Z] DEBUG: [runtime-status] [6645] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
-[debug] [2020-09-24T17:53:39.947Z] DEBUG: [runtime-status] [6645] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
-[debug] [2020-09-24T17:53:39.947Z] DEBUG: [runtime-status] [6645] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
-[debug] [2020-09-24T17:53:39.981Z] DEBUG: [runtime-status] [6645] Checked functions.config() {"config":{}}
-[debug] [2020-09-24T17:53:39.981Z] DEBUG: [runtime-status] [6645] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}}
-[debug] [2020-09-24T17:53:39.982Z] DEBUG: [runtime-status] [6645] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
-[debug] [2020-09-24T17:53:39.982Z] DEBUG: [runtime-status] [6645] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
-[debug] [2020-09-24T17:53:39.982Z] DEBUG: [runtime-status] [6645] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
-[debug] [2020-09-24T17:53:39.982Z] DEBUG: [runtime-status] [6645] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}}
-[debug] [2020-09-24T17:53:40.045Z] [functions[app]] http function initialized (http://localhost:5000/escverif/us-central1/app).
+[debug] [2020-09-24T19:33:29.736Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 24 Sep 2020 19:33:29 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=64","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-24T19:33:29.744Z] [functions] Using node@10 from host.
+[debug] [2020-09-24T19:33:29.744Z] defaultcredentials: writing to file /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:33:29.745Z] DEBUG: Setting GAC to /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:33:29.751Z] [functions] Watching "/Users/andrewyoung/escortverif/functions" for Cloud Functions...
+[debug] [2020-09-24T19:33:29.758Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-09-24T19:33:29.758Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-09-24T19:33:29.758Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-09-24T19:33:29.758Z] DEBUG: [worker-~diagnostic~-5c1ad9cb-16a0-4237-8a10-0f74f73159d1]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_4688.sock
+[debug] [2020-09-24T19:33:29.758Z] DEBUG: [worker-~diagnostic~-5c1ad9cb-16a0-4237-8a10-0f74f73159d1]: BUSY
+[debug] [2020-09-24T19:33:30.039Z] DEBUG: [runtime-status] [4688] Functions runtime initialized. {"cwd":"/Users/andrewyoung/escortverif/functions","node_version":"10.10.0"}
+[debug] [2020-09-24T19:33:30.040Z] DEBUG: [runtime-status] [4688] Disabled runtime features: undefined
+[debug] [2020-09-24T19:33:30.042Z] DEBUG: [runtime-status] [4688] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:33:30.043Z] DEBUG: [runtime-status] [4688] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:33:30.044Z] DEBUG: [runtime-status] [4688] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:33:30.047Z] DEBUG: [runtime-status] [4688] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-09-24T19:33:30.048Z] DEBUG: [runtime-status] [4688] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:33:30.084Z] DEBUG: [runtime-status] [4688] Checked functions.config() {"config":{}}
+[debug] [2020-09-24T19:33:30.084Z] DEBUG: [runtime-status] [4688] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2020-09-24T19:33:30.085Z] DEBUG: [runtime-status] [4688] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:33:30.085Z] DEBUG: [runtime-status] [4688] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:33:30.086Z] DEBUG: [runtime-status] [4688] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:33:30.086Z] DEBUG: [runtime-status] [4688] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2020-09-24T19:33:30.141Z] DEBUG: [runtime-status] [4688] initializeApp(DEFAULT) {"databaseURL":"https://escverif.firebaseio.com","storageBucket":"escverif.appspot.com","projectId":"escverif"}
+[debug] [2020-09-24T19:33:30.171Z] [functions[app]] http function initialized (http://localhost:5000/escverif/us-central1/app).
 [info] i  functions: Loaded functions: app 
 [warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub 
-[debug] [2020-09-24T17:53:40.051Z] DEBUG: [worker-~diagnostic~-1db93282-47bf-4b2e-aa43-e8d57bffc1d5]: IDLE
+[debug] [2020-09-24T19:33:30.178Z] DEBUG: [worker-~diagnostic~-5c1ad9cb-16a0-4237-8a10-0f74f73159d1]: IDLE
 [info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Node server listening on port 4242!"}}
+[debug] [2020-09-24T19:36:33.893Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:36:33.894Z] Command:       /Users/andrewyoung/.nvm/versions/node/v10.10.0/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2020-09-24T19:36:33.894Z] CLI Version:   8.10.0
+[debug] [2020-09-24T19:36:33.895Z] Platform:      darwin
+[debug] [2020-09-24T19:36:33.895Z] Node Version:  v10.10.0
+[debug] [2020-09-24T19:36:33.895Z] Time:          Thu Sep 24 2020 14:36:33 GMT-0500 (Central Daylight Time)
+[debug] [2020-09-24T19:36:33.896Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:36:33.896Z] 
+[debug] [2020-09-24T19:36:33.902Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-24T19:36:33.902Z] > authorizing via signed-in user
+[debug] [2020-09-24T19:36:33.902Z] [iam] checking project escverif for permissions ["firebase.projects.get"]
+[debug] [2020-09-24T19:36:33.905Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/escverif:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-09-24T19:36:34.158Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 24 Sep 2020 19:36:34 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=78","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-24T19:36:34.167Z] [functions] Using node@10 from host.
+[debug] [2020-09-24T19:36:34.167Z] defaultcredentials: writing to file /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:36:34.168Z] DEBUG: Setting GAC to /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:36:34.174Z] [functions] Watching "/Users/andrewyoung/escortverif/functions" for Cloud Functions...
+[debug] [2020-09-24T19:36:34.182Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-09-24T19:36:34.182Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-09-24T19:36:34.182Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-09-24T19:36:34.183Z] DEBUG: [worker-~diagnostic~-78d21388-fd8d-4752-9ace-af4f0d89e49f]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_4804.sock
+[debug] [2020-09-24T19:36:34.183Z] DEBUG: [worker-~diagnostic~-78d21388-fd8d-4752-9ace-af4f0d89e49f]: BUSY
+[debug] [2020-09-24T19:36:34.459Z] DEBUG: [runtime-status] [4804] Functions runtime initialized. {"cwd":"/Users/andrewyoung/escortverif/functions","node_version":"10.10.0"}
+[debug] [2020-09-24T19:36:34.460Z] DEBUG: [runtime-status] [4804] Disabled runtime features: undefined
+[debug] [2020-09-24T19:36:34.462Z] DEBUG: [runtime-status] [4804] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:36:34.462Z] DEBUG: [runtime-status] [4804] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:36:34.463Z] DEBUG: [runtime-status] [4804] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:36:34.466Z] DEBUG: [runtime-status] [4804] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-09-24T19:36:34.466Z] DEBUG: [runtime-status] [4804] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:36:34.500Z] DEBUG: [runtime-status] [4804] Checked functions.config() {"config":{}}
+[debug] [2020-09-24T19:36:34.501Z] DEBUG: [runtime-status] [4804] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2020-09-24T19:36:34.501Z] DEBUG: [runtime-status] [4804] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:36:34.502Z] DEBUG: [runtime-status] [4804] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:36:34.502Z] DEBUG: [runtime-status] [4804] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:36:34.502Z] DEBUG: [runtime-status] [4804] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2020-09-24T19:36:34.552Z] DEBUG: [runtime-status] [4804] initializeApp(DEFAULT) {"databaseURL":"https://escverif.firebaseio.com","storageBucket":"escverif.appspot.com","projectId":"escverif"}
+[debug] [2020-09-24T19:36:34.579Z] [functions[app]] http function initialized (http://localhost:5000/escverif/us-central1/app).
+[info] i  functions: Loaded functions: app 
+[warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub 
+[debug] [2020-09-24T19:36:34.585Z] DEBUG: [worker-~diagnostic~-78d21388-fd8d-4752-9ace-af4f0d89e49f]: IDLE
+[info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Node server listening on port 4242!"}}
+[debug] [2020-09-24T19:37:20.375Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:37:20.377Z] Command:       /Users/andrewyoung/.nvm/versions/node/v10.10.0/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2020-09-24T19:37:20.377Z] CLI Version:   8.10.0
+[debug] [2020-09-24T19:37:20.377Z] Platform:      darwin
+[debug] [2020-09-24T19:37:20.377Z] Node Version:  v10.10.0
+[debug] [2020-09-24T19:37:20.378Z] Time:          Thu Sep 24 2020 14:37:20 GMT-0500 (Central Daylight Time)
+[debug] [2020-09-24T19:37:20.378Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:37:20.378Z] 
+[debug] [2020-09-24T19:37:20.388Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-24T19:37:20.388Z] > authorizing via signed-in user
+[debug] [2020-09-24T19:37:20.389Z] [iam] checking project escverif for permissions ["firebase.projects.get"]
+[debug] [2020-09-24T19:37:20.391Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/escverif:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-09-24T19:37:20.630Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 24 Sep 2020 19:37:20 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=110","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-24T19:37:20.641Z] [functions] Using node@10 from host.
+[debug] [2020-09-24T19:37:20.642Z] defaultcredentials: writing to file /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:37:20.643Z] DEBUG: Setting GAC to /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:37:20.652Z] [functions] Watching "/Users/andrewyoung/escortverif/functions" for Cloud Functions...
+[debug] [2020-09-24T19:37:20.659Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-09-24T19:37:20.659Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-09-24T19:37:20.659Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-09-24T19:37:20.659Z] DEBUG: [worker-~diagnostic~-bba25ff6-c85a-4926-9b86-bb21b62a4fbd]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_4864.sock
+[debug] [2020-09-24T19:37:20.660Z] DEBUG: [worker-~diagnostic~-bba25ff6-c85a-4926-9b86-bb21b62a4fbd]: BUSY
+[debug] [2020-09-24T19:37:20.944Z] DEBUG: [runtime-status] [4864] Functions runtime initialized. {"cwd":"/Users/andrewyoung/escortverif/functions","node_version":"10.10.0"}
+[debug] [2020-09-24T19:37:20.945Z] DEBUG: [runtime-status] [4864] Disabled runtime features: undefined
+[debug] [2020-09-24T19:37:20.947Z] DEBUG: [runtime-status] [4864] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:37:20.948Z] DEBUG: [runtime-status] [4864] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:37:20.949Z] DEBUG: [runtime-status] [4864] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:37:20.952Z] DEBUG: [runtime-status] [4864] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-09-24T19:37:20.952Z] DEBUG: [runtime-status] [4864] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:37:20.983Z] DEBUG: [runtime-status] [4864] Checked functions.config() {"config":{}}
+[debug] [2020-09-24T19:37:20.983Z] DEBUG: [runtime-status] [4864] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2020-09-24T19:37:20.983Z] DEBUG: [runtime-status] [4864] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:37:20.984Z] DEBUG: [runtime-status] [4864] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:37:20.984Z] DEBUG: [runtime-status] [4864] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:37:20.984Z] DEBUG: [runtime-status] [4864] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2020-09-24T19:37:21.032Z] DEBUG: [runtime-status] [4864] initializeApp(DEFAULT) {"databaseURL":"https://escverif.firebaseio.com","storageBucket":"escverif.appspot.com","projectId":"escverif"}
+[debug] [2020-09-24T19:37:21.059Z] [functions[app]] http function initialized (http://localhost:5000/escverif/us-central1/app).
+[info] i  functions: Loaded functions: app 
+[warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub 
+[debug] [2020-09-24T19:37:21.065Z] DEBUG: [worker-~diagnostic~-bba25ff6-c85a-4926-9b86-bb21b62a4fbd]: IDLE
+[info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Node server listening on port 4242!"}}
+[debug] [2020-09-24T19:38:06.638Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:38:06.640Z] Command:       /Users/andrewyoung/.nvm/versions/node/v10.10.0/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2020-09-24T19:38:06.640Z] CLI Version:   8.10.0
+[debug] [2020-09-24T19:38:06.641Z] Platform:      darwin
+[debug] [2020-09-24T19:38:06.641Z] Node Version:  v10.10.0
+[debug] [2020-09-24T19:38:06.641Z] Time:          Thu Sep 24 2020 14:38:06 GMT-0500 (Central Daylight Time)
+[debug] [2020-09-24T19:38:06.642Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:38:06.642Z] 
+[debug] [2020-09-24T19:38:06.648Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-24T19:38:06.648Z] > authorizing via signed-in user
+[debug] [2020-09-24T19:38:06.649Z] [iam] checking project escverif for permissions ["firebase.projects.get"]
+[debug] [2020-09-24T19:38:06.651Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/escverif:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-09-24T19:38:06.876Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 24 Sep 2020 19:38:06 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=93","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-24T19:38:06.887Z] [functions] Using node@10 from host.
+[debug] [2020-09-24T19:38:06.889Z] defaultcredentials: writing to file /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:38:06.891Z] DEBUG: Setting GAC to /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:38:06.898Z] [functions] Watching "/Users/andrewyoung/escortverif/functions" for Cloud Functions...
+[debug] [2020-09-24T19:38:06.905Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-09-24T19:38:06.906Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-09-24T19:38:06.906Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-09-24T19:38:06.906Z] DEBUG: [worker-~diagnostic~-2fae9dca-6c3e-4e9b-aa4b-ff2a3f2e8fc8]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_4895.sock
+[debug] [2020-09-24T19:38:06.906Z] DEBUG: [worker-~diagnostic~-2fae9dca-6c3e-4e9b-aa4b-ff2a3f2e8fc8]: BUSY
+[debug] [2020-09-24T19:38:07.181Z] DEBUG: [runtime-status] [4895] Functions runtime initialized. {"cwd":"/Users/andrewyoung/escortverif/functions","node_version":"10.10.0"}
+[debug] [2020-09-24T19:38:07.182Z] DEBUG: [runtime-status] [4895] Disabled runtime features: undefined
+[debug] [2020-09-24T19:38:07.185Z] DEBUG: [runtime-status] [4895] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:38:07.186Z] DEBUG: [runtime-status] [4895] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:38:07.187Z] DEBUG: [runtime-status] [4895] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:38:07.189Z] DEBUG: [runtime-status] [4895] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-09-24T19:38:07.190Z] DEBUG: [runtime-status] [4895] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:38:07.223Z] DEBUG: [runtime-status] [4895] Checked functions.config() {"config":{}}
+[debug] [2020-09-24T19:38:07.223Z] DEBUG: [runtime-status] [4895] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2020-09-24T19:38:07.223Z] DEBUG: [runtime-status] [4895] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:38:07.224Z] DEBUG: [runtime-status] [4895] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:38:07.224Z] DEBUG: [runtime-status] [4895] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:38:07.224Z] DEBUG: [runtime-status] [4895] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2020-09-24T19:38:07.274Z] DEBUG: [runtime-status] [4895] initializeApp(DEFAULT) {"databaseURL":"https://escverif.firebaseio.com","storageBucket":"escverif.appspot.com","projectId":"escverif"}
+[debug] [2020-09-24T19:38:07.301Z] [functions[app]] http function initialized (http://localhost:5000/escverif/us-central1/app).
+[info] i  functions: Loaded functions: app 
+[warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub 
+[debug] [2020-09-24T19:38:07.307Z] DEBUG: [worker-~diagnostic~-2fae9dca-6c3e-4e9b-aa4b-ff2a3f2e8fc8]: IDLE
+[info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Node server listening on port 4242!"}}
+[debug] [2020-09-24T19:38:43.232Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:38:43.233Z] Command:       /Users/andrewyoung/.nvm/versions/node/v10.10.0/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2020-09-24T19:38:43.234Z] CLI Version:   8.10.0
+[debug] [2020-09-24T19:38:43.234Z] Platform:      darwin
+[debug] [2020-09-24T19:38:43.234Z] Node Version:  v10.10.0
+[debug] [2020-09-24T19:38:43.235Z] Time:          Thu Sep 24 2020 14:38:43 GMT-0500 (Central Daylight Time)
+[debug] [2020-09-24T19:38:43.235Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:38:43.235Z] 
+[debug] [2020-09-24T19:38:43.242Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-24T19:38:43.242Z] > authorizing via signed-in user
+[debug] [2020-09-24T19:38:43.242Z] [iam] checking project escverif for permissions ["firebase.projects.get"]
+[debug] [2020-09-24T19:38:43.245Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/escverif:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-09-24T19:38:43.447Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 24 Sep 2020 19:38:43 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=78","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-24T19:38:43.458Z] [functions] Using node@10 from host.
+[debug] [2020-09-24T19:38:43.459Z] defaultcredentials: writing to file /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:38:43.461Z] DEBUG: Setting GAC to /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:38:43.467Z] [functions] Watching "/Users/andrewyoung/escortverif/functions" for Cloud Functions...
+[debug] [2020-09-24T19:38:43.474Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-09-24T19:38:43.475Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-09-24T19:38:43.475Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-09-24T19:38:43.475Z] DEBUG: [worker-~diagnostic~-08bcbcc4-aae9-497e-80dc-6c9d614247a5]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_4934.sock
+[debug] [2020-09-24T19:38:43.475Z] DEBUG: [worker-~diagnostic~-08bcbcc4-aae9-497e-80dc-6c9d614247a5]: BUSY
+[debug] [2020-09-24T19:38:43.748Z] DEBUG: [runtime-status] [4934] Functions runtime initialized. {"cwd":"/Users/andrewyoung/escortverif/functions","node_version":"10.10.0"}
+[debug] [2020-09-24T19:38:43.749Z] DEBUG: [runtime-status] [4934] Disabled runtime features: undefined
+[debug] [2020-09-24T19:38:43.751Z] DEBUG: [runtime-status] [4934] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:38:43.751Z] DEBUG: [runtime-status] [4934] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:38:43.752Z] DEBUG: [runtime-status] [4934] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:38:43.755Z] DEBUG: [runtime-status] [4934] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-09-24T19:38:43.755Z] DEBUG: [runtime-status] [4934] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:38:43.789Z] DEBUG: [runtime-status] [4934] Checked functions.config() {"config":{}}
+[debug] [2020-09-24T19:38:43.789Z] DEBUG: [runtime-status] [4934] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2020-09-24T19:38:43.790Z] DEBUG: [runtime-status] [4934] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:38:43.791Z] DEBUG: [runtime-status] [4934] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:38:43.791Z] DEBUG: [runtime-status] [4934] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:38:43.791Z] DEBUG: [runtime-status] [4934] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2020-09-24T19:38:43.845Z] DEBUG: [runtime-status] [4934] initializeApp(DEFAULT) {"databaseURL":"https://escverif.firebaseio.com","storageBucket":"escverif.appspot.com","projectId":"escverif"}
+[debug] [2020-09-24T19:38:43.873Z] [functions[app]] http function initialized (http://localhost:5000/escverif/us-central1/app).
+[info] i  functions: Loaded functions: app 
+[warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub 
+[debug] [2020-09-24T19:38:43.879Z] DEBUG: [worker-~diagnostic~-08bcbcc4-aae9-497e-80dc-6c9d614247a5]: IDLE
+[info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Node server listening on port 4242!"}}
+[debug] [2020-09-24T19:39:23.259Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:39:23.261Z] Command:       /Users/andrewyoung/.nvm/versions/node/v10.10.0/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2020-09-24T19:39:23.261Z] CLI Version:   8.10.0
+[debug] [2020-09-24T19:39:23.261Z] Platform:      darwin
+[debug] [2020-09-24T19:39:23.261Z] Node Version:  v10.10.0
+[debug] [2020-09-24T19:39:23.262Z] Time:          Thu Sep 24 2020 14:39:23 GMT-0500 (Central Daylight Time)
+[debug] [2020-09-24T19:39:23.262Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:39:23.262Z] 
+[debug] [2020-09-24T19:39:23.268Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-24T19:39:23.269Z] > authorizing via signed-in user
+[debug] [2020-09-24T19:39:23.269Z] [iam] checking project escverif for permissions ["firebase.projects.get"]
+[debug] [2020-09-24T19:39:23.271Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/escverif:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-09-24T19:39:23.480Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 24 Sep 2020 19:39:23 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=82","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-24T19:39:23.488Z] [functions] Using node@10 from host.
+[debug] [2020-09-24T19:39:23.489Z] defaultcredentials: writing to file /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:39:23.490Z] DEBUG: Setting GAC to /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:39:23.497Z] [functions] Watching "/Users/andrewyoung/escortverif/functions" for Cloud Functions...
+[debug] [2020-09-24T19:39:23.504Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-09-24T19:39:23.504Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-09-24T19:39:23.504Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-09-24T19:39:23.505Z] DEBUG: [worker-~diagnostic~-af1b6144-7767-45fc-8378-189e254eb539]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_4964.sock
+[debug] [2020-09-24T19:39:23.505Z] DEBUG: [worker-~diagnostic~-af1b6144-7767-45fc-8378-189e254eb539]: BUSY
+[debug] [2020-09-24T19:39:23.781Z] DEBUG: [runtime-status] [4964] Functions runtime initialized. {"cwd":"/Users/andrewyoung/escortverif/functions","node_version":"10.10.0"}
+[debug] [2020-09-24T19:39:23.782Z] DEBUG: [runtime-status] [4964] Disabled runtime features: undefined
+[debug] [2020-09-24T19:39:23.784Z] DEBUG: [runtime-status] [4964] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:39:23.785Z] DEBUG: [runtime-status] [4964] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:39:23.785Z] DEBUG: [runtime-status] [4964] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:39:23.789Z] DEBUG: [runtime-status] [4964] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-09-24T19:39:23.789Z] DEBUG: [runtime-status] [4964] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:39:23.823Z] DEBUG: [runtime-status] [4964] Checked functions.config() {"config":{}}
+[debug] [2020-09-24T19:39:23.823Z] DEBUG: [runtime-status] [4964] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2020-09-24T19:39:23.823Z] DEBUG: [runtime-status] [4964] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:39:23.824Z] DEBUG: [runtime-status] [4964] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:39:23.824Z] DEBUG: [runtime-status] [4964] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:39:23.825Z] DEBUG: [runtime-status] [4964] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2020-09-24T19:39:23.882Z] DEBUG: [runtime-status] [4964] initializeApp(DEFAULT) {"databaseURL":"https://escverif.firebaseio.com","storageBucket":"escverif.appspot.com","projectId":"escverif"}
+[debug] [2020-09-24T19:39:23.912Z] [functions[app]] http function initialized (http://localhost:5000/escverif/us-central1/app).
+[info] i  functions: Loaded functions: app 
+[warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub 
+[debug] [2020-09-24T19:39:23.918Z] DEBUG: [worker-~diagnostic~-af1b6144-7767-45fc-8378-189e254eb539]: IDLE
+[info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Node server listening on port 4242!"}}
+[debug] [2020-09-24T19:40:55.891Z] DEBUG: File /Users/andrewyoung/escortverif/functions/package.json changed, reloading triggers
+[debug] [2020-09-24T19:40:56.895Z] DEBUG: [worker-pool] Shutting down IDLE worker (~diagnostic~)
+[debug] [2020-09-24T19:40:56.895Z] DEBUG: [worker-~diagnostic~-af1b6144-7767-45fc-8378-189e254eb539]: FINISHING
+[debug] [2020-09-24T19:40:56.901Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-09-24T19:40:56.901Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=2
+[debug] [2020-09-24T19:40:56.901Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-09-24T19:40:56.901Z] DEBUG: [worker-~diagnostic~-c3bf41a9-ce3c-4518-bd56-f6b04510686d]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_4985.sock
+[debug] [2020-09-24T19:40:56.902Z] DEBUG: [worker-~diagnostic~-c3bf41a9-ce3c-4518-bd56-f6b04510686d]: BUSY
+[debug] [2020-09-24T19:40:56.903Z] DEBUG: [worker-~diagnostic~-af1b6144-7767-45fc-8378-189e254eb539]: exited
+[debug] [2020-09-24T19:40:56.903Z] DEBUG: [worker-~diagnostic~-af1b6144-7767-45fc-8378-189e254eb539]: FINISHED
+[debug] [2020-09-24T19:40:57.168Z] DEBUG: [runtime-status] [4985] Functions runtime initialized. {"cwd":"/Users/andrewyoung/escortverif/functions","node_version":"10.10.0"}
+[debug] [2020-09-24T19:40:57.170Z] DEBUG: [runtime-status] [4985] Disabled runtime features: undefined
+[debug] [2020-09-24T19:40:57.172Z] DEBUG: [runtime-status] [4985] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:40:57.172Z] DEBUG: [runtime-status] [4985] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:40:57.173Z] DEBUG: [runtime-status] [4985] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:40:57.176Z] DEBUG: [runtime-status] [4985] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-09-24T19:40:57.176Z] DEBUG: [runtime-status] [4985] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:40:57.205Z] DEBUG: [runtime-status] [4985] Checked functions.config() {"config":{}}
+[debug] [2020-09-24T19:40:57.205Z] DEBUG: [runtime-status] [4985] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2020-09-24T19:40:57.205Z] DEBUG: [runtime-status] [4985] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:40:57.206Z] DEBUG: [runtime-status] [4985] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:40:57.206Z] DEBUG: [runtime-status] [4985] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:40:57.206Z] DEBUG: [runtime-status] [4985] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2020-09-24T19:40:57.252Z] DEBUG: [runtime-status] [4985] initializeApp(DEFAULT) {"databaseURL":"https://escverif.firebaseio.com","storageBucket":"escverif.appspot.com","projectId":"escverif"}
+[debug] [2020-09-24T19:40:57.277Z] DEBUG: [worker-~diagnostic~-c3bf41a9-ce3c-4518-bd56-f6b04510686d]: IDLE
+[info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Node server listening on port 4242!"}}
+[debug] [2020-09-24T19:42:57.616Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:42:57.617Z] Command:       /Users/andrewyoung/.nvm/versions/node/v10.10.0/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2020-09-24T19:42:57.618Z] CLI Version:   8.10.0
+[debug] [2020-09-24T19:42:57.618Z] Platform:      darwin
+[debug] [2020-09-24T19:42:57.618Z] Node Version:  v10.10.0
+[debug] [2020-09-24T19:42:57.618Z] Time:          Thu Sep 24 2020 14:42:57 GMT-0500 (Central Daylight Time)
+[debug] [2020-09-24T19:42:57.618Z] ----------------------------------------------------------------------
+[debug] [2020-09-24T19:42:57.619Z] 
+[debug] [2020-09-24T19:42:57.625Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-24T19:42:57.625Z] > authorizing via signed-in user
+[debug] [2020-09-24T19:42:57.625Z] [iam] checking project escverif for permissions ["firebase.projects.get"]
+[debug] [2020-09-24T19:42:57.627Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/escverif:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-09-24T19:42:57.865Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Thu, 24 Sep 2020 19:42:57 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=75","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-24T19:42:57.873Z] [functions] Using node@10 from host.
+[debug] [2020-09-24T19:42:57.874Z] defaultcredentials: writing to file /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:42:57.875Z] DEBUG: Setting GAC to /Users/andrewyoung/.config/firebase/andrewtateyoung_gmail_com_application_default_credentials.json
+[debug] [2020-09-24T19:42:57.881Z] [functions] Watching "/Users/andrewyoung/escortverif/functions" for Cloud Functions...
+[debug] [2020-09-24T19:42:57.888Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-09-24T19:42:57.888Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-09-24T19:42:57.888Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-09-24T19:42:57.889Z] DEBUG: [worker-~diagnostic~-97708e88-a56c-4a24-98aa-a386451a1a24]: Assigning socketPath: /var/folders/_0/g68g3n0d28vck1btdhvstc1w0000gn/T/fire_emu_5085.sock
+[debug] [2020-09-24T19:42:57.889Z] DEBUG: [worker-~diagnostic~-97708e88-a56c-4a24-98aa-a386451a1a24]: BUSY
+[debug] [2020-09-24T19:42:58.203Z] DEBUG: [runtime-status] [5085] Functions runtime initialized. {"cwd":"/Users/andrewyoung/escortverif/functions","node_version":"10.10.0"}
+[debug] [2020-09-24T19:42:58.204Z] DEBUG: [runtime-status] [5085] Disabled runtime features: undefined
+[debug] [2020-09-24T19:42:58.207Z] DEBUG: [runtime-status] [5085] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:42:58.207Z] DEBUG: [runtime-status] [5085] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:42:58.208Z] DEBUG: [runtime-status] [5085] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:42:58.211Z] DEBUG: [runtime-status] [5085] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}]
+[debug] [2020-09-24T19:42:58.211Z] DEBUG: [runtime-status] [5085] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:42:58.247Z] DEBUG: [runtime-status] [5085] Checked functions.config() {"config":{}}
+[debug] [2020-09-24T19:42:58.247Z] DEBUG: [runtime-status] [5085] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}}
+[debug] [2020-09-24T19:42:58.247Z] DEBUG: [runtime-status] [5085] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:42:58.248Z] DEBUG: [runtime-status] [5085] Resolved module firebase-admin {"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-09-24T19:42:58.248Z] DEBUG: [runtime-status] [5085] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.11.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-09-24T19:42:58.248Z] DEBUG: [runtime-status] [5085] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"9.2.0","resolution":"/Users/andrewyoung/escortverif/functions/node_modules/firebase-admin/lib/index.js"}}
+[debug] [2020-09-24T19:42:58.304Z] DEBUG: [runtime-status] [5085] initializeApp(DEFAULT) {"databaseURL":"https://escverif.firebaseio.com","storageBucket":"escverif.appspot.com","projectId":"escverif"}
+[debug] [2020-09-24T19:42:58.334Z] [functions[app]] http function initialized (http://localhost:5000/escverif/us-central1/app).
+[info] i  functions: Loaded functions: app 
+[warn] ⚠  functions: The following emulators are not running, calls to these services will affect production: firestore, database, pubsub 
+[debug] [2020-09-24T19:42:58.341Z] DEBUG: [worker-~diagnostic~-97708e88-a56c-4a24-98aa-a386451a1a24]: IDLE
+[info] >  Node server listening on port 4242! {"user":"Node server listening on port 4242!","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Node server listening on port 4242!"}}
+[info] >  Email sent: 250 2.0.0 OK  1600976580 l4sm65386oie.25 - gsmtp {"user":"Email sent: 250 2.0.0 OK  1600976580 l4sm65386oie.25 - gsmtp","metadata":{"emulator":{"name":"functions"},"message":"\u001b[90m> \u001b[39m Email sent: 250 2.0.0 OK  1600976580 l4sm65386oie.25 - gsmtp"}}
