@@ -1,16 +1,22 @@
+const functions = require("firebase-functions");
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const functions = require("firebase-functions");
 // The Firebase Admin SDK to access Cloud Firestore.
-const admin = require("firebase-admin");
-admin.initializeApp();
 var nodemailer = require("nodemailer");
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+var admin = require("firebase-admin");
+
+var serviceAccount = require("./service.json");
+
+console.log("YIO{{{{{");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://escverif.firebaseio.com",
+});
 
 app.get("/test", (req, res) => {
   res.send({ working: "Working!" });
@@ -46,11 +52,11 @@ app.post("/send-email", (req, res) => {
   });
 });
 
-process.on("SIGINT", function () {
-  console.log("\nGracefully shutting down from SIGINT (Ctrl-C)");
-  // some other closing procedures go here
-  process.exit(1);
-});
+// process.on("SIGINT", function () {
+//   console.log("\nGracefully shutting down from SIGINT (Ctrl-C)");
+//   // some other closing procedures go here
+//   process.exit(1);
+// });
 
 app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
-exports.app = functions.https.onRequest(app);
+exports.test = functions.https.onRequest(app);

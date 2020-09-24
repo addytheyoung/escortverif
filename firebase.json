@@ -15,6 +15,10 @@
         "function": "app"
       },
       {
+        "source": "/test",
+        "function": "app"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
