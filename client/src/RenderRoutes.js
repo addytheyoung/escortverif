@@ -98,7 +98,7 @@ export default class RenderRoutes extends Component {
               <Route
                 path="/clientprofile"
                 exact={false}
-                render={() => <ClientProfile />}
+                render={() => <ClientProfile profileData={profileData} />}
               />
 
               <Route
@@ -117,16 +117,16 @@ export default class RenderRoutes extends Component {
     const signedIn = !!firebase.auth().currentUser;
 
     // We're signed in!
-    if (signedIn) {
+    if (!signedIn) {
       // Get the path
       const path = window.location.pathname;
       // Provider or client?
       const provider = localStorage.getItem("provider");
       const client = localStorage.getItem("client");
-      var colRef = "Provider";
-      if (client == "true") {
-        colRef = "Clients";
-      }
+      var colRef = "Providers";
+      // if (client == "true") {
+      //   colRef = "Clients";
+      // }
 
       firebase
         .firestore()
