@@ -12,6 +12,7 @@ import Profile from "./Profile";
 import SignInPage from "./SignInPage";
 import About from "./About";
 import VerifyEmail from "./VerifyEmail";
+import ClientProfile from "./ClientProfile";
 
 export default class RenderRoutes extends Component {
   constructor(props) {
@@ -75,6 +76,7 @@ export default class RenderRoutes extends Component {
                 exact={true}
                 render={() => <SignInPage />}
               />
+
               <Route
                 path="/getstarted"
                 exact={true}
@@ -94,12 +96,16 @@ export default class RenderRoutes extends Component {
               />
 
               <Route
+                path="/clientprofile"
+                exact={false}
+                render={() => <ClientProfile />}
+              />
+
+              <Route
                 path={"/"}
                 exact={false}
                 render={() => <Screen profileData={profileData} />}
               />
-
-              {/* <Route path="/" exact={false} render={() => <ErrorPage />} /> */}
             </Switch>
           )}
         </Router>

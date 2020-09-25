@@ -9,23 +9,43 @@ export default class ErrorPage extends Component {
   }
 
   render() {
+    const { client } = this.props;
     return (
       <div>
         <Header />
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 100,
-            textAlign: "center",
-            fontSize: 18,
-          }}
-        >
-          Uh oh, we didn't find a page for this provider.
-          <br /> <br /> Try the link sent to you again, or return to the
-          homepage.
-        </div>
+        {!client && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 140,
+              textAlign: "center",
+              fontSize: 20,
+            }}
+          >
+            Uh oh, we didn't find a page for this provider.
+            <br /> <br /> Try the link sent to you again, or return to the
+            homepage.
+          </div>
+        )}
+
+        {client && (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 140,
+              textAlign: "center",
+              fontSize: 20,
+            }}
+          >
+            Uh oh, we didn't find a page for this client.
+            <br /> <br /> Try the link sent to you again, or return to the
+            homepage.
+          </div>
+        )}
       </div>
     );
   }
