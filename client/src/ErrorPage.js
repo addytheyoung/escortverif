@@ -19,7 +19,7 @@ export default class ErrorPage extends Component {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              marginTop: 140,
+              marginTop: 160,
               textAlign: "center",
               fontSize: 20,
             }}
@@ -36,14 +36,14 @@ export default class ErrorPage extends Component {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              marginTop: 140,
+              marginTop: 160,
               textAlign: "center",
               fontSize: 20,
             }}
           >
-            Uh oh, we didn't find a page for this client.
-            <br /> <br /> Try the link sent to you again, or return to the
-            homepage.
+            Uh oh, we didn't find a page for this client, or you don't have
+            permission. <br /> <br /> Try signing into your account, or try the
+            link sent to you again, or return to the homepage.
           </div>
         )}
       </div>

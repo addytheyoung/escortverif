@@ -15,6 +15,7 @@ import VerifyEmail from "./VerifyEmail";
 import ClientProfile from "./ClientProfile";
 import AndrewVerify from "./AndrewVerify";
 import GetAllDataFromFirestore from "./scripts/GetAllDataFromFirestore";
+import WriteTestIntoRealData from "./scripts/WriteTestIntoRealData";
 
 export default class RenderRoutes extends Component {
   constructor(props) {
@@ -57,11 +58,22 @@ export default class RenderRoutes extends Component {
               />
 
               <Route
+                path={"/andrewverify"}
+                exact={true}
+                render={() => <AndrewVerify profileData={profileData} />}
+              />
+
+              <Route
+                path="/clientprofile"
+                exact={false}
+                render={() => <ClientProfile profileData={profileData} />}
+              />
+
+              <Route
                 path={"/"}
                 exact={false}
                 render={() => <Screen profileData={profileData} />}
               />
-              {/* <Route path="/" exact={false} render={() => <ErrorPage />} /> */}
             </Switch>
           )}
 
@@ -76,7 +88,7 @@ export default class RenderRoutes extends Component {
               <Route
                 path={"/andrewscripts"}
                 exact={true}
-                render={() => <GetAllDataFromFirestore />}
+                render={() => <WriteTestIntoRealData />}
               />
               <Route path="/" exact={true} render={() => <Home />} />
               <Route path="/about" exact={true} render={() => <About />} />
@@ -102,12 +114,6 @@ export default class RenderRoutes extends Component {
                 path="/verifyemail"
                 exact={true}
                 render={() => <VerifyEmail />}
-              />
-
-              <Route
-                path="/clientprofile"
-                exact={false}
-                render={() => <ClientProfile profileData={profileData} />}
               />
 
               <Route

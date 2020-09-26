@@ -13,6 +13,7 @@ import { isMobile } from "react-device-detect";
 import "./css/ProviderSignUp.css";
 import randomNumber from "./functions/randomNumber";
 import { act } from "react-dom/test-utils";
+import api from "./api";
 
 export default class Screen extends Component {
   constructor(props) {
@@ -21,10 +22,8 @@ export default class Screen extends Component {
     const { profileData } = this.props;
 
     const {
-      address,
       age,
       assult_charges,
-      background,
       employer,
       employer_city,
       escora_ratings,
@@ -35,7 +34,7 @@ export default class Screen extends Component {
       instagram,
       job_title,
       last_name,
-      liscense_picture,
+      license_picture,
       linkedin,
       phone,
       picture,
@@ -45,8 +44,8 @@ export default class Screen extends Component {
     } = profileData;
 
     this.state = {
-      uploadingPicture: false,
-      uploadingFile: true,
+      uploadingPicture: true,
+      uploadingFile: false,
       croppingPicture: false,
       info: "",
       firstName: first_name,
@@ -63,7 +62,7 @@ export default class Screen extends Component {
       errorPage: false,
       providerData: false,
       activePosePictureUri: picture,
-      activeLiscenseUri: liscense_picture,
+      activeLiscenseUri: license_picture,
       jobTitle: job_title,
       employerTitle: employer,
       employerCity: employer_city,
@@ -119,6 +118,19 @@ export default class Screen extends Component {
     for (var i = 0; i < activeQuestionArray.length; i++) {
       if (activeQuestionArray[i] === activeQuestion) {
         activeQuestionArrayIndex = i;
+        // Done!
+        if (i == activeQuestionArray.length - 1) {
+          console.log("sss");
+          api.sendEmail(
+            "andrew@collection.deals",
+            "Escora Screen",
+            "New screen. View the data here: " +
+              "https://www.escora.io/andrewverify\n\n\n" +
+              "View the profile here: https://www.escora.io/clientprofile/" +
+              profileData.escora_id
+          );
+        }
+
         break;
       }
     }
@@ -131,7 +143,7 @@ export default class Screen extends Component {
           <LoadingPage />
         </div>
       );
-    } else if (profileData.first_name) {
+    } else if (!!firebase.auth().currentUser) {
       // Signed in!
       return (
         <div>
@@ -179,7 +191,7 @@ export default class Screen extends Component {
                 }
                 title={"About"}
                 subTitle={
-                  "Remember, only escorts you choose to share your profile with can see any of your info, and you can choose to not save it at all by checking the box below."
+                  "Only escorts you choose to share your profile with can see any of your info, and you can choose to not save it at all by checking the box below, but you'll have to enter it again next time."
                 }
                 input={
                   <div
@@ -351,7 +363,7 @@ export default class Screen extends Component {
                 prevDisabled={activeQuestionArrayIndex === 0}
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
-                nextDisabled={activePosePictureUri === "" || croppingPicture}
+                nextDisabled={croppingPicture}
                 title={"Please upload a picture of you"}
                 subTitle={
                   "This is used for Lisa's (and other Escorts) verification of what you look like. Nobody can see this, except escorts you choose to share it with."
@@ -421,163 +433,7 @@ export default class Screen extends Component {
                             DONE CROPPING
                           </div>
                         )}
-                        {!croppingPicture && (
-                          <div
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                            }}
-                          >
-                            <div
-                              style={{
-                                fontSize: 18,
-                                marginTop: 30,
-                                fontWeight: 500,
-                              }}
-                            >
-                              OR
-                            </div>
-                            <div
-                              onClick={() =>
-                                this.setState({
-                                  uploadingFile: true,
-                                  uploadingPicture: false,
-                                  activePosePictureUri: "",
-                                })
-                              }
-                              id="button"
-                              style={{
-                                marginTop: 20,
-                                borderRadius: 5,
-                                backgroundColor: "#a1a1a1",
-                                color: "white",
-                                padding: 10,
-                                fontSize: 18,
-                                fontWeight: 500,
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                width: 170,
-                                marginBottom: 40,
-                              }}
-                            >
-                              Upload a photo
-                            </div>
-                          </div>
-                        )}
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                          }}
-                        >
-                          <Checkbox
-                            onChange={() => this.updateCheckedBoxes(0)}
-                            checked={deleteItems[0]}
-                          ></Checkbox>
-                          <div style={{ fontSize: 18 }}>
-                            I want this deleted after Lisa views it.
-                          </div>
-                        </div>
-                      </div>
-                    )}
 
-                    {uploadingFile && (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                        }}
-                      >
-                        <Input
-                          id="pic-input"
-                          onChangeCapture={() =>
-                            this.uploadedImage("activePosePictureUri")
-                          }
-                          type="file"
-                        />
-                        <CropImage
-                          showCroppedImage={!croppingPicture}
-                          showOriginalImage={croppingPicture}
-                          setCroppedImg={(croppedImgUrl) =>
-                            this.setCroppedImg(croppedImgUrl)
-                          }
-                          picture={activePosePictureUri}
-                        />
-
-                        {croppingPicture && (
-                          <div
-                            onClick={() =>
-                              this.setState({
-                                croppingPicture: false,
-                              })
-                            }
-                            id="button"
-                            style={{
-                              marginTop: 5,
-                              borderRadius: 5,
-                              backgroundColor: "#008489",
-                              color: "white",
-                              padding: 10,
-                              fontSize: 18,
-                              fontWeight: 500,
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              marginBottom: 40,
-                            }}
-                          >
-                            DONE CROPPING
-                          </div>
-                        )}
-
-                        {!croppingPicture && (
-                          <div
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              marginTop: 20,
-                            }}
-                          >
-                            <div
-                              style={{
-                                fontSize: 18,
-                                fontWeight: 500,
-                              }}
-                            >
-                              OR
-                            </div>
-                            <div
-                              onClick={() =>
-                                this.setState({
-                                  uploadingFile: false,
-                                  uploadingPicture: true,
-                                  activePosePictureUri: "",
-                                })
-                              }
-                              id="button"
-                              style={{
-                                marginTop: 20,
-                                borderRadius: 5,
-                                backgroundColor: "#a1a1a1",
-                                color: "white",
-                                padding: 10,
-                                fontSize: 18,
-                                fontWeight: 500,
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                marginBottom: 40,
-                              }}
-                            >
-                              Take a picture here
-                            </div>
-                          </div>
-                        )}
                         <div
                           style={{
                             display: "flex",
@@ -634,6 +490,7 @@ export default class Screen extends Component {
                       >
                         {!activeLiscenseUri && (
                           <Camera
+                            idealFacingMode={"environment"}
                             onCameraStop={() => console.log("")}
                             oncameraError={() => console.log("")}
                             onTakePhoto={(dataUri) =>
@@ -715,7 +572,7 @@ export default class Screen extends Component {
                                 marginBottom: 40,
                               }}
                             >
-                              Upload a photo
+                              Upload a file
                             </div>
                           </div>
                         )}
@@ -827,7 +684,7 @@ export default class Screen extends Component {
                                 marginBottom: 40,
                               }}
                             >
-                              Take a picture here
+                              Take a picture
                             </div>
                           </div>
                         )}
@@ -1035,39 +892,63 @@ export default class Screen extends Component {
             </div>
           )}
           {activeQuestion === 6 && (
-            <div
-              style={{
-                marginTop: 80,
-                width: "100vw",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "column",
-              }}
-            >
+            <div>
+              <ProgressBar currentIndex={1} total={1} />
               <div
                 style={{
-                  fontSize: 32,
-                  fontWeight: 600,
-                  width: isMobile ? "90vw" : "30vw",
-                  textAlign: "center",
-                  color: "#008489",
+                  marginTop: 80,
+                  width: "100vw",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexDirection: "column",
                 }}
               >
-                You're all set!
-              </div>
-              <div style={{ fontSize: 18, marginTop: 30 }}>
-                {"We've submitted your info to " +
-                  providerData.first_name +
-                  ". She'll get back to you soon!"}
-              </div>
-              <div style={{ fontSize: 18, marginTop: 30 }}>
-                You're free to close this page.
+                <div
+                  style={{
+                    fontSize: 32,
+                    fontWeight: 600,
+                    width: isMobile ? "90vw" : "30vw",
+                    textAlign: "center",
+                    color: "#008489",
+                  }}
+                >
+                  You're all set!
+                </div>
+                {providerData.first_name !== "" && (
+                  <div style={{ fontSize: 18, marginTop: 30 }}>
+                    {"We've submitted your info to " +
+                      providerData.first_name +
+                      ". She'll get back to you soon!"}
+                  </div>
+                )}
+
+                {providerData.first_name === "" && (
+                  <div
+                    style={{
+                      fontSize: 18,
+                      marginTop: 30,
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div style={{ textAlign: "center", fontSize: 20 }}>
+                      We have everything we need from you! <br />
+                      <br />
+                      When escorts share their Escora link with you, all you
+                      have to do is click it, and you're off the races!
+                    </div>
+                  </div>
+                )}
+
+                <div style={{ fontSize: 18, marginTop: 50 }}>
+                  You're free to close this page.
+                </div>
               </div>
             </div>
           )}
 
-          <div style={{ height: 100 }}></div>
+          <div style={{ height: 120 }}></div>
         </div>
       );
     } else {
@@ -1409,10 +1290,11 @@ export default class Screen extends Component {
   }
 
   checkLiscensePage(profileData, providerData) {
-    const { liscense_picture } = profileData;
-    const client_liscense = true;
+    const { license_picture } = profileData;
+    const client_license = true;
+    console.log(license_picture);
 
-    if (client_liscense && liscense_picture === "") {
+    if (client_license && license_picture === "") {
       return true;
     }
     return false;
@@ -1429,7 +1311,10 @@ export default class Screen extends Component {
   }
 
   checkReferencePage(profileData, providerData) {
+    console.log(profileData);
     const { references } = profileData;
+    console.log(references);
+    console.log(firebase.auth().currentUser);
     const { client_references } = providerData;
 
     if (
@@ -1459,12 +1344,12 @@ export default class Screen extends Component {
   // ** Check out Pages end **
 
   // What questions does our user need to answer?
-  pullActiveQuestions(providerData) {
+  pullActiveQuestions(providerData, defaultProvider) {
     const profileData = this.props.profileData;
     var finalActiveQuestionArray = [];
     const signedIn = firebase.auth().currentUser;
 
-    if (signedIn) {
+    if (signedIn && profileData.doc_id) {
       if (this.checkAboutPage(profileData, providerData)) {
         finalActiveQuestionArray.push(0);
       }
@@ -1488,10 +1373,13 @@ export default class Screen extends Component {
       if (this.checkSocialPage(profileData, providerData)) {
         finalActiveQuestionArray.push(5);
       }
+
       // Always push the final page
       finalActiveQuestionArray.push(6);
-    } else {
+    } else if (defaultProvider) {
       finalActiveQuestionArray = [1, 2, 3, 4, 5, 6];
+    } else {
+      finalActiveQuestionArray = [0, 1, 2, 3, 4, 5, 6];
     }
 
     return finalActiveQuestionArray;
@@ -1535,30 +1423,31 @@ export default class Screen extends Component {
       });
     } else if (activeQuestion === 2) {
       console.log(croppedImg);
-      const number = randomNumber(20);
       const storageRef = firebase
         .storage()
         .ref()
         .child(firebase.auth().currentUser.uid)
         .child("profile_picture");
 
-      await storageRef.put(croppedImg);
-      const url = await storageRef.getDownloadURL();
-      await myDocRef.update({
-        picture: url,
-      });
+      if (croppedImg && croppedImg !== "") {
+        await storageRef.put(croppedImg);
+        const url = await storageRef.getDownloadURL();
+        await myDocRef.update({
+          picture: url,
+        });
+      }
     } else if (activeQuestion === 3) {
       console.log(croppedImg);
       const storageRef = firebase
         .storage()
         .ref()
         .child(firebase.auth().currentUser.uid)
-        .child("liscense");
+        .child("license");
 
       await storageRef.put(croppedImg);
       const url = await storageRef.getDownloadURL();
       await myDocRef.update({
-        lisense_picture: url,
+        license_picture: url,
       });
     } else if (activeQuestion === 4) {
       var url = "";
@@ -1642,15 +1531,15 @@ export default class Screen extends Component {
         t.setState({
           activeQuestion: 2,
         });
-      })``.catch(function (error) {
-      alert(error.message);
-      // Error; SMS not sent
-      // ...
-    });
+      })
+      .catch((e) => {
+        alert("Bad number. Please try again.");
+        console.log(e.message);
+      });
   }
 
   verifyText() {
-    const { activeInput1, activeInput2 } = this.state;
+    const { activeInput1, activeInput2, providerData } = this.state;
     var code = activeInput2;
     window.confirmationResult
       .confirm(code)
@@ -1665,19 +1554,20 @@ export default class Screen extends Component {
             .doc(result.user.uid)
             .set({
               age: "",
+              applying_to_provider: providerData.doc_id,
               assult_charges: "",
               background: "",
               doc_id: result.user.uid,
               employer: "",
               employer_city: "",
-              escora_id: randomNumber(10),
+              escora_id: randomNumber(12),
               facebook: "",
               felonies: "",
               first_name: "",
               job_title: "",
               last_name: "",
               linkedin: "",
-              liscense_picture: "",
+              license_picture: "",
               paystub_picture: "",
               phone: activeInput1,
               picture: "",
@@ -1725,7 +1615,8 @@ export default class Screen extends Component {
         .get();
 
       const activeQuestionArray = this.pullActiveQuestions(
-        provider.docs[0].data()
+        provider.docs[0].data(),
+        true
       );
 
       this.setState({
@@ -1748,7 +1639,8 @@ export default class Screen extends Component {
         });
       } else {
         const activeQuestionArray = this.pullActiveQuestions(
-          provider.docs[0].data()
+          provider.docs[0].data(),
+          false
         );
 
         this.setState({
@@ -1788,10 +1680,9 @@ export default class Screen extends Component {
 
   componentDidUpdate() {
     if (
-      // this.state.activeQuestion === 1 &&
-      // !window.recaptchaVerifier &&
-      // !firebase.auth().currentUser
-      false
+      this.state.activeQuestion === 1 &&
+      !window.recaptchaVerifier &&
+      !firebase.auth().currentUser
     ) {
       window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
         this.recaptcha,

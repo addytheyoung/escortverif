@@ -4,6 +4,7 @@ import * as firebase from "firebase";
 import LoadingPage from "./LoadingPage";
 import { Checkbox } from "@material-ui/core";
 import Button from "./Button";
+import api from "./api";
 
 export default class AndrewVerify extends Component {
   constructor(props) {
@@ -13,6 +14,10 @@ export default class AndrewVerify extends Component {
       loadedClients: false,
       clientsData: [],
       checkedBoxes: [
+        true,
+        true,
+        true,
+        true,
         true,
         true,
         true,
@@ -126,8 +131,8 @@ export default class AndrewVerify extends Component {
               >
                 <div>{"Picture good?"}</div>
                 <Checkbox
-                  onChange={() => this.updateCheckedBoxes(1)}
-                  checked={checkedBoxes[1]}
+                  onChange={() => this.updateCheckedBoxes(3)}
+                  checked={checkedBoxes[3]}
                 />
               </div>
               <div
@@ -139,8 +144,8 @@ export default class AndrewVerify extends Component {
               >
                 <div>{"No felonies?"}</div>
                 <Checkbox
-                  onChange={() => this.updateCheckedBoxes(1)}
-                  checked={checkedBoxes[1]}
+                  onChange={() => this.updateCheckedBoxes(4)}
+                  checked={checkedBoxes[4]}
                 />
               </div>
               <div
@@ -152,8 +157,8 @@ export default class AndrewVerify extends Component {
               >
                 <div>{"No assult charges?"}</div>
                 <Checkbox
-                  onChange={() => this.updateCheckedBoxes(1)}
-                  checked={checkedBoxes[1]}
+                  onChange={() => this.updateCheckedBoxes(5)}
+                  checked={checkedBoxes[5]}
                 />
               </div>
 
@@ -172,8 +177,8 @@ export default class AndrewVerify extends Component {
                     </div>
 
                     <Checkbox
-                      onChange={() => this.updateCheckedBoxes(1)}
-                      checked={checkedBoxes[1]}
+                      onChange={() => this.updateCheckedBoxes(6)}
+                      checked={checkedBoxes[6]}
                     />
                   </div>
                 );
@@ -202,8 +207,8 @@ export default class AndrewVerify extends Component {
               >
                 <div>{client.job_title}</div>
                 <Checkbox
-                  onChange={() => this.updateCheckedBoxes(1)}
-                  checked={checkedBoxes[1]}
+                  onChange={() => this.updateCheckedBoxes(7)}
+                  checked={checkedBoxes[7]}
                 />
               </div>
               <div
@@ -215,8 +220,8 @@ export default class AndrewVerify extends Component {
               >
                 <div>{client.employer}</div>
                 <Checkbox
-                  onChange={() => this.updateCheckedBoxes(1)}
-                  checked={checkedBoxes[1]}
+                  onChange={() => this.updateCheckedBoxes(8)}
+                  checked={checkedBoxes[8]}
                 />
               </div>
               <div
@@ -228,8 +233,8 @@ export default class AndrewVerify extends Component {
               >
                 <div>{client.employer_city}</div>
                 <Checkbox
-                  onChange={() => this.updateCheckedBoxes(1)}
-                  checked={checkedBoxes[1]}
+                  onChange={() => this.updateCheckedBoxes(9)}
+                  checked={checkedBoxes[9]}
                 />
               </div>
               <div
@@ -246,8 +251,8 @@ export default class AndrewVerify extends Component {
                   {client.linkedin}
                 </div>
                 <Checkbox
-                  onChange={() => this.updateCheckedBoxes(1)}
-                  checked={checkedBoxes[1]}
+                  onChange={() => this.updateCheckedBoxes(10)}
+                  checked={checkedBoxes[10]}
                 />
               </div>
               <div
@@ -264,8 +269,8 @@ export default class AndrewVerify extends Component {
                   {client.facebook}
                 </div>
                 <Checkbox
-                  onChange={() => this.updateCheckedBoxes(1)}
-                  checked={checkedBoxes[1]}
+                  onChange={() => this.updateCheckedBoxes(11)}
+                  checked={checkedBoxes[11]}
                 />
               </div>
               <div
@@ -282,8 +287,8 @@ export default class AndrewVerify extends Component {
                   {client.twitter}
                 </div>
                 <Checkbox
-                  onChange={() => this.updateCheckedBoxes(1)}
-                  checked={checkedBoxes[1]}
+                  onChange={() => this.updateCheckedBoxes(12)}
+                  checked={checkedBoxes[12]}
                 />
               </div>
               <div
@@ -300,8 +305,8 @@ export default class AndrewVerify extends Component {
                   {client.instagram}
                 </div>
                 <Checkbox
-                  onChange={() => this.updateCheckedBoxes(1)}
-                  checked={checkedBoxes[1]}
+                  onChange={() => this.updateCheckedBoxes(13)}
+                  checked={checkedBoxes[13]}
                 />
               </div>
             </div>
@@ -326,8 +331,26 @@ export default class AndrewVerify extends Component {
   }
 
   async submitVerify(client) {
+    const { checkedBoxes } = this.state;
     const now = new Date();
     const time = now.getTime();
+
+    const provider = (
+      await firebase
+        .firestore()
+        .collection("Providers")
+        .doc(client.applying_to_provider)
+        .get()
+    ).data();
+
+    api.sendEmail(
+      provider.email,
+      "Escora Screen Complete",
+      "Hey " +
+        provider.first_name +
+        ", you have a completed screening!\n\n See it here: https://www.escora.io/" +
+        client.escora_id
+    );
 
     const docRef = firebase
       .firestore()
@@ -335,25 +358,36 @@ export default class AndrewVerify extends Component {
       .doc(client.doc_id);
 
     await docRef.update({
-      verify_age: "green",
-      verify_assult_charges: 0,
-      verify_employer: "green",
-      verify_employer_city: "green",
-      verify_facebook: "gray",
-      verify_felonies: "green",
-      verify_first_name: "green",
-      verify_instagram: "gray",
-      verify_job_title: "green",
-      verify_last_name: "green",
-      verify_linkedin: "green",
+      verify_age: checkedBoxes[1] ? "green" : "gray",
+      verify_assult_charges: checkedBoxes[5] ? "green" : "red",
+      verify_employer: checkedBoxes[8] ? "green" : "gray",
+      verify_employer_city: checkedBoxes[9] ? "green" : "gray",
+      verify_facebook: checkedBoxes[11] ? "green" : "gray",
+      verify_felonies: checkedBoxes[4] ? "green" : "red",
+      verify_instagram: checkedBoxes[13] ? "green" : "gray",
+      verify_job_title: checkedBoxes[7] ? "green" : "gray",
+      verify_linkedin: checkedBoxes[10] ? "green" : "gray",
+      verify_name: checkedBoxes[0] ? "green" : "gray",
       verify_phone: "green",
-      verify_picture: "green",
-      verify_race: "green",
-      verify_references: "green",
-      verify_twitter: "green",
+      verify_picture: checkedBoxes[3] ? "green" : "gray",
+      verify_race: checkedBoxes[2] ? "green" : "gray",
+      verify_references: "gray",
+      verify_stds: [false, false, false, false],
+      verify_twitter: checkedBoxes[12] ? "green" : "gray",
       verify: false,
       verify_time: time,
+      verified_providers: this.getVerifiedProviders(client, provider),
     });
+  }
+
+  getVerifiedProviders(client, provider) {
+    const verifiedProviders = client.verified_providers;
+    if (verifiedProviders) {
+      verifiedProviders.push(provider.doc_id);
+    } else {
+      verifiedProviders = [provider.doc_id];
+    }
+    return verifiedProviders;
   }
 
   updateCheckedBoxes(index) {

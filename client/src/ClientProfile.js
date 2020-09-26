@@ -35,6 +35,7 @@ export default class ClientProfile extends Component {
       currentRating,
       providerReviewed,
     } = this.state;
+
     if (errorPage) {
       return <ErrorPage client={true} />;
     } else if (!clientLoaded || !clientRatings) {
@@ -88,7 +89,7 @@ export default class ClientProfile extends Component {
                 <div
                   onClick={() => this.submitRating()}
                   style={{
-                    backgroundColor: "#008489",
+                    backgroundColor: "green",
                     width: 180,
                     padding: 10,
                     color: "white",
@@ -131,7 +132,7 @@ export default class ClientProfile extends Component {
 
           <div
             style={{
-              color: "#008489",
+              color: "green",
               fontWeight: 600,
               fontSize: 20,
               marginTop: 30,
@@ -179,7 +180,7 @@ export default class ClientProfile extends Component {
                     height: 250,
                     borderRadius: 1000,
                     borderWidth: 10,
-                    borderColor: "#008489",
+                    borderColor: "green",
                     borderStyle: "solid",
                   }}
                 ></img>
@@ -189,7 +190,7 @@ export default class ClientProfile extends Component {
                       fontSize: 22,
                       marginTop: 20,
                       fontWeight: 600,
-                      color: "#008489",
+                      color: "green",
                     }}
                   >
                     {clientData.first_name + " " + clientData.last_name}
@@ -198,7 +199,7 @@ export default class ClientProfile extends Component {
                     style={{
                       fontSize: 22,
                       fontWeight: 600,
-                      color: "#008489",
+                      color: "green",
                     }}
                   >
                     {clientData.age}
@@ -206,7 +207,7 @@ export default class ClientProfile extends Component {
                   <div
                     style={{
                       fontSize: 22,
-                      color: "#008489",
+                      color: "green",
                       fontWeight: 600,
                     }}
                   >
@@ -221,7 +222,7 @@ export default class ClientProfile extends Component {
                 style={{
                   fontSize: 22,
                   fontWeight: "600",
-                  color: "#008489",
+                  color: "green",
                 }}
               >
                 {"Phone number: " + clientData.phone}
@@ -231,7 +232,7 @@ export default class ClientProfile extends Component {
                   fontSize: 22,
                   marginTop: 20,
                   fontWeight: "600",
-                  color: "#008489",
+                  color: "green",
                 }}
               >
                 {clientData.job_title + " at " + clientData.employer}
@@ -241,7 +242,7 @@ export default class ClientProfile extends Component {
                   fontSize: 22,
                   marginTop: 20,
                   fontWeight: "600",
-                  color: "#008489",
+                  color: "green",
                 }}
               >
                 {"No felonies"}
@@ -252,7 +253,7 @@ export default class ClientProfile extends Component {
                   fontSize: 22,
                   marginTop: 20,
                   fontWeight: "600",
-                  color: "#008489",
+                  color: "green",
                 }}
               >
                 {"No assult charges"}
@@ -263,7 +264,7 @@ export default class ClientProfile extends Component {
                   fontSize: 22,
                   marginTop: 20,
                   fontWeight: "600",
-                  color: "#008489",
+                  color: "green",
                   textDecoration: "underline",
                   cursor: "pointer",
                 }}
@@ -361,7 +362,7 @@ export default class ClientProfile extends Component {
                     })
                   }
                   style={{
-                    backgroundColor: "#008489",
+                    backgroundColor: "green",
                     width: 180,
                     padding: 10,
                     color: "white",
@@ -430,7 +431,20 @@ export default class ClientProfile extends Component {
       .where("escora_id", "==", id)
       .get();
 
-    if (client.empty) {
+    // Check permissions
+    if (!firebase.auth().currentUser) {
+      this.setState({
+        errorPage: true,
+      });
+    } else if (
+      !client.docs[0]
+        .data()
+        .verified_providers.includes(firebase.auth().currentUser.uid)
+    ) {
+      this.setState({
+        errorPage: true,
+      });
+    } else if (client.empty) {
       this.setState({
         errorPage: true,
       });
