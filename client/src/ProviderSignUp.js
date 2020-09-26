@@ -446,9 +446,19 @@ export default class ProviderSignUp extends Component {
         first_name: name,
       });
     } else if (currentInput === 1) {
-      await myDocRef.update({
-        escora_id: escoraId,
-      });
+      const snapshot = await firebase
+        .firestore()
+        .collection("Providers")
+        .where("escora_id", "==", escoraId)
+        .get();
+      if (snapshot.empty) {
+        await myDocRef.update({
+          escora_id: escoraId,
+        });
+      } else {
+        alert("That id is taken.");
+        return "error";
+      }
     } else if (currentInput === 2) {
       console.log(croppedImg);
       const storageRef = firebase
@@ -485,10 +495,12 @@ export default class ProviderSignUp extends Component {
     const { currentInput } = this.state;
     // What input are we on?
 
-    await this.updateDatabase();
-    this.setState({
-      currentInput: currentInput + 1,
-    });
+    const result = await this.updateDatabase();
+    if (result !== "error") {
+      this.setState({
+        currentInput: currentInput + 1,
+      });
+    }
   }
 
   // Send the sign in link to our email
