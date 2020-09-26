@@ -53,11 +53,11 @@ export default class VerifyEmail extends Component {
                 client_references: false,
                 client_stds: [false, false, false, false],
                 client_twitter: false,
+                email: email,
                 escora_id: "",
                 first_name: "",
                 last_name: "",
                 picture: "",
-                verify_picture: "",
               })
               .then(() => {
                 window.location.href = "/getstarted";

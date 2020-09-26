@@ -436,7 +436,10 @@ export default class ProviderSignUp extends Component {
 
   async updateDatabase() {
     const { currentInput, name, escoraId, croppedImg } = this.state;
-    const myDocRef = firebase.firestore().collection("Providers").doc("abc");
+    const myDocRef = firebase
+      .firestore()
+      .collection("Providers")
+      .doc(firebase.auth().currentUser.uid);
 
     if (currentInput === 0) {
       await myDocRef.update({
@@ -451,7 +454,7 @@ export default class ProviderSignUp extends Component {
       const storageRef = firebase
         .storage()
         .ref()
-        .child("abc")
+        .child(firebase.auth().currentUser.uid)
         .child("profile_picture");
 
       await storageRef.put(croppedImg);

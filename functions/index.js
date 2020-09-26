@@ -60,3 +60,19 @@ app.post("/send-email", (req, res) => {
 
 app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
 exports.test = functions.https.onRequest(app);
+
+exports.removeData = functions.pubsub
+  .schedule("every 48 hours")
+  .timeZone("America/New_York")
+  .onRun((context) => {
+    var prevDate = new Date("09/26/2020");
+    var currentDate = new Date();
+    var Difference_In_Time = currentDate.getTime() - prevDate.getTime();
+    var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+    if (Difference_In_Days > 3) {
+      // Remove it
+    }
+
+    console.log(Difference_In_Days);
+  });

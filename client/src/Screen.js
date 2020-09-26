@@ -1122,7 +1122,7 @@ export default class Screen extends Component {
                       <br /> <br />
                       {"The photo on the left has been hand verified by us as " +
                         providerData.first_name +
-                        ", so you have nothing to worry about."}
+                        ". Save data so you don't have to do this again."}
                       <br /> <br />
                       This takes just a few minutes, it's (obviously) free, we
                       don't store any data you don't want us to.. <br /> <br />
@@ -1491,7 +1491,7 @@ export default class Screen extends Component {
       // Always push the final page
       finalActiveQuestionArray.push(6);
     } else {
-      finalActiveQuestionArray = [0, 1, 2, 3, 4, 5, 6];
+      finalActiveQuestionArray = [1, 2, 3, 4, 5, 6];
     }
 
     return finalActiveQuestionArray;
@@ -1516,7 +1516,10 @@ export default class Screen extends Component {
       twitter,
       instagram,
     } = this.state;
-    const myDocRef = firebase.firestore().collection("Clients").doc("abc");
+    const myDocRef = firebase
+      .firestore()
+      .collection("Clients")
+      .doc(firebase.auth().currentUser.uid);
     if (activeQuestion === 0) {
       // About
       await myDocRef.update({
@@ -1661,26 +1664,27 @@ export default class Screen extends Component {
             .collection("Clients")
             .doc(result.user.uid)
             .set({
-              address: "",
               age: "",
               assult_charges: "",
               background: "",
+              doc_id: result.user.uid,
               employer: "",
-              escora_ratings: [],
-              escora_reviews: [],
+              employer_city: "",
+              escora_id: randomNumber(10),
               facebook: "",
               felonies: "",
-              first_name: "Andrew",
-              height: "",
-              income: "",
+              first_name: "",
               job_title: "",
               last_name: "",
               linkedin: "",
+              liscense_picture: "",
+              paystub_picture: "",
               phone: activeInput1,
               picture: "",
               race: "",
               references: [],
               twitter: "",
+              verify: true,
             })
             .then(() => {
               window.location.reload();

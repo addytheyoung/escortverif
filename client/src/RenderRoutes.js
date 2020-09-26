@@ -13,6 +13,8 @@ import SignInPage from "./SignInPage";
 import About from "./About";
 import VerifyEmail from "./VerifyEmail";
 import ClientProfile from "./ClientProfile";
+import AndrewVerify from "./AndrewVerify";
+import GetAllDataFromFirestore from "./scripts/GetAllDataFromFirestore";
 
 export default class RenderRoutes extends Component {
   constructor(props) {
@@ -53,6 +55,7 @@ export default class RenderRoutes extends Component {
                 exact={true}
                 render={() => <ProviderSignUp profileData={profileData} />}
               />
+
               <Route
                 path={"/"}
                 exact={false}
@@ -68,6 +71,12 @@ export default class RenderRoutes extends Component {
                 path={"/makescreen"}
                 exact={true}
                 render={() => <MakeScreen />}
+              />
+
+              <Route
+                path={"/andrewscripts"}
+                exact={true}
+                render={() => <GetAllDataFromFirestore />}
               />
               <Route path="/" exact={true} render={() => <Home />} />
               <Route path="/about" exact={true} render={() => <About />} />
@@ -102,6 +111,12 @@ export default class RenderRoutes extends Component {
               />
 
               <Route
+                path={"/andrewverify"}
+                exact={true}
+                render={() => <AndrewVerify profileData={profileData} />}
+              />
+
+              <Route
                 path={"/"}
                 exact={false}
                 render={() => <Screen profileData={profileData} />}
@@ -117,21 +132,21 @@ export default class RenderRoutes extends Component {
     const signedIn = !!firebase.auth().currentUser;
 
     // We're signed in!
-    if (!signedIn) {
+    if (signedIn) {
       // Get the path
       const path = window.location.pathname;
       // Provider or client?
       const provider = localStorage.getItem("provider");
       const client = localStorage.getItem("client");
       var colRef = "Providers";
-      // if (client == "true") {
-      //   colRef = "Clients";
-      // }
+      if (client === "true") {
+        colRef = "Clients";
+      }
 
       firebase
         .firestore()
         .collection(colRef)
-        .doc("abc")
+        .doc(firebase.auth().currentUser.uid)
         .get()
         .then((snapshot) => {
           this.setState({
