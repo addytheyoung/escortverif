@@ -53,11 +53,13 @@ export default class VerifyEmail extends Component {
                 client_references: false,
                 client_stds: [false, false, false, false],
                 client_twitter: false,
+                doc_id: result.user.uid,
                 email: email,
                 escora_id: "",
                 first_name: "",
                 last_name: "",
                 picture: "",
+                type: "provider",
               })
               .then(() => {
                 window.location.href = "/getstarted";
@@ -66,6 +68,8 @@ export default class VerifyEmail extends Component {
                 alert(e.message);
                 console.log(e.message);
               });
+          } else {
+            window.location.href = "/getstarted";
           }
         })
         .catch(function (error) {

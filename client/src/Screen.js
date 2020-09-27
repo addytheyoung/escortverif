@@ -1574,6 +1574,7 @@ export default class Screen extends Component {
               race: "",
               references: [],
               twitter: "",
+              type: "client",
               verify: true,
             })
             .then(() => {
@@ -1584,7 +1585,7 @@ export default class Screen extends Component {
               console.log(e.message);
             });
         } else {
-          window.location.reload();
+          window.location.href = "/";
         }
       })
       .catch(function (error) {

@@ -16,6 +16,7 @@ import ClientProfile from "./ClientProfile";
 import AndrewVerify from "./AndrewVerify";
 import GetAllDataFromFirestore from "./scripts/GetAllDataFromFirestore";
 import WriteTestIntoRealData from "./scripts/WriteTestIntoRealData";
+import ClientHome from "./ClientHome";
 
 export default class RenderRoutes extends Component {
   constructor(props) {
@@ -38,12 +39,24 @@ export default class RenderRoutes extends Component {
     if (!loadedData) {
       return <LoadingPage />;
     }
+    const client = profileData.type === "client";
+    const provider = profileData.type === "provider";
     return (
       <div>
         <Router>
           {signedIn && (
             <Switch>
-              <Route path="/" exact={true} render={() => <Home />} />
+              {client && (
+                <Route path="/" exact={true} render={() => <ClientHome />} />
+              )}
+              {provider && (
+                <Route path="/" exact={true} render={() => <ProviderHome />} />
+              )}
+
+              {!client && !provider && (
+                <Route path="/" exact={true} render={() => <Home />} />
+              )}
+
               <Route path="/about" exact={true} render={() => <About />} />
               <Route path="/profile" exact={true} render={() => <Profile />} />
               <Route
@@ -70,6 +83,12 @@ export default class RenderRoutes extends Component {
               />
 
               <Route
+                path="/verifyemail"
+                exact={true}
+                render={() => <LoadingPage />}
+              />
+
+              <Route
                 path={"/"}
                 exact={false}
                 render={() => <Screen profileData={profileData} />}
@@ -79,6 +98,7 @@ export default class RenderRoutes extends Component {
 
           {!signedIn && (
             <Switch>
+              <Route path="/" exact={true} render={() => <Home />} />
               <Route
                 path={"/makescreen"}
                 exact={true}
@@ -90,7 +110,6 @@ export default class RenderRoutes extends Component {
                 exact={true}
                 render={() => <WriteTestIntoRealData />}
               />
-              <Route path="/" exact={true} render={() => <Home />} />
               <Route path="/about" exact={true} render={() => <About />} />
               <Route
                 path="/profile"

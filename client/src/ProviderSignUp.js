@@ -10,6 +10,7 @@ import { isMobile } from "react-device-detect";
 import "react-html5-camera-photo/build/css/index.css";
 import "./css/ProviderSignUp.css";
 import ProgressBar from "./ProgressBar";
+import MakeScreen from "./MakeScreen";
 
 export default class ProviderSignUp extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ export default class ProviderSignUp extends Component {
       uploadingPicture: false,
       uploadingFile: true,
       croppingPicture: false,
-      currentInput: 0,
+      currentInput: 3,
       activePictureUri: "",
       activePosePictureUri: "",
       name: "",
@@ -41,7 +42,7 @@ export default class ProviderSignUp extends Component {
     } = this.state;
     const { profileData } = this.props;
 
-    if (profileData) {
+    if (firebase.auth().currentUser) {
       return (
         <div>
           <Header />
@@ -74,7 +75,7 @@ export default class ProviderSignUp extends Component {
                 marginTop: 100,
               }}
             >
-              <div style={{ textAlign: "center", width: "30vw" }}>
+              <div style={{ textAlign: "center", width: "30vw", fontSize: 20 }}>
                 We sent you an email! <br /> <br />
                 Please click the link to verify it.
               </div>
@@ -90,14 +91,14 @@ export default class ProviderSignUp extends Component {
 
           {currentInput === 0 && (
             <div>
-              <ProgressBar currentIndex={1} total={4} />
+              <ProgressBar currentIndex={1} total={3} />
 
               <ProviderInput
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
                 prevDisabled={true}
                 nextDisabled={name === ""}
-                title={"What escort name do you go by?"}
+                title={"What name do you go by?"}
                 subTitle={""}
                 input={
                   <Input
@@ -117,12 +118,12 @@ export default class ProviderSignUp extends Component {
           )}
           {currentInput === 1 && (
             <div>
-              <ProgressBar currentIndex={2} total={4} />
+              <ProgressBar currentIndex={2} total={3} />
 
               <ProviderInput
                 clickPrev={() => this.clickPrev()}
                 clickNext={() => this.clickNext()}
-                prevDisabled={true}
+                prevDisabled={false}
                 nextDisabled={escoraId === ""}
                 title={"Make an Escora id"}
                 subTitle={
@@ -157,7 +158,7 @@ export default class ProviderSignUp extends Component {
 
           {currentInput === 2 && (
             <div>
-              <ProgressBar currentIndex={3} total={4} />
+              <ProgressBar currentIndex={3} total={3} />
               <ProviderInput
                 prevDisabled={false}
                 clickPrev={() => this.clickPrev()}
@@ -165,7 +166,7 @@ export default class ProviderSignUp extends Component {
                 nextDisabled={activePosePictureUri === "" || croppingPicture}
                 title={"Please upload a picture of you"}
                 subTitle={
-                  "This is used for Lisa's (and other Escorts) verification of what you look like. Nobody can see this, except escorts you choose to share it with."
+                  "Blurred faces are fine. This is just so your clients can recognize you when visiting your screen."
                 }
                 input={
                   <div
@@ -472,16 +473,18 @@ export default class ProviderSignUp extends Component {
       await myDocRef.update({
         picture: url,
       });
+
+      window.location.href = "/";
     } else if (currentInput === 3) {
     } else if (currentInput === 4) {
     } else {
     }
   }
 
-  sendEmail() {
+  async sendEmail() {
+    const email = document.getElementById("email-input").value;
     const { currentInput } = this.state;
     if (currentInput === 0) {
-      const email = document.getElementById("email-input").value;
       // Bad email?
       if (!checkEmail(email)) {
         return;
