@@ -1,1 +1,1 @@
-cd client && npm run build && firebase deploy
+cd client && npm run build && cd .. && firebase deploy --only hosting

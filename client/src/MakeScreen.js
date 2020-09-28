@@ -21,7 +21,7 @@ export default class MakeScreen extends Component {
       checkedBoxes: [
         true,
         true,
-        profileData.client_name,
+        true,
         profileData.client_age,
         profileData.client_race,
         profileData.client_verify_about,
@@ -243,7 +243,7 @@ export default class MakeScreen extends Component {
         client_escora_ratings: checkedBoxes[0],
         client_escora_reviews: checkedBoxes[0],
         client_phone: checkedBoxes[1],
-        client_name: checkedBoxes[2],
+        client_name: true,
         client_age: checkedBoxes[3],
         client_race: checkedBoxes[4],
         client_verify_about: !!checkedBoxes[5],
@@ -364,7 +364,10 @@ export default class MakeScreen extends Component {
 
                 <Checkbox
                   disabled={
-                    newIndex === 0 || newIndex === 1 || newIndex >= 18
+                    newIndex === 0 ||
+                    newIndex === 1 ||
+                    newIndex === 2 ||
+                    newIndex >= 18
                       ? true
                       : false
                   }

@@ -1276,6 +1276,7 @@ export default class Screen extends Component {
       client_company,
       client_employer_city,
       client_linkedin,
+      client_verify_employment,
     } = providerData;
 
     if (
@@ -1291,10 +1292,9 @@ export default class Screen extends Component {
 
   checkLiscensePage(profileData, providerData) {
     const { license_picture } = profileData;
-    const client_license = true;
-    console.log(license_picture);
+    const { client_verify_about } = providerData;
 
-    if (client_license && license_picture === "") {
+    if (client_verify_about && license_picture === "") {
       return true;
     }
     return false;
@@ -1302,9 +1302,9 @@ export default class Screen extends Component {
 
   checkPicturePage(profileData, providerData) {
     const { picture } = profileData;
-    const { client_photo } = providerData;
+    const { client_verify_photo } = providerData;
 
-    if (client_photo && picture === "") {
+    if (client_verify_photo && picture === "") {
       return true;
     }
     return false;
