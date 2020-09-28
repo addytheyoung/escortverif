@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import close from "./images/close.png";
+import { isMobile } from "react-device-detect";
 
 export default class Modal extends Component {
   constructor(props) {
@@ -32,10 +33,10 @@ export default class Modal extends Component {
         ></div>
         <div
           style={{
-            width: "65vw",
+            width: isMobile ? "100vw" : "65vw",
             borderRadius: 5,
-            height: "85vh",
-            top: 30,
+            height: isMobile ? "100vh" : "85vh",
+            top: isMobile ? 0 : 30,
             backgroundColor: "#f5f5f5",
             position: "fixed",
             zIndex: 10000,

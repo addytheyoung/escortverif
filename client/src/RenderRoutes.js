@@ -46,23 +46,12 @@ export default class RenderRoutes extends Component {
         <Router>
           {signedIn && (
             <Switch>
-              {client && (
-                <Route path="/" exact={true} render={() => <ClientHome />} />
-              )}
-              {provider && (
-                <Route path="/" exact={true} render={() => <ProviderHome />} />
-              )}
-
-              {!client && !provider && (
-                <Route path="/" exact={true} render={() => <Home />} />
-              )}
-
               <Route path="/about" exact={true} render={() => <About />} />
               <Route path="/profile" exact={true} render={() => <Profile />} />
               <Route
                 path={"/makescreen"}
                 exact={true}
-                render={() => <MakeScreen />}
+                render={() => <MakeScreen profileData={profileData} />}
               />
               <Route
                 path="/getstarted"
@@ -88,11 +77,26 @@ export default class RenderRoutes extends Component {
                 render={() => <LoadingPage />}
               />
 
-              <Route
-                path={"/"}
-                exact={false}
-                render={() => <Screen profileData={profileData} />}
-              />
+              {provider && (
+                <Switch>
+                  <Route
+                    path="/"
+                    exact={false}
+                    render={() => <ProviderHome profileData={profileData} />}
+                  />
+                </Switch>
+              )}
+
+              {client && (
+                <Switch>
+                  <Route path="/" exact={true} render={() => <ClientHome />} />
+                  <Route
+                    path={"/"}
+                    exact={false}
+                    render={() => <Screen profileData={profileData} />}
+                  />
+                </Switch>
+              )}
             </Switch>
           )}
 
@@ -102,7 +106,7 @@ export default class RenderRoutes extends Component {
               <Route
                 path={"/makescreen"}
                 exact={true}
-                render={() => <MakeScreen />}
+                render={() => <MakeScreen profileData={profileData} />}
               />
 
               <Route
@@ -158,8 +162,6 @@ export default class RenderRoutes extends Component {
 
     // We're signed in!
     if (signedIn) {
-      // Get the path
-      const path = window.location.pathname;
       // Provider or client?
       const provider = localStorage.getItem("provider");
       const client = localStorage.getItem("client");
@@ -184,11 +186,26 @@ export default class RenderRoutes extends Component {
           console.log(e.message);
         });
     } else {
-      this.setState({
-        profileData: {},
-        loadedData: true,
-        type: "",
-      });
+      // In test mode?
+      const test = true;
+      if (test) {
+        const snapshot = await firebase
+          .firestore()
+          .collection("Providers")
+          .doc("zjolOpyhN1adZBircfQXLo1wLHz1")
+          .get();
+        this.setState({
+          profileData: snapshot.data(),
+          loadedData: true,
+          type: "",
+        });
+      } else {
+        this.setState({
+          profileData: {},
+          loadedData: true,
+          type: "",
+        });
+      }
     }
   }
 }

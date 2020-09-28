@@ -20,7 +20,7 @@ export default class ProviderSignUp extends Component {
       uploadingPicture: false,
       uploadingFile: true,
       croppingPicture: false,
-      currentInput: 3,
+      currentInput: 0,
       activePictureUri: "",
       activePosePictureUri: "",
       name: "",
@@ -42,7 +42,7 @@ export default class ProviderSignUp extends Component {
     } = this.state;
     const { profileData } = this.props;
 
-    if (firebase.auth().currentUser) {
+    if (!firebase.auth().currentUser) {
       return (
         <div>
           <Header />
