@@ -71,26 +71,6 @@ export default class MakeScreen extends Component {
               />
             </div>
           )}
-          {/* {info !== "" && (
-            <div
-              style={{
-                position: "fixed",
-                top: isMobile ? 0 : 100,
-                zIndex: 99999,
-                left: isMobile ? 0 : 50,
-                width: isMobile ? "100vw" : 300,
-                height: isMobile ? "100vh" : 200,
-                backgroundColor: "#ffffff",
-                borderRadius: 5,
-                borderStyle: isMobile ? "none" : "solid",
-                borderColor: "lightgray",
-                fontSize: 12,
-                padding: 10,
-              }}
-            >
-              {info}
-            </div>
-          )} */}
         </div>
         <div
           style={{
@@ -229,12 +209,8 @@ export default class MakeScreen extends Component {
   // Save the changes selected here.
   async saveChanges() {
     const { checkedBoxes } = this.state;
-    var uid = "";
-    if (firebase.auth().currentUser) {
-      uid = firebase.auth().currentUser.uid;
-    } else {
-      uid = "zjolOpyhN1adZBircfQXLo1wLHz1";
-    }
+    var uid = firebase.auth().currentUser.uid;
+
     await firebase
       .firestore()
       .collection("Providers")

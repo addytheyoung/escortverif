@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Header from "./Header";
 import { Input } from "@material-ui/core";
 import "./css/ProviderHome.css";
+import Modal from "./Modal";
+import { isMobile } from "react-device-detect";
 
 import { WhatsappShareButton } from "react-share";
 import LoadingPage from "./LoadingPage";
@@ -26,22 +28,27 @@ export default class ProviderHome extends Component {
       <div>
         <Header />
         {info !== "" && (
-          <div
-            style={{
-              position: "fixed",
-              top: 140,
-              left: 50,
-              width: 300,
-              height: 200,
-              backgroundColor: "#ffffff",
-              borderRadius: 5,
-              borderStyle: "solid",
-              borderColor: "lightgray",
-              fontSize: 12,
-              padding: 10,
-            }}
-          >
-            {info}
+          <div>
+            <Modal
+              closeModal={() =>
+                this.setState({
+                  info: "",
+                })
+              }
+              modalContent={
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingLeft: isMobile ? "5vw" : "5vw",
+                    paddingRight: isMobile ? "5vw" : "5vw",
+                  }}
+                >
+                  <div style={{ fontSize: 18, marginTop: 20 }}>{info}</div>
+                </div>
+              }
+            />
           </div>
         )}
         <div style={{ paddingLeft: "20vw", paddingRight: "20vw" }}>

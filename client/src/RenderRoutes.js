@@ -187,7 +187,7 @@ export default class RenderRoutes extends Component {
         });
     } else {
       // In test mode?
-      const test = true;
+      const test = false;
       if (test) {
         const snapshot = await firebase
           .firestore()
