@@ -5,33 +5,38 @@ import { withStyles } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { isMobile } from "react-device-detect";
+import * as firebase from "firebase";
+import Modal from "./Modal";
 
 export default class MakeScreen extends Component {
   counter = -1;
   constructor(props) {
     super(props);
 
+    const { profileData } = this.props;
+    console.log(profileData);
+
     this.state = {
       info: "",
       checkedBoxes: [
         true,
         true,
-        false,
-        false,
-        false,
-        null,
-        false,
-        false,
-        false,
-        false,
-        false,
-        false,
-        null,
-        false,
-        false,
-        false,
-        false,
-        false,
+        true,
+        profileData.client_age,
+        profileData.client_race,
+        profileData.client_verify_about,
+        profileData.client_references,
+        profileData.client_references_skip,
+        profileData.client_verify_photo,
+        profileData.client_job,
+        profileData.client_company,
+        profileData.client_linkedin,
+        profileData.client_verify_employment,
+        profileData.client_felonies,
+        profileData.client_assult_charges,
+        profileData.client_facebook,
+        profileData.client_twitter,
+        profileData.client_instagram,
       ],
     };
   }
@@ -43,22 +48,27 @@ export default class MakeScreen extends Component {
         <Header />
         <div>
           {info !== "" && (
-            <div
-              style={{
-                position: "fixed",
-                top: 100,
-                left: 50,
-                width: 300,
-                height: 200,
-                backgroundColor: "#ffffff",
-                borderRadius: 5,
-                borderStyle: "solid",
-                borderColor: "lightgray",
-                fontSize: 12,
-                padding: 10,
-              }}
-            >
-              {info}
+            <div>
+              <Modal
+                closeModal={() =>
+                  this.setState({
+                    info: "",
+                  })
+                }
+                modalContent={
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      paddingLeft: isMobile ? "5vw" : "5vw",
+                      paddingRight: isMobile ? "5vw" : "5vw",
+                    }}
+                  >
+                    <div style={{ fontSize: 18, marginTop: 20 }}>{info}</div>
+                  </div>
+                }
+              />
             </div>
           )}
         </div>
@@ -197,7 +207,40 @@ export default class MakeScreen extends Component {
   }
 
   // Save the changes selected here.
-  saveChanges() {}
+  async saveChanges() {
+    const { checkedBoxes } = this.state;
+    var uid = firebase.auth().currentUser.uid;
+
+    await firebase
+      .firestore()
+      .collection("Providers")
+      .doc(uid)
+      .update({
+        client_escora_ratings: checkedBoxes[0],
+        client_escora_reviews: checkedBoxes[0],
+        client_phone: checkedBoxes[1],
+        client_name: true,
+        client_age: checkedBoxes[3],
+        client_race: checkedBoxes[4],
+        client_verify_about: !!checkedBoxes[5],
+        client_references: checkedBoxes[6],
+        client_references_skip: checkedBoxes[7],
+        client_verify_photo: !!checkedBoxes[8],
+        client_job: checkedBoxes[9],
+        client_company: checkedBoxes[10],
+        client_linkedin: checkedBoxes[11],
+        client_verify_employment: !!checkedBoxes[12],
+        client_felonies: checkedBoxes[13],
+        client_assult_charges: checkedBoxes[14],
+        client_facebook: checkedBoxes[15],
+        client_twitter: checkedBoxes[16],
+        client_instagram: checkedBoxes[17],
+        client_stds: [false, false, false, false],
+        client_verify_stds: false,
+      });
+
+    window.location.reload();
+  }
 
   // Update one of the selections.
   updateCheckedBoxes(box) {
@@ -231,18 +274,7 @@ export default class MakeScreen extends Component {
       <img
         onClick={() =>
           this.setState({
-            info:
-              stateInfo === "" ? "Your encounters are stored with Escora" : "",
-          })
-        }
-        onMouseOver={() =>
-          this.setState({
-            info: newInfo,
-          })
-        }
-        onMouseLeave={() =>
-          this.setState({
-            info: "",
+            info: stateInfo === "" ? newInfo : "",
           })
         }
         style={{ width: 20, height: 20, cursor: "pointer" }}
@@ -263,6 +295,7 @@ export default class MakeScreen extends Component {
           marginBottom: 30,
           marginTop: 30,
           width: isMobile ? "80vw" : "25vw",
+          minWidth: 240,
           justifyContent: "center",
         }}
       >
@@ -307,7 +340,10 @@ export default class MakeScreen extends Component {
 
                 <Checkbox
                   disabled={
-                    newIndex === 0 || newIndex === 1 || newIndex >= 18
+                    newIndex === 0 ||
+                    newIndex === 1 ||
+                    newIndex === 2 ||
+                    newIndex >= 18
                       ? true
                       : false
                   }

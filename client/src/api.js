@@ -4,6 +4,7 @@ const sendEmail = (email, subject, text) => {
     .fetch("/send-email", {
       method: "POST",
       headers: {
+        "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(json),

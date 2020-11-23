@@ -16,6 +16,7 @@ import ClientProfile from "./ClientProfile";
 import AndrewVerify from "./AndrewVerify";
 import GetAllDataFromFirestore from "./scripts/GetAllDataFromFirestore";
 import WriteTestIntoRealData from "./scripts/WriteTestIntoRealData";
+import ClientHome from "./ClientHome";
 
 export default class RenderRoutes extends Component {
   constructor(props) {
@@ -38,18 +39,19 @@ export default class RenderRoutes extends Component {
     if (!loadedData) {
       return <LoadingPage />;
     }
+    const client = profileData.type === "client";
+    const provider = profileData.type === "provider";
     return (
       <div>
         <Router>
           {signedIn && (
             <Switch>
-              <Route path="/" exact={true} render={() => <Home />} />
               <Route path="/about" exact={true} render={() => <About />} />
               <Route path="/profile" exact={true} render={() => <Profile />} />
               <Route
                 path={"/makescreen"}
                 exact={true}
-                render={() => <MakeScreen />}
+                render={() => <MakeScreen profileData={profileData} />}
               />
               <Route
                 path="/getstarted"
@@ -70,19 +72,41 @@ export default class RenderRoutes extends Component {
               />
 
               <Route
-                path={"/"}
-                exact={false}
-                render={() => <Screen profileData={profileData} />}
+                path="/verifyemail"
+                exact={true}
+                render={() => <LoadingPage />}
               />
+
+              {provider && (
+                <Switch>
+                  <Route
+                    path="/"
+                    exact={false}
+                    render={() => <ProviderHome profileData={profileData} />}
+                  />
+                </Switch>
+              )}
+
+              {client && (
+                <Switch>
+                  <Route path="/" exact={true} render={() => <ClientHome />} />
+                  <Route
+                    path={"/"}
+                    exact={false}
+                    render={() => <Screen profileData={profileData} />}
+                  />
+                </Switch>
+              )}
             </Switch>
           )}
 
           {!signedIn && (
             <Switch>
+              <Route path="/" exact={true} render={() => <Home />} />
               <Route
                 path={"/makescreen"}
                 exact={true}
-                render={() => <MakeScreen />}
+                render={() => <MakeScreen profileData={profileData} />}
               />
 
               <Route
@@ -90,7 +114,6 @@ export default class RenderRoutes extends Component {
                 exact={true}
                 render={() => <WriteTestIntoRealData />}
               />
-              <Route path="/" exact={true} render={() => <Home />} />
               <Route path="/about" exact={true} render={() => <About />} />
               <Route
                 path="/profile"
@@ -139,8 +162,6 @@ export default class RenderRoutes extends Component {
 
     // We're signed in!
     if (signedIn) {
-      // Get the path
-      const path = window.location.pathname;
       // Provider or client?
       const provider = localStorage.getItem("provider");
       const client = localStorage.getItem("client");
@@ -165,11 +186,26 @@ export default class RenderRoutes extends Component {
           console.log(e.message);
         });
     } else {
-      this.setState({
-        profileData: {},
-        loadedData: true,
-        type: "",
-      });
+      // In test mode?
+      const test = false;
+      if (test) {
+        const snapshot = await firebase
+          .firestore()
+          .collection("Providers")
+          .doc("zjolOpyhN1adZBircfQXLo1wLHz1")
+          .get();
+        this.setState({
+          profileData: snapshot.data(),
+          loadedData: true,
+          type: "",
+        });
+      } else {
+        this.setState({
+          profileData: {},
+          loadedData: true,
+          type: "",
+        });
+      }
     }
   }
 }

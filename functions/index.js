@@ -13,10 +13,7 @@ var serviceAccount = require("./service.json");
 
 console.log("YIO{{{{{");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://escverif.firebaseio.com",
-});
+admin.initializeApp();
 
 app.get("/test", (req, res) => {
   res.send({ working: "Working!" });

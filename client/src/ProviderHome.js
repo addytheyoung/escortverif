@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import Header from "./Header";
 import { Input } from "@material-ui/core";
 import "./css/ProviderHome.css";
+import Modal from "./Modal";
+import { isMobile } from "react-device-detect";
 
 import { WhatsappShareButton } from "react-share";
+import LoadingPage from "./LoadingPage";
 
 export default class ProviderHome extends Component {
   constructor(props) {
@@ -16,26 +19,36 @@ export default class ProviderHome extends Component {
 
   render() {
     const { info } = this.state;
+    const { profileData } = this.props;
+    if (window.location.pathname !== "/" + profileData.escora_id) {
+      window.location.href = "/" + profileData.escora_id;
+      return <LoadingPage />;
+    }
     return (
       <div>
         <Header />
         {info !== "" && (
-          <div
-            style={{
-              position: "fixed",
-              top: 100,
-              left: 50,
-              width: 300,
-              height: 200,
-              backgroundColor: "#ffffff",
-              borderRadius: 5,
-              borderStyle: "solid",
-              borderColor: "lightgray",
-              fontSize: 12,
-              padding: 10,
-            }}
-          >
-            {info}
+          <div>
+            <Modal
+              closeModal={() =>
+                this.setState({
+                  info: "",
+                })
+              }
+              modalContent={
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    paddingLeft: isMobile ? "5vw" : "5vw",
+                    paddingRight: isMobile ? "5vw" : "5vw",
+                  }}
+                >
+                  <div style={{ fontSize: 18, marginTop: 20 }}>{info}</div>
+                </div>
+              }
+            />
           </div>
         )}
         <div style={{ paddingLeft: "20vw", paddingRight: "20vw" }}>
@@ -45,14 +58,14 @@ export default class ProviderHome extends Component {
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              marginTop: 50,
+              marginTop: 160,
             }}
           >
             <Input
               id="unique-url"
-              style={{ width: 300 }}
+              style={{ width: 300, fontSize: 18 }}
               type="text"
-              value={"escora.io/lisali48"}
+              value={"escora.io/" + profileData.escora_id}
             ></Input>
             <div style={{ marginTop: 20, fontSize: 12, width: 300 }}></div>
 
@@ -93,6 +106,7 @@ export default class ProviderHome extends Component {
                 color: "white",
                 fontWeight: 600,
                 marginTop: 20,
+                fontSize: 18,
               }}
             >
               Copy
@@ -114,6 +128,7 @@ export default class ProviderHome extends Component {
                 color: "white",
                 fontWeight: 600,
                 textAlign: "center",
+                fontSize: 18,
               }}
             >
               Edit my Screen

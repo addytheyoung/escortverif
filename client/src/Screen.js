@@ -14,6 +14,7 @@ import "./css/ProviderSignUp.css";
 import randomNumber from "./functions/randomNumber";
 import { act } from "react-dom/test-utils";
 import api from "./api";
+import Modal from "./Modal";
 
 export default class Screen extends Component {
   constructor(props) {
@@ -122,7 +123,7 @@ export default class Screen extends Component {
         if (i == activeQuestionArray.length - 1) {
           console.log("sss");
           api.sendEmail(
-            "andrew@collection.deals",
+            "andrewtateyoung@gmail.com",
             "Escora Screen",
             "New screen. View the data here: " +
               "https://www.escora.io/andrewverify\n\n\n" +
@@ -153,22 +154,27 @@ export default class Screen extends Component {
 
           <div>
             {info !== "" && (
-              <div
-                style={{
-                  position: "fixed",
-                  top: 100,
-                  left: 50,
-                  width: 300,
-                  height: 200,
-                  backgroundColor: "#ffffff",
-                  borderRadius: 5,
-                  borderStyle: "solid",
-                  borderColor: "lightgray",
-                  fontSize: 12,
-                  padding: 10,
-                }}
-              >
-                {info}
+              <div>
+                <Modal
+                  closeModal={() =>
+                    this.setState({
+                      info: "",
+                    })
+                  }
+                  modalContent={
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        paddingLeft: isMobile ? "5vw" : "5vw",
+                        paddingRight: isMobile ? "5vw" : "5vw",
+                      }}
+                    >
+                      <div style={{ fontSize: 18, marginTop: 20 }}>{info}</div>
+                    </div>
+                  }
+                />
               </div>
             )}
           </div>
@@ -981,7 +987,10 @@ export default class Screen extends Component {
                     marginTop: 30,
                   }}
                 >
-                  <img style={{ width: 200 }} src={providerData.picture} />
+                  <img
+                    style={{ width: 200, borderRadius: 200 }}
+                    src={providerData.picture}
+                  />
 
                   <div style={{ width: 50 }}></div>
 
@@ -1276,6 +1285,7 @@ export default class Screen extends Component {
       client_company,
       client_employer_city,
       client_linkedin,
+      client_verify_employment,
     } = providerData;
 
     if (
@@ -1291,10 +1301,9 @@ export default class Screen extends Component {
 
   checkLiscensePage(profileData, providerData) {
     const { license_picture } = profileData;
-    const client_license = true;
-    console.log(license_picture);
+    const { client_verify_about } = providerData;
 
-    if (client_license && license_picture === "") {
+    if (client_verify_about && license_picture === "") {
       return true;
     }
     return false;
@@ -1302,9 +1311,9 @@ export default class Screen extends Component {
 
   checkPicturePage(profileData, providerData) {
     const { picture } = profileData;
-    const { client_photo } = providerData;
+    const { client_verify_photo } = providerData;
 
-    if (client_photo && picture === "") {
+    if (client_verify_photo && picture === "") {
       return true;
     }
     return false;
@@ -1574,6 +1583,7 @@ export default class Screen extends Component {
               race: "",
               references: [],
               twitter: "",
+              type: "client",
               verify: true,
             })
             .then(() => {
@@ -1584,7 +1594,7 @@ export default class Screen extends Component {
               console.log(e.message);
             });
         } else {
-          window.location.reload();
+          window.location.href = "/";
         }
       })
       .catch(function (error) {
